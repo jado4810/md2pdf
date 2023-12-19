@@ -1,0 +1,26 @@
+{
+  "name": "jado4810-md2pdf",
+  "version": "0.0.1",
+  "description": "Typeset Markdown to PDF for publishing",
+  "type": "module",
+  "main": "md2pdf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jado4810/md2pdf.git"
+  },
+  "author": "Shun-ichi TAHARA <jado@flowernet.gr.jp> (https://github.com/jado4810/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jado4810/md2pdf/issues",
+    "email": "jado@flowernet.gr.jp"
+  },
+  "homepage": "https://github.com/jado4810/md2pdf/",
+  "dependencies": {
+    "commander": ">8.0.0",
+    "highlight.js": "*",
+    "marked": "*",
+    "memory-streams": "*",
+    "mermaid": "*",
+    "puppeteer": ">21.0.0"
+  }
+}

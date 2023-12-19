@@ -1,0 +1,124 @@
+body {
+  font: 10.5pt "Noto Serif", "BIZ UDPMincho", "Noto Serif CJK JP";
+  margin: 0;
+}
+
+h1 {
+  break-after: avoid-page;
+  font: bold 24pt "Noto Serif", "BIZ UDPGothic", "Noto Sans CJK JP";
+  margin: 8pt 0 16pt;
+  padding: 0;
+}
+
+h2 {
+  break-after: avoid-page;
+  font: bold 18pt "Noto Serif", "BIZ UDPGothic", "Noto Sans CJK JP";
+  margin: 16pt 0 8pt;
+  padding: 0;
+}
+
+h3 {
+  break-after: avoid-page;
+  font: bold 16pt "Noto Serif", "BIZ UDPGothic", "Noto Sans CJK JP";
+  margin: 12pt 0 8pt;
+  padding: 0;
+}
+
+h4 {
+  break-after: avoid-page;
+  font: bold 14pt "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+  margin: 12pt 0 8pt;
+  padding: 0;
+}
+
+h5 {
+  break-after: avoid-page;
+  font: bold 12pt "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+  margin: 8pt 0;
+  padding: 0;
+}
+
+h6 {
+  break-after: avoid-page;
+  font: 12pt "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+  margin: 8pt 0;
+  padding: 0;
+}
+
+p {
+  margin: 4pt 0;
+  text-indent: 1em;
+}
+
+blockquote {
+  background-color: #ffd;
+  border-radius: 4pt;
+  break-inside: avoid-page;
+  margin: 8pt 12pt;
+  padding: 4pt 8pt;
+}
+
+pre {
+  background-color: #eee;
+  border-radius: 4pt;
+  break-inside: avoid-page;
+  margin: 8pt 12pt;
+  padding: 4pt 8pt;
+}
+
+code {
+  font-family: "Inconsolata", "BIZ UDGothic", "Noto Sans Mono CJK JP";
+}
+
+ul, ol {
+  margin: 8pt 0 8pt 8pt;
+  padding-left: 2em;
+}
+
+li > ul,
+li > ol {
+  margin: 0;
+}
+
+li > p:first-child {
+  break-after: avoid-page;
+  text-indent: 0;
+}
+
+table {
+  border-collapse: collapse;
+  break-inside: avoid-page;
+  margin: 8pt;
+}
+
+th {
+  background-color: #ddd;
+  border: 1pt solid #666;
+  padding: 2pt;
+  white-space: nowrap;
+}
+
+td {
+  white-space: nowrap;
+}
+
+b {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+  font-weight: normal;
+}
+
+.mermaid {
+  text-align: center;
+}
+
+.mermaid .cluster-label .nodeLabel {
+  font: 10.5pt "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+}
+
+.mermaid .label .nodeLabel {
+  font: 9pt "Noto Serif", "BIZ UDPMincho", "Noto Serif CJK JP";
+}
+
+.mermaid .label .edgeLabel {
+  font: 9pt "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+}
