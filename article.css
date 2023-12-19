@@ -76,6 +76,21 @@ pre {
   padding: 4pt 8pt;
 }
 
+pre.float {
+  break-inside: auto;
+}
+
+pre.newpage {
+  break-before: page;
+  break-inside: auto;
+}
+
+pre.isolated {
+  break-after: page;
+  break-before: page;
+  break-inside: auto;
+}
+
 code {
   font-family: "Inconsolata", "BIZ UDGothic", "Noto Sans Mono CJK JP";
 }

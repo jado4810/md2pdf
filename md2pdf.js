@@ -22,16 +22,34 @@ async function convert(markdown) {
   // Markdownのコードレンダラー
   const renderer = new marked.Renderer();
   renderer.code = (code, lang) => {
-    switch (lang) {
-    case 'mermaid':
-      return '<div class="mermaid">\n' + code + '\n</div>';
-    case '':
-    case null:
-      break;
-    default:
-      code = hljs.highlight(code, {language: lang}).value;
+    if (lang == null) lang = '';
+    let langs = lang.split(/:/);
+    let paging = ''
+    if (langs.length > 0) {
+      switch (langs[0]) {
+      case 'float':
+      case 'newpage':
+      case 'isolated':
+        paging = ` class="${langs.shift()}"`;
+      }
     }
-    return '<pre><code>' + code + '</code></pre>';
+    if (langs.length > 0) {
+      switch (langs[0]) {
+      case 'mermaid':
+        return `<div class="${langs.shift()}">\n` + code + '\n</div>';
+      case '':
+        langs.shift();
+        break;
+      default:
+        try {
+          code = hljs.highlight(code, {language: langs.shift()}).value;
+        } catch (e) {
+          console.error('Error on highlight: ', e);
+        }
+      }
+    }
+    if (langs.length > 0) console.error('Too many mode: ', lang);
+    return `<pre${paging}><code>` + code + '</code></pre>';
   };
 
   // Markdownを解析してHTMLに変換
