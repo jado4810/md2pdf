@@ -8,6 +8,7 @@ h1 {
   font: bold 24pt "Noto Serif", "BIZ UDPGothic", "Noto Sans CJK JP";
   margin: 8pt 0 16pt;
   padding: 0;
+  text-align: center;
 }
 
 h2 {
@@ -51,11 +52,20 @@ p {
 }
 
 blockquote {
-  background-color: #ffd;
+  background-color: #fec;
   border-radius: 4pt;
   break-inside: avoid-page;
   margin: 8pt 12pt;
   padding: 4pt 8pt;
+}
+
+blockquote > h1:first-child,
+blockquote > h2:first-child,
+blockquote > h3:first-child,
+blockquote > h4:first-child,
+blockquote > h5:first-child,
+blockquote > h6:first-child {
+  margin-top: 4px;
 }
 
 pre {
