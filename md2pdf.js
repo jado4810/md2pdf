@@ -16,7 +16,7 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
-async function convert(markdown) {
+async function convert(markdown, title, langspec, colorspec) {
   if (markdown == null) return;
 
   // Markdownのコードレンダラー
@@ -58,15 +58,17 @@ async function convert(markdown) {
   // Markdownを解析してHTMLに変換
   const body = marked(markdown, {renderer: renderer});
 
-  const lines = body.split(/\n/);
-  const tline = lines.find((line) => {
-    return line.match(/<h1>.*<\/h1>/);
-  });
-  const title = tline ?
-      tline.replace(/<h1>(.*?)<\/h1>/, '$1').replaceAll(/<.*?>/g, '') :
-      lines.find((line) => {
-        return line != '';
-      }).replaceAll(/<.*?>/g, '') || '';
+  if (title == null) {
+    const lines = body.split(/\n/);
+    const tline = lines.find((line) => {
+      return line.match(/<h1>.*<\/h1>/);
+    });
+    title = tline ?
+        tline.replace(/<h1>(.*?)<\/h1>/, '$1').replaceAll(/<.*?>/g, '') :
+        lines.find((line) => {
+          return line != '';
+        }).replaceAll(/<.*?>/g, '') || '';
+  }
 
   const head = (title == null || title == '') ?
       '' :
@@ -80,19 +82,28 @@ async function convert(markdown) {
   });
   const page = await browser.newPage();
   await page.setContent(html, {waitUntil: 'networkidle0'});
-  await page.addStyleTag({
-    path: 'article.css'
-  });
-  await page.addStyleTag({
-    path: 'node_modules/highlight.js/styles/github.min.css'
-  });
+  await page.addStyleTag({path: 'style/base.css'});
+  await page.addStyleTag({path: `style/lang/${langspec}.css`});
+  await page.addStyleTag({path: `style/color/${colorspec}.css`});
+  if (colorspec == 'color') {
+    await page.addStyleTag({
+      path: 'node_modules/highlight.js/styles/github.min.css'
+    });
+  }
 
   // Mermaidのレンダリング
   await page.addScriptTag({
     path: 'node_modules/mermaid/dist/mermaid.min.js'
   });
+  let styles = '';
+  switch (colorspec) {
+  case 'grayscale':
+  case 'monochrome':
+    styles = ',theme:"neutral"';
+    break;
+  }
   await page.addScriptTag({
-    content: 'mermaid.initialize({startOnLoad:false})'
+    content: `mermaid.initialize({startOnLoad:false${styles}})`
   });
   const result = await page.evaluateHandle(async () => {
     try {
@@ -137,9 +148,20 @@ async function main() {
       .description('Typeset Markdown to PDF for publishing')
       .version('0.0.1', '-v, --version', 'show version')
       .argument('[infile]')
-      .addOption(new Option('-b, --base <path>').hideHelp());
+      .option('-t, --title <title>', 'title')
+      .addOption(
+          new Option('-l, --lang <lang>', 'language spec').default('latin')
+              .choices(['latin', 'ja'])
+      ).addOption(
+          new Option('-c, --color <color>', 'color spec').default('color')
+              .choices(['color', 'grayscale', 'monochrome'])
+      ).addOption(new Option('-b, --base <path>').hideHelp());
 
   program.parse();
+
+  const title = program.opts().title;
+  const langspec = program.opts().lang;
+  const colorspec = program.opts().color;
 
   if (program.args.length > 1) {
     process.stderr.write('Error: too many input files\n');
@@ -174,7 +196,7 @@ async function main() {
   if (markdown == null || markdown == '') return;
 
   // PDF変換
-  const pdf = await convert(markdown);
+  const pdf = await convert(markdown, title, langspec, colorspec);
 
   // 標準出力に出力
   const stream = new streams.ReadableStream(pdf);

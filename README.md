@@ -9,11 +9,16 @@ Tiny PDF converter for Markdown, assumed for use in exporting documents.
 So the style is built with consciousness of single-column articles in academic journals:
 
 * A4 portrait
-* Header with the document title (Auto extraction from H1 header)
+* Header with the document title (Auto extraction from H1 header available)
 * Footer with the page number
-* Japanese universal-design fonts (Morisawa BIZ UD)
+* For Japanese, with universal-design fonts (Morisawa BIZ UD)
 
-We provide it with those built-in fixed style for now, but considering to be customizable in some days.
+Some styles are customizable:
+
+* Color scheme (color, grayscale, monochrome)
+* Language scheme (Latin, Japanese)
+
+And considering of others to be customizable in some days.
 Of course you can modify the style and rebuild it ;)
 
 It accepts Markdown format like below:
@@ -25,38 +30,72 @@ It accepts Markdown format like below:
 How to Use
 ----------
 
-In any case, you can get output PDF from stdout.
+You can get output PDF from stdout.
 So remind using output redirection to get a result file.
 
 Input file can be omitted or be specified `-`, to read input from stdin.
 
-### Direct-run NodeJS
-
-```console
-$ node md2pdf.js [input] > output
-```
+Considering of preparing environments like font files, we recommend to run as a container.
 
 ### Run as a container
-
-```console
-$ docker run --rm -i -v «dir»:/opt/app/mnt md2pdf:«ver» node md2pdf.js -b /opt/app/mnt [input] > output
-```
-
-* Mount volume on local filesystem and specify `-b` option
-* Input file must be relative from `dir`
 
 Helper script `md2pdf.sh` is available.
 
 ```console
-$ ./md2pdf.sh [input] > output
+$ ./md2pdf.sh [options] [input] > output
 ```
+
+Options are available below:
+
+* `-t «title»`
+    * Specify the document title to be printed on the page header
+    * If omitted, attempt to extract from H1 header
+* `-l «lang»`
+    * Speciry the language scheme, to set some styles: fonts and indentation rules
+    * Available below for now:
+        * `latin` (default) - For most european languages
+        * `ja` - For Japanese, use BIZ UD fonts and paragraph indentation
+* `-c «color»`
+    * Specify the color scheme
+    * Available below for now:
+        * `color` (default)
+        * `grayscale`
+        * `monochrome`
+
+This script calls docker run like below:
+
+```console
+$ docker run --rm -i -v «dir»:/opt/app/mnt md2pdf node md2pdf.js -b /opt/app/mnt «options» «input»
+```
+
+* Extract base directory from input file path (or `$PWD`) and mount volume
+* Pass base directory to be extracted directory (or `$PWD`), so any resources are refered relative from the base directory
+
+### Direct-run NodeJS
+
+Required web browser compatible with "headless mode" and proper fonts to be installed, and you can run it on the local NodeJS environment.
+
+```console
+$ node md2pdf.js [options] [input] > output
+```
+
+You can append `-b` option to specify the base path for resources.
 
 Preparation
 -----------
 
+### Run as a container
+
+There is pretty severe criteria to run puppeteer, a headless browser driver, in the container.
+However we have confirmed to be available on Intel Linux and ARM macOS.
+
+```console
+$ docker build -t md2pdf .
+```
+
 ### Direct-run NodeJS
 
-If you use NodeJS directly, install required libraries first.
+If you want to run NodeJS directly, install required libraries first.
 
 ```console
 $ npm install
@@ -64,15 +103,6 @@ $ npm install
 
 Also needs a web browser installed, which is compatible with "headless mode",
 i.e. Google Chrome, Microsoft Edge.
-
-### Run as a container
-
-Alternatively, you can use it as a docker container.
-It has severe criteria related to headless browser, however we have confirmed to be available on Intel Linux and ARM macOS.
-
-```console
-$ docker build -t md2pdf .
-```
 
 Markdown format
 ---------------

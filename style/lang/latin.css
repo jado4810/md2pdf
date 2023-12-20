@@ -1,0 +1,36 @@
+body {
+  font-family: "Noto Serif";
+}
+
+h1, h2, h3 {
+  font-family: "Noto Serif";
+  font-weight: bold;
+}
+
+h4, h5 {
+  font-family: "Noto Sans";
+  font-weight: bold;
+}
+
+h6 {
+  font-family: "Noto Sans";
+  font-weight: normal;
+}
+
+code {
+  font-family: "Inconsolata";
+}
+
+b {
+  font-family: "Noto Sans";
+  font-weight: normal;
+}
+
+.mermaid .cluster-label .nodeLabel,
+.mermaid .label .edgeLabel {
+  font-family: "Noto Sans";
+}
+
+.mermaid .label .nodeLabel {
+  font-family: "Noto Serif";
+}

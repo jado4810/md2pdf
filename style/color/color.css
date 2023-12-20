@@ -1,0 +1,18 @@
+blockquote {
+  background-color: #fec;
+  border-radius: 4pt;
+}
+
+pre {
+  background-color: #eee;
+  border-radius: 4pt;
+}
+
+th {
+  background-color: #ddd;
+  border-color: #666;
+}
+
+td {
+  border-color: #666;
+}

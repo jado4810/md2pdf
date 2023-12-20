@@ -1,0 +1,114 @@
+body {
+  font-size: 10.5pt;
+  margin: 0;
+}
+
+h1 {
+  break-after: avoid-page;
+  font-size: 24pt;
+  margin: 8pt 0 16pt;
+  padding: 0;
+  text-align: center;
+}
+
+h2 {
+  break-after: avoid-page;
+  font-size: 18pt;
+  margin: 16pt 0 8pt;
+  padding: 0;
+}
+
+h3 {
+  break-after: avoid-page;
+  font-size: 16pt;
+  margin: 12pt 0 8pt;
+  padding: 0;
+}
+
+h4 {
+  break-after: avoid-page;
+  font-size: 14pt;
+  margin: 12pt 0 8pt;
+  padding: 0;
+}
+
+h5, h6 {
+  break-after: avoid-page;
+  font-size: 12pt;
+  margin: 8pt 0;
+  padding: 0;
+}
+
+blockquote, pre {
+  break-inside: avoid-page;
+  margin: 8pt 12pt;
+  padding: 4pt 8pt;
+}
+
+blockquote > h1:first-child,
+blockquote > h2:first-child,
+blockquote > h3:first-child,
+blockquote > h4:first-child,
+blockquote > h5:first-child,
+blockquote > h6:first-child {
+  margin-top: 4px;
+}
+
+pre.float {
+  break-inside: auto;
+}
+
+pre.newpage {
+  break-before: page;
+  break-inside: auto;
+}
+
+pre.isolated {
+  break-after: page;
+  break-before: page;
+  break-inside: auto;
+}
+
+ul, ol {
+  margin: 8pt 0 8pt 8pt;
+  padding-left: 2em;
+}
+
+li > ul,
+li > ol {
+  margin: 0;
+}
+
+li > p:first-child {
+  break-after: avoid-page;
+  text-indent: 0;
+}
+
+table {
+  border-collapse: collapse;
+  break-inside: avoid-page;
+  margin: 8pt;
+}
+
+th, td {
+  border-style: solid;
+  border-width: 1px;
+  padding: 2pt;
+}
+
+p {
+  margin: 4pt 0;
+}
+
+.mermaid {
+  text-align: center;
+}
+
+.mermaid .cluster-label .nodeLabel {
+  font-size: 10.5pt;
+}
+
+.mermaid .label .nodeLabel,
+.mermaid .label .edgeLabel {
+  font-size: 9pt;
+}

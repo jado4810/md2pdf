@@ -1,0 +1,37 @@
+blockquote {
+  border: 1px solid #000;
+  border-radius: 4pt;
+}
+
+pre {
+  border: 1px solid #000;
+}
+
+th, td {
+  border-color: #000;
+}
+
+a {
+  color: #000;
+}
+
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon,
+.mermaid .node path,
+.mermaid .edgeLabels rect,
+.mermaid .cluster rect {
+  fill: #fff !important;
+  stroke: #000 !important;
+}
+
+.mermaid .edgePaths path {
+  fill: none !important;
+  stroke: #000 !important;
+}
+
+.mermaid .marker {
+  fill: #000 !important;
+  stroke: #000 !important;
+}
