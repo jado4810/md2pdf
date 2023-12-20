@@ -41,14 +41,17 @@ async function convert(markdown) {
         langs.shift();
         break;
       default:
+        const hl = langs.shift();
         try {
-          code = hljs.highlight(code, {language: langs.shift()}).value;
+          code = hljs.highlight(code, {language: hl}).value;
         } catch (e) {
-          console.error('Error on highlight: ', e);
+          process.stderr.write('Error on highlight\n');
         }
       }
     }
-    if (langs.length > 0) console.error('Too many mode: ', lang);
+    if (langs.length > 0) {
+      process.stderr.write(`Too many modes on highlight: ${lang}\n`);
+    }
     return `<pre${paging}><code>` + code + '</code></pre>';
   };
 
@@ -91,12 +94,16 @@ async function convert(markdown) {
   await page.addScriptTag({
     content: 'mermaid.initialize({startOnLoad:false})'
   });
-  try {
-    await page.evaluateHandle(async () => {
+  const result = await page.evaluateHandle(async () => {
+    try {
       await window.mermaid.run({querySelector: '.mermaid'});
-    });
-  } catch (e) {
-    console.error('Error on mermaid: ', e);
+      return null;
+    } catch (e) {
+      return e.message;
+    }
+  });
+  if (result.remoteObject().value) {
+    process.stderr.write(`Error on mermaid: ${result.remoteObject().value}\n`);
   }
 
   // PDF出力
@@ -135,7 +142,7 @@ async function main() {
   program.parse();
 
   if (program.args.length > 1) {
-    process.stderr.write('error: too many input files\n');
+    process.stderr.write('Error: too many input files\n');
     return;
   }
   const base = program.opts().base || process.cwd();
@@ -159,7 +166,7 @@ async function main() {
         })();
       }
     } catch (e) {
-      console.error('Read error: ', e);
+      process.stderr.write(`Read error: ${e.message.replace(/^.*?: */, '')}\n`);
       return;
     }
   })();
@@ -174,7 +181,7 @@ async function main() {
   try {
     await pipeline(stream, process.stdout);
   } catch (e) {
-    console.error('Write error: ', e);
+    process.stderr.write(`Write error: ${e.message.replace(/^.*?: */, '')}\n`);
   }
 }
 

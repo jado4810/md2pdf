@@ -76,7 +76,7 @@ parse "$@"
 eval "set -- $REST"
 
 if [ $# -gt 1 ]; then
-    echo >&2 'error: too many input files'
+    echo >&2 'Error: too many input files'
     exit 1
 elif [ $# -eq 1 -a "$1" = '-' -o $# -eq 0 ]; then
     DIRNAME=$PWD
