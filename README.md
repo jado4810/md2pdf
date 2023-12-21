@@ -117,16 +117,16 @@ Code blocks with the language specifier of "mermaid" will be rendered by [mermai
 
 For example, code block below:
 
-```
-`​`​`mermaid
+````
+```mermaid
 flowchart LR
   A[Start]-->B{Check}
-  B-->|Yes| C
-  B-->|No| D
   C[Okay]
   D[NG]
-`​`​`
+  B-->|Yes| C
+  B-->|No| D
 ```
+````
 
 will be rendered as:
 
@@ -143,8 +143,8 @@ flowchart LR
 
 Language specifier following code block openers are passed to [highlight.js](https://highlightjs.org/)
 
-```
-`​`​`javascript
+````
+```javascript
 function highlight(code, lang) {
   try {
     code = hljs.highlight(code, {language: lang}).value;
@@ -153,8 +153,8 @@ function highlight(code, lang) {
   }
   return code;
 }
-`​`​`
 ```
+````
 
 will be:
 
