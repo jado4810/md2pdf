@@ -1,6 +1,7 @@
 .git
 .dockerignore
 .gitignore
+getoptions
 md2pdf.sh
 *.pdf
 *.N
