@@ -100,6 +100,12 @@ p {
   margin: 4pt 0;
 }
 
+kbd {
+  padding: 0 4pt;
+  border-radius: 4pt;
+  margin: 0 2pt;
+}
+
 .mermaid {
   text-align: center;
 }

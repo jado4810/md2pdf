@@ -16,3 +16,8 @@ th {
 td {
   border-color: #666;
 }
+
+kbd {
+  background-color: #444;
+  color: #fff;
+}

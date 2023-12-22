@@ -20,3 +20,9 @@ td {
 a {
   color: #000;
 }
+
+kbd {
+  background-color: #ddd;
+  border: 1px solid #666;
+  color: #000;
+}

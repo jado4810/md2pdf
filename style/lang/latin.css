@@ -21,9 +21,13 @@ code {
   font-family: "Inconsolata";
 }
 
-b {
+b, strong {
   font-family: "Noto Sans";
   font-weight: normal;
+}
+
+kbd {
+  font-family: "Noto Sans";
 }
 
 .mermaid .cluster-label .nodeLabel,

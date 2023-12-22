@@ -25,9 +25,13 @@ p {
   text-indent: 1em;
 }
 
-b {
+b, strong {
   font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
   font-weight: normal;
+}
+
+kbd {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
 }
 
 .mermaid .cluster-label .nodeLabel,
