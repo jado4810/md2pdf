@@ -123,10 +123,12 @@ For example, titled image below:
 
 will be rendered as:
 
-<figure>
-<div style="background-color:#dfd;color:#0a0;font:bold 24pt sans-serif;display:inline-flex;align-items:center;justify-content:center;width:240pt;height:135pt">Just a Sample!</div>
-<figcaption>fig1. Sample image</figcaption>
-</figure>
+```mermaid
+flowchart TD
+  A[This is
+    just a SAMPLE!]
+```
+<div align="center">fig1. Sample image</div>
 
 ### Mermaid
 
