@@ -125,8 +125,9 @@ will be rendered as:
 
 ```mermaid
 flowchart TD
-  A[This is
-    just a SAMPLE!]
+  subgraph image.png
+    A(Just a SAMPLE!)
+  end
 ```
 <div align="center">fig1. Sample image</div>
 
