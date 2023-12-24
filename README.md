@@ -111,6 +111,23 @@ Markdown documents will be rendered by [marked](https://marked.js.org/).
 
 In addition, we provide the following extensions.
 
+### Figure with caption
+
+Images with title will be rendered as `figure` elements with `figurecaption` holding those titles.
+
+For example, titled image below:
+
+```
+![fig](image.png "fig1. Sample image")
+```
+
+will be rendered as:
+
+<figure>
+<div style="background-color:#dfd;color:#0a0;font:bold 24pt sans-serif;display:inline-flex;align-items:center;justify-content:center;width:240pt;height:135pt">Just a Sample!</div>
+<figcaption>fig1. Sample image</figcaption>
+</figure>
+
 ### Mermaid
 
 Code blocks with the language specifier of "mermaid" will be rendered by [mermaidjs](https://mermaid.js.org/).

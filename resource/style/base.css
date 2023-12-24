@@ -81,7 +81,6 @@ li > ol {
 
 li > p:first-child {
   break-after: avoid-page;
-  text-indent: 0;
 }
 
 table {
@@ -104,6 +103,20 @@ kbd {
   padding: 0 4pt;
   border-radius: 4pt;
   margin: 0 2pt;
+}
+
+figure {
+  margin: 8pt 12pt;
+  text-align: center;
+}
+
+figcaption {
+  font-size: 9pt;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 .mermaid {

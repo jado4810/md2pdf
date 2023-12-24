@@ -16,11 +16,24 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
-async function convert(markdown, title, langspec, colorspec) {
+async function convert(markdown, title, langspec, colorspec, base) {
   if (markdown == null) return;
 
-  // Markdownのコードレンダラー
+  // Markdownのレンダラー
   const renderer = new marked.Renderer();
+
+  renderer.image = (href, imgtitle, alttext) => {
+    let uri = (href.match(/^https?:\/\//)) ? href : path.resolve(base, href);
+    let alt = alttext ? ` alt="${alttext}"` : '';
+    let img = `<img src="${uri}"${alt}>\n`
+    if (imgtitle) {
+      let caption = `<figurecaption>${imgtitle}</figurecaption>\n`;
+      return `<figure>\n${img}${caption}</figure>\n`;
+    } else {
+      return img;
+    }
+  };
+
   renderer.code = (code, lang) => {
     if (lang == null) lang = '';
     let langs = lang.split(/:/);
@@ -78,13 +91,20 @@ async function convert(markdown, title, langspec, colorspec) {
   // PuppeteerでHTMLをレンダリング
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--allow-file-access-from-files',
+      '--enable-local-file-access'
+    ]
   });
   const page = await browser.newPage();
-  await page.setContent(html, {waitUntil: 'networkidle0'});
-  await page.addStyleTag({path: 'style/base.css'});
-  await page.addStyleTag({path: `style/lang/${langspec}.css`});
-  await page.addStyleTag({path: `style/color/${colorspec}.css`});
+  const uri = `file://${path.resolve(process.cwd(), './resource/fake.html')}`;
+  await page.goto(uri);
+  await page.setContent(html);
+  await page.addStyleTag({path: './resource/style/base.css'});
+  await page.addStyleTag({path: `./resource/style/lang/${langspec}.css`});
+  await page.addStyleTag({path: `./resource/style/color/${colorspec}.css`});
   if (colorspec == 'color') {
     await page.addStyleTag({
       path: 'node_modules/highlight.js/styles/github.min.css'
@@ -196,7 +216,7 @@ async function main() {
   if (markdown == null || markdown == '') return;
 
   // PDF変換
-  const pdf = await convert(markdown, title, langspec, colorspec);
+  const pdf = await convert(markdown, title, langspec, colorspec, base);
 
   // 標準出力に出力
   const stream = new streams.ReadableStream(pdf);

@@ -22,6 +22,6 @@ RUN npm init -y \
  && chown -R user:user /opt/app
 
 COPY LICENSE.txt README.md md2pdf.js .
-COPY style style/
+COPY resource resource/
 
 USER user

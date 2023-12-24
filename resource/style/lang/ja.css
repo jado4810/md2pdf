@@ -17,6 +17,10 @@ h6 {
   font-weight: normal;
 }
 
+li > p:first-child {
+  text-indent: 0;
+}
+
 code {
   font-family: "Inconsolata", "BIZ UDGothic", "Noto Sans Mono CJK JP";
 }
