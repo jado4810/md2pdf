@@ -50,6 +50,9 @@ Options are available below:
 * `-t «title»`
     * Specify the document title to be printed on the page header
     * If omitted, attempt to extract from H1 header
+* `-r «ratio»`
+    * Specify the img magnify ratio in percentage
+    * Recommended smaller (< 100) value on screenshots from zoomed screen to get clear images in PDF
 * `-l «lang»`
     * Speciry the language scheme, to set some styles: fonts and indentation rules
     * Available below for now:
@@ -130,6 +133,8 @@ flowchart TD
   end
 ```
 <div align="center">fig1. Sample image</div>
+
+Also consider specifying the `-r` options.
 
 ### Mermaid
 

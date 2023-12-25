@@ -100,23 +100,26 @@ p {
 }
 
 kbd {
-  padding: 0 4pt;
   border-radius: 4pt;
   margin: 0 2pt;
+  padding: 0 4pt;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
 }
 
 figure {
+  align-items: center;
+  break-inside: avoid-page;
+  display: flex;
+  flex-direction: column;
   margin: 8pt 12pt;
-  text-align: center;
 }
 
 figcaption {
   font-size: 9pt;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
 }
 
 .mermaid {

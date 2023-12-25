@@ -2,7 +2,7 @@
 
 'use strict';
 
-import { Command, Option } from 'commander';
+import { Command, Option, InvalidArgumentError } from 'commander';
 
 import path from 'path';
 import { promisify } from 'util';
@@ -16,7 +16,7 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
-async function convert(markdown, title, langspec, colorspec, base) {
+async function convert(markdown, title, ratio, langspec, colorspec, base) {
   if (markdown == null) return;
 
   // Markdownのレンダラー
@@ -25,7 +25,7 @@ async function convert(markdown, title, langspec, colorspec, base) {
   renderer.image = (href, imgtitle, alttext) => {
     let uri = (href.match(/^https?:\/\//)) ? href : path.resolve(base, href);
     let alt = alttext ? ` alt="${alttext}"` : '';
-    let img = `<img src="${uri}"${alt}>\n`
+    let img = `<img class="md-img" src="${uri}"${alt}>\n`
     if (imgtitle) {
       let caption = `<figurecaption>${imgtitle}</figurecaption>\n`;
       return `<figure>\n${img}${caption}</figure>\n`;
@@ -111,6 +111,17 @@ async function convert(markdown, title, langspec, colorspec, base) {
     });
   }
 
+  // 画像サイズの調整
+  await page.addScriptTag({
+    content: `const ratio = ${ratio} / 100;`
+  });
+  await page.evaluate(async () => {
+    let imgs = document.getElementsByClassName('md-img');
+    Array.prototype.forEach.call(imgs, (img) => {
+      img.style.width = `${Math.ceil(img.naturalWidth * ratio)}px`;
+    });
+  });
+
   // Mermaidのレンダリング
   await page.addScriptTag({
     path: 'node_modules/mermaid/dist/mermaid.min.js'
@@ -169,7 +180,11 @@ async function main() {
       .version('0.0.1', '-v, --version', 'show version')
       .argument('[infile]')
       .option('-t, --title <title>', 'title')
-      .addOption(
+      .option('-r, --ratio <ratio>', 'image ratio in percent', (val) => {
+        val = parseInt(val);
+        if (isNaN(val)) throw new InvalidArgumentError("must be an integer");
+        return val;
+      }, 100).addOption(
           new Option('-l, --lang <lang>', 'language spec').default('latin')
               .choices(['latin', 'ja'])
       ).addOption(
@@ -178,18 +193,21 @@ async function main() {
       ).addOption(new Option('-b, --base <path>').hideHelp());
 
   program.parse();
+  const args = program.args;
+  const opts = program.opts();
 
-  const title = program.opts().title;
-  const langspec = program.opts().lang;
-  const colorspec = program.opts().color;
+  const title = opts.title;
+  const ratio = opts.ratio;
+  const langspec = opts.lang;
+  const colorspec = opts.color;
 
-  if (program.args.length > 1) {
+  if (args.length > 1) {
     process.stderr.write('Error: too many input files\n');
     return;
   }
-  const base = program.opts().base || process.cwd();
-  const infile = (program.args.length < 1 || program.args[0] == '-') ?
-      null : path.resolve(base, program.args[0]);
+  const base = opts.base || process.cwd();
+  const infile = (args.length < 1 || args[0] == '-') ?
+      null : path.resolve(base, args[0]);
 
   // 入力データ取得
   const markdown = await (async () => {
@@ -216,7 +234,7 @@ async function main() {
   if (markdown == null || markdown == '') return;
 
   // PDF変換
-  const pdf = await convert(markdown, title, langspec, colorspec, base);
+  const pdf = await convert(markdown, title, ratio, langspec, colorspec, base);
 
   // 標準出力に出力
   const stream = new streams.ReadableStream(pdf);
