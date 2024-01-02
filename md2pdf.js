@@ -25,7 +25,7 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
   renderer.image = (href, imgtitle, alttext) => {
     let uri = (href.match(/^https?:\/\//)) ? href : path.resolve(base, href);
     let alt = alttext ? ` alt="${alttext}"` : '';
-    let img = `<img class="md-img" src="${uri}"${alt}>\n`
+    let img = `<img class="md-img" src="${uri}"${alt}>\n`;
     if (imgtitle) {
       let caption = `<figurecaption>${imgtitle}</figurecaption>\n`;
       return `<figure>\n${img}${caption}</figure>\n`;
@@ -37,7 +37,7 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
   renderer.code = (code, lang) => {
     if (lang == null) lang = '';
     let langs = lang.split(/:/);
-    let paging = ''
+    let paging = '';
     if (langs.length > 0) {
       switch (langs[0]) {
       case 'float':
@@ -76,11 +76,12 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
     const tline = lines.find((line) => {
       return line.match(/<h1>.*<\/h1>/);
     });
-    title = tline ?
-        tline.replace(/<h1>(.*?)<\/h1>/, '$1').replaceAll(/<.*?>/g, '') :
-        lines.find((line) => {
-          return line != '';
-        }).replaceAll(/<.*?>/g, '') || '';
+    if (tline) {
+      title = tline.replace(/<h1>(.*?)<\/h1>/, '$1');
+    } else {
+      title = lines.find((line) => {return line != ''}) || '';
+    }
+    title = title.replaceAll(/<.*?>/g, '');
   }
 
   const head = (title == null || title == '') ?
