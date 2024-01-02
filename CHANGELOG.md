@@ -1,5 +1,7 @@
 # md2pdf - Changelog
 
+## Version 0.0.2 (2024-1-2)
+
 * Support figure caption; image titles are rendered as captions
 * Introduce -r option to make images with high-dpi clear on PDF
 
