@@ -92,7 +92,8 @@ table {
 th, td {
   border-style: solid;
   border-width: 1px;
-  padding: 2pt;
+  font-size: 10.5pt;
+  padding: 0 2pt;
 }
 
 p {

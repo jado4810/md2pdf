@@ -21,6 +21,15 @@ li > p:first-child {
   text-indent: 0;
 }
 
+th {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+  font-weight: normal;
+}
+
+td {
+  font-family: "Noto Serif", "BIZ UDPMincho", "Noto Serif CJK JP";
+}
+
 code {
   font-family: "Inconsolata", "BIZ UDGothic", "Noto Sans Mono CJK JP";
 }

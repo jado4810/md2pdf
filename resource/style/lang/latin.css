@@ -17,6 +17,15 @@ h6 {
   font-weight: normal;
 }
 
+th {
+  font-family: "Noto Sans";
+  font-weight: normal;
+}
+
+td {
+  font-family: "Noto Serif";
+}
+
 code {
   font-family: "Inconsolata";
 }
