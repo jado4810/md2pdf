@@ -17,6 +17,14 @@ h6 {
   font-weight: normal;
 }
 
+.filename {
+  font-family: "Noto Sans";
+}
+
+code {
+  font-family: "Inconsolata";
+}
+
 th {
   font-family: "Noto Sans";
   font-weight: normal;
@@ -24,10 +32,6 @@ th {
 
 td {
   font-family: "Noto Serif";
-}
-
-code {
-  font-family: "Inconsolata";
 }
 
 b, strong {

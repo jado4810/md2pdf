@@ -22,50 +22,81 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
   // Markdownのレンダラー
   const renderer = new marked.Renderer();
 
-  renderer.image = (href, imgtitle, alttext) => {
-    let uri = (href.match(/^https?:\/\//)) ? href : path.resolve(base, href);
-    let alt = alttext ? ` alt="${alttext}"` : '';
-    let img = `<img class="md-img" src="${uri}"${alt}>\n`;
-    if (imgtitle) {
-      let caption = `<figurecaption>${imgtitle}</figurecaption>\n`;
+  renderer.image = (href, title, alttext) => {
+    const uri = (href.match(/^https?:\/\//)) ? href : path.resolve(base, href);
+    const alt = alttext ? ` alt="${alttext}"` : '';
+    const img = `<img class="md-img" src="${uri}"${alt}>\n`;
+    if (title) {
+      const caption = `<figurecaption>${title}</figurecaption>\n`;
       return `<figure>\n${img}${caption}</figure>\n`;
     } else {
       return img;
     }
   };
 
-  renderer.code = (code, lang) => {
-    if (lang == null) lang = '';
-    let langs = lang.split(/:/);
-    let paging = '';
-    if (langs.length > 0) {
-      switch (langs[0]) {
-      case 'float':
-      case 'newpage':
-      case 'isolated':
-        paging = ` class="${langs.shift()}"`;
-      }
-    }
-    if (langs.length > 0) {
-      switch (langs[0]) {
-      case 'mermaid':
-        return `<div class="${langs.shift()}">\n` + code + '\n</div>';
-      case '':
-        langs.shift();
-        break;
-      default:
-        const hl = langs.shift();
+  renderer.code = (code, info) => {
+    if (info == null) info = '';
+
+    let classes = [];
+    let m;
+
+    m = info.match(/^([^:\s]*):?(.*)$/);
+    const lang = m && m[1] || '';
+    info = m && m[2] || '';
+
+    m = info.match(/^(\S*)(.*)?$/);
+    const filename = m && m[1] || '';
+    info = m && m[2] || '';
+    const file = filename ? `<code class="filename">${filename}</code>` : '';
+
+    let otags = [];
+    let ctag;
+    if (lang == 'mermaid') {
+      classes.push('mermaid');
+      otags.push('<div');
+      otags.push('>\n');
+      ctag = '\n</div>\n';
+    } else {
+      otags.push('<pre');
+      otags.push(`>${file}<code>`);
+      ctag = '</code></pre>\n';
+      if (lang != '') {
         try {
-          code = hljs.highlight(code, {language: hl}).value;
+          code = hljs.highlight(code, {language: lang}).value;
         } catch (e) {
           process.stderr.write('Error on highlight\n');
         }
       }
     }
-    if (langs.length > 0) {
-      process.stderr.write(`Too many modes on highlight: ${lang}\n`);
+
+    m = info.match(/\[([^\]]+)\]/);
+    const paging = m && m[1] || '';
+
+    switch (paging) {
+    case '':
+      break;
+    case 'float':
+    case 'newpage':
+    case 'isolated':
+      classes.push(paging);
+    default:
+      process.stderr.write(`Unknown paging option: ${paging}\n`);
     }
-    return `<pre${paging}><code>` + code + '</code></pre>';
+
+    if (classes.length > 0) {
+      otags.splice(1, 0, ` class="${classes.join(' ')}"`);
+    }
+    const base = otags.join('') + code + ctag;
+
+    m = info.match(/"([^\"]+)"/);
+    const title = m && m[1] || '';
+
+    if (title) {
+      const caption = `<figurecaption>${title}</figurecaption>\n`;
+      return `<figure>\n${base}${caption}</figure>\n`;
+    } else {
+      return base;
+    }
   };
 
   // Markdownを解析してHTMLに変換

@@ -8,6 +8,10 @@ pre {
   border-radius: 4pt;
 }
 
+.filename {
+  background-color: #ddd;
+}
+
 th {
   background-color: #ddd;
   border-color: #666;

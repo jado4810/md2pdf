@@ -54,6 +54,10 @@ blockquote > h6:first-child {
   margin-top: 4px;
 }
 
+pre {
+  position: relative;
+}
+
 pre.float {
   break-inside: auto;
 }
@@ -67,6 +71,22 @@ pre.isolated {
   break-after: page;
   break-before: page;
   break-inside: auto;
+}
+
+.filename {
+  border-radius: 0 0 4pt 4pt;
+  display: block;
+  font-size: 9pt;
+  left: 8pt;
+  line-height: 14pt;
+  padding: 0 4pt;
+  position: absolute;
+  top: 0;
+}
+
+.filename + * {
+  display: block;
+  margin-top: 14pt;
 }
 
 ul, ol {
@@ -112,15 +132,15 @@ img {
 }
 
 figure {
-  align-items: center;
-  break-inside: avoid-page;
-  display: flex;
-  flex-direction: column;
+  text-align: center;
   margin: 8pt 12pt;
 }
 
 figcaption {
+  break-before: avoid-page;
+  display: block;
   font-size: 9pt;
+  text-align: center;
 }
 
 .mermaid {

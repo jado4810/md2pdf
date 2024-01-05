@@ -7,6 +7,11 @@ pre {
   border: 1px solid #000;
 }
 
+.filename {
+  border: 1px solid #000;
+  border-top: none;
+}
+
 th, td {
   border-color: #000;
 }
