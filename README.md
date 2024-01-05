@@ -121,18 +121,14 @@ Images with title will be rendered as `figure` elements with `figurecaption` hol
 For example, titled image below:
 
 ```
-![fig](image.png "fig1. Sample image")
+![fig](image.png "Fig1. Sample image")
 ```
 
 will be rendered as:
 
-```mermaid
-flowchart TD
-  subgraph image.png
-    A(Just a SAMPLE!)
-  end
-```
-<div align="center">fig1. Sample image</div>
+<div style="text-align:center">
+<img src="./doc-images/fig1.png" style="width:114px;height:auto">
+</div>
 
 Also consider specifying the `-r` options.
 
@@ -155,21 +151,17 @@ flowchart LR
 
 will be rendered as:
 
-```mermaid
-flowchart LR
-  A[Start]-->B{Check}
-  C[Okay]
-  D[NG]
-  B-->|Yes| C
-  B-->|No| D
-```
+<div style="text-align:center">
+<img src="./doc-images/fig2.png" style="width:294px;height:auto">
+</div>
 
 ### Code highlight
 
-Language specifier following code block openers are passed to [highlight.js](https://highlightjs.org/)
+Language specifier following code block openers are passed to [highlight.js](https://highlightjs.org/).
+And additional filenames separated by colon are also available.
 
 ````
-```javascript
+```javascript:sample.js
 function highlight(code, lang) {
   try {
     code = hljs.highlight(code, {language: lang}).value;
@@ -183,7 +175,20 @@ function highlight(code, lang) {
 
 will be:
 
-```javascript
+<div style="text-align:center">
+<img src="./doc-images/fig3.png" style="width:862px;height:auto">
+</div>
+
+### Caption for code block (and mermaid)
+
+Language specifiers can be followed by captions enclosed in double quotations.
+
+Note that spaces are required after code block openers and language specifiers to avoid confusing common markdown parsers.
+
+Captions are available also on Mermaid blocks.
+
+````
+```javascript:sample.js "List 1. highlight sample"
 function highlight(code, lang) {
   try {
     code = hljs.highlight(code, {language: lang}).value;
@@ -193,12 +198,19 @@ function highlight(code, lang) {
   return code;
 }
 ```
+````
+
+will be:
+
+<div style="text-align:center">
+<img src="./doc-images/fig4.png" style="width:862px;height:auto">
+</div>
 
 ### Paging control
 
-Language specifier can be prefixed by paging control keyword.
+Language specifiers can be followed by paging control specifications enclosed in brackets.
 
-To specify both paging control and language, separate them with '`:`'.
+Note that spaces are required after code block openers and language specifiers to avoid confusing common markdown parsers.
 
 The following controls are available:
 
@@ -211,3 +223,21 @@ The following controls are available:
   Makes sure break page just before this code block.
 * `isolated`
   In addition to `newpage`, also breaks page just after this code block.
+
+For example, the list below will be rendered in separate page.
+
+```javascript:long.js [isolated]
+function long_proc(list) {
+  var a = 1;
+  var b = 2;
+
+  return list.forEach(function(elem) {
+    elem.someProcs(a);
+    elem.someProcs(b);
+    // other long procs...
+    // :
+    // :
+    // :
+  });
+}
+```
