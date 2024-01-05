@@ -27,7 +27,7 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
     const alt = alttext ? ` alt="${alttext}"` : '';
     const img = `<img class="md-img" src="${uri}"${alt}>\n`;
     if (title) {
-      const caption = `<figurecaption>${title}</figurecaption>\n`;
+      const caption = `<figcaption>${title}</figcaption>\n`;
       return `<figure>\n${img}${caption}</figure>\n`;
     } else {
       return img;
@@ -93,7 +93,7 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
     const title = m && m[1] || '';
 
     if (title) {
-      const caption = `<figurecaption>${title}</figurecaption>\n`;
+      const caption = `<figcaption>${title}</figcaption>\n`;
       return `<figure>\n${base}${caption}</figure>\n`;
     } else {
       return base;

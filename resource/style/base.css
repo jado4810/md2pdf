@@ -45,6 +45,10 @@ blockquote, pre {
   padding: 4pt 8pt;
 }
 
+figure > pre {
+  margin: 0;
+}
+
 blockquote > h1:first-child,
 blockquote > h2:first-child,
 blockquote > h3:first-child,
@@ -132,15 +136,23 @@ img {
 }
 
 figure {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
   margin: 8pt 12pt;
 }
 
+figure:has(> img) {
+  align-items: center;
+}
+
+figure:has(> pre), figure:has(> .mermaid) {
+  align-items: stretch;
+}
+
 figcaption {
+  align-self: center;
   break-before: avoid-page;
-  display: block;
   font-size: 9pt;
-  text-align: center;
 }
 
 .mermaid {
