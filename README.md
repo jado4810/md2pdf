@@ -126,9 +126,9 @@ For example, titled image below:
 
 will be rendered as:
 
-<div style="text-align:center">
+<p align="center">
 <img src="./doc-images/fig1.png" style="width:114px;height:auto">
-</div>
+</p>
 
 Also consider specifying the `-r` options.
 
@@ -151,9 +151,9 @@ flowchart LR
 
 will be rendered as:
 
-<div style="text-align:center">
+<p align="center">
 <img src="./doc-images/fig2.png" style="width:294px;height:auto">
-</div>
+</p>
 
 ### Code highlight
 
@@ -175,9 +175,9 @@ function highlight(code, lang) {
 
 will be:
 
-<div style="text-align:center">
+<p align="center">
 <img src="./doc-images/fig3.png" style="width:862px;height:auto">
-</div>
+</p>
 
 ### Caption for code block (and mermaid)
 
@@ -202,9 +202,9 @@ function highlight(code, lang) {
 
 will be:
 
-<div style="text-align:center">
+<p align="center">
 <img src="./doc-images/fig4.png" style="width:862px;height:auto">
-</div>
+</p>
 
 ### Paging control
 
