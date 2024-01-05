@@ -40,11 +40,11 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
     let classes = [];
     let m;
 
-    m = info.match(/^([^:\s]*):?(.*)$/);
+    m = info.match(/^([^\[\"\s:]*):?(.*)$/);
     const lang = m && m[1] || '';
     info = m && m[2] || '';
 
-    m = info.match(/^(\S*)(.*)?$/);
+    m = info.match(/^([^\[\"\s]*)(.*)?$/);
     const filename = m && m[1] || '';
     info = m && m[2] || '';
     const file = filename ? `<code class="filename">${filename}</code>` : '';
