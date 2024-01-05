@@ -79,6 +79,7 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
     case 'newpage':
     case 'isolated':
       classes.push(paging);
+      break;
     default:
       process.stderr.write(`Unknown paging option: ${paging}\n`);
     }
