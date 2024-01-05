@@ -185,7 +185,7 @@ Language specifiers can be followed by captions enclosed in double quotations.
 
 Note that spaces are required after code block openers and language specifiers to avoid confusing common markdown parsers.
 
-Captions are available also on Mermaid blocks.
+Captions are available also on mermaid blocks.
 
 ````
 ```javascript:sample.js "List 1. highlight sample"
