@@ -226,6 +226,7 @@ The following controls are available:
 
 For example, the list below will be rendered in separate page.
 
+````
 ```javascript:long.js [isolated]
 function long_proc(list) {
   var a = 1;
@@ -241,3 +242,4 @@ function long_proc(list) {
   });
 }
 ```
+````
