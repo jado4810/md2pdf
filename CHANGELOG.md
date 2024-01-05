@@ -1,6 +1,6 @@
 # md2pdf - Changelog
 
-## Version 0.0.3
+## Version 0.0.3 (2024-1-5)
 
 * Support filenames
 * Support caption also on code blocks
