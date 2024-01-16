@@ -134,7 +134,7 @@ Also consider specifying the `-r` options.
 
 ### Mermaid
 
-Code blocks with the language specifier of "mermaid" will be rendered by [mermaidjs](https://mermaid.js.org/).
+Code blocks with the language specifiers of "mermaid" will be rendered by [mermaidjs](https://mermaid.js.org/).
 
 For example, code block below:
 
@@ -157,7 +157,7 @@ will be rendered as:
 
 ### Code highlight
 
-Language specifier following code block openers are passed to [highlight.js](https://highlightjs.org/).
+Language specifiers following code block openers are passed to [highlight.js](https://highlightjs.org/).
 And additional filenames separated by colon are also available.
 
 ````
@@ -243,3 +243,12 @@ function long_proc(list) {
 }
 ```
 ````
+
+Copyright and License
+---------------------
+
+Copyright (c)2023-2024 Shun-ichi TAHARA <jado@flowernet.jp>
+
+Provided under MIT License, with the exception of getoptions directory,
+which is appropriated from ko1nksm's work provided under CC0 at
+https://github.com/ko1nksm/getoptions .
