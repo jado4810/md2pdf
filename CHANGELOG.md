@@ -1,5 +1,10 @@
 # md2pdf - Changelog
 
+## Version 0.0.4 (2024-1-16)
+
+* Fix parsing of code blocks specifiers
+    * Now captions or paging controls work without language specifiers
+
 ## Version 0.0.3 (2024-1-5)
 
 * Support filenames
