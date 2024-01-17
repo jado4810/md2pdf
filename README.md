@@ -247,8 +247,6 @@ function long_proc(list) {
 Copyright and License
 ---------------------
 
-Copyright (c)2023-2024 Shun-ichi TAHARA <jado@flowernet.jp>
+Copyright (c)2023-2024 Shun-ichi TAHARA &lt;jado@flowernet.jp&gt;
 
-Provided under MIT License, with the exception of getoptions directory,
-which is appropriated from ko1nksm's work provided under CC0 at
-https://github.com/ko1nksm/getoptions .
+Provided under MIT license, with the exception of third-party/getoptions directory, which is appropriated from [ko1nksm/getoptions](https://github.com/ko1nksm/getoptions) of CC0 license.
