@@ -104,8 +104,7 @@ If you want to run NodeJS directly, install required libraries first.
 $ npm install
 ```
 
-Also needs a web browser installed, which is compatible with "headless mode",
-i.e. Google Chrome, Microsoft Edge.
+Also needs a web browser installed, which is compatible with "headless mode", i.e. Google Chrome, Microsoft Edge.
 
 Markdown format
 ---------------
@@ -215,14 +214,17 @@ Note that spaces are required after code block openers and language specifiers t
 The following controls are available:
 
 * `flow`
-  Allows this code block paging inside the block;
-  pagings are avoided inside it as a default,
-  so breaks page before long code block.
-  But `flow`ed blocks will not break pages before it.
+
+    Allows this code block paging inside the block; pagings are avoided inside it as a default, so breaks page before long code block.
+    But `flow`ed blocks will not break pages before it.
+
 * `newpage`
-  Makes sure break page just before this code block.
+
+    Makes sure break page just before this code block.
+
 * `isolated`
-  In addition to `newpage`, also breaks page just after this code block.
+
+    In addition to `newpage`, also breaks page just after this code block.
 
 For example, the list below will be rendered in separate page.
 
