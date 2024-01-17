@@ -1,7 +1,8 @@
 .git
 .dockerignore
 .gitignore
-getoptions
+src
+third-party
 md2pdf.sh
 *.pdf
 *.N
