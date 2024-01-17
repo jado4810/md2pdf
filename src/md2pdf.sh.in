@@ -1,0 +1,29 @@
+#!/bin/sh
+
+VERSION=0.0.1
+TAGNAME=
+
+#%%%INSERT_HERE%%%
+
+parse "$@"
+eval "set -- $REST"
+
+if [ $# -gt 1 ]; then
+  echo >&2 'Error: too many input files'
+  exit 1
+elif [ $# -eq 1 -a "$1" = '-' -o $# -eq 0 ]; then
+  DIRNAME=$PWD
+  INFILE=
+else
+  DIRNAME=$(cd `dirname "$1"` 2>/dev/null; echo $PWD)
+  INFILE=$(basename "$1")
+fi
+
+OPTS=(${TITLE:+-t "$TITLE"} ${RATIO:+-r "$RATIO"})
+OPTS+=(${LANG:+-l "$LANG"} ${COLOR:+-c "$COLOR"})
+OPTS+=(-b /opt/app/mnt)
+
+MOUNT=(-v "$DIRNAME:/opt/app/mnt")
+IMAGE="md2pdf${TAGNAME:+:$TAGNAME}"
+
+docker run --rm -i "${MOUNT[@]}" "$IMAGE" node md2pdf.js "${OPTS[@]}" "$INFILE"
