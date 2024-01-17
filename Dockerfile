@@ -23,5 +23,6 @@ RUN npm init -y \
 
 COPY LICENSE.txt README.md md2pdf.js .
 COPY resource resource/
+COPY doc-images doc-images/
 
 USER user
