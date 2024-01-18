@@ -1,8 +1,9 @@
 .git
-.dockerignore
 .gitignore
+Dockerfile
 src
 third-party
 md2pdf.sh
 *.pdf
 *.N
+.DS_Store
