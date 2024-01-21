@@ -116,16 +116,8 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
   const body = marked(markdown, {renderer: renderer});
 
   if (title == null) {
-    const lines = body.split(/\n/);
-    const tline = lines.find((line) => {
-      return line.match(/<h1>.*<\/h1>/);
-    });
-    if (tline) {
-      title = tline.replace(/<h1>(.*?)<\/h1>/, '$1');
-    } else {
-      title = lines.find((line) => {return line != ''}) || '';
-    }
-    title = title.replaceAll(/<.*?>/g, '');
+    const match = body.match(/<h1(?: id=".+?")?>(.*?)<\/h1>/);
+    title = match ? match[1] : '';
   }
 
   const head = (title == null || title == '') ?
