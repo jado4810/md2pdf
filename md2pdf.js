@@ -22,6 +22,18 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
   // Markdownのレンダラー
   const renderer = new marked.Renderer();
 
+  // 見出しからアンカーIDへの変換ルール(GitHub互換)
+  const klasses = [
+    'Lu', 'Ll', 'Lt', 'Lm', 'Lo', 'Nl', 'Nd', 'Mc', 'Me', 'Mn', 'Pc'
+  ].map((klass) => { return `\\p{${klass}}` }).join('');
+  const slugify_regexp = new RegExp(`[^- ${klasses}]`, 'gu');
+
+  renderer.heading = (text, level) => {
+    const key = text.replaceAll(slugify_regexp, '')
+        .replace(/ +$/, '').replaceAll(/ /g, '-').toLowerCase();
+    return `<h${level} id="${key}">${text}</h${level}>`;
+  };
+
   renderer.image = (href, title, alttext) => {
     const uri = (href.match(/^https?:\/\//)) ? href : path.resolve(base, href);
     const alt = alttext ? ` alt="${alttext}"` : '';
