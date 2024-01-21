@@ -19,14 +19,15 @@ import puppeteer from 'puppeteer';
 async function convert(markdown, title, ratio, langspec, colorspec, base) {
   if (markdown == null) return;
 
+  // 見出しからアンカーIDへの変換ルール(GitHub互換)
+  const slugify_regexp = new RegExp(`[^- ${
+    [
+      'Lu', 'Ll', 'Lt', 'Lm', 'Lo', 'Nl', 'Nd', 'Mc', 'Me', 'Mn', 'Pc'
+    ].map((klass) => { return `\\p{${klass}}` }).join('')
+  }]`, 'gu');
+
   // Markdownのレンダラー
   const renderer = new marked.Renderer();
-
-  // 見出しからアンカーIDへの変換ルール(GitHub互換)
-  const klasses = [
-    'Lu', 'Ll', 'Lt', 'Lm', 'Lo', 'Nl', 'Nd', 'Mc', 'Me', 'Mn', 'Pc'
-  ].map((klass) => { return `\\p{${klass}}` }).join('');
-  const slugify_regexp = new RegExp(`[^- ${klasses}]`, 'gu');
 
   renderer.heading = (text, level) => {
     const key = text.replaceAll(slugify_regexp, '')
