@@ -217,21 +217,27 @@ async function main() {
   program
       .name('md2pdf')
       .description('Typeset Markdown to PDF for publishing')
-      .version('0.0.1', '-v, --version', 'show version')
-      .argument('[infile]')
-      .option('-t, --title <title>', 'title')
-      .option('-r, --ratio <ratio>', 'image ratio in percent', (val) => {
-        val = parseInt(val);
-        if (isNaN(val)) throw new InvalidArgumentError("must be an integer");
-        return val;
-      }, 100).addOption(
-          new Option('-l, --lang <lang>', 'language spec').default('latin')
-              .choices(['latin', 'ja'])
-      ).addOption(
-          new Option('-c, --color <color>', 'color spec').default('color')
-              .choices(['color', 'grayscale', 'monochrome'])
-      ).option('-a, --anchors', 'show anchor ids and texts of headings')
-          .addOption(new Option('-b, --base <path>').hideHelp());
+      .argument('[infile]');
+
+  program.option('-t, --title <title>', 'title');
+  program.option('-r, --ratio <ratio>', 'image ratio in percent', (val) => {
+    val = parseInt(val);
+    if (isNaN(val)) throw new InvalidArgumentError("must be an integer");
+    return val;
+  }, 100);
+  program.addOption(
+      new Option('-l, --lang <lang>', 'language spec')
+          .default('latin')
+          .choices(['latin', 'ja'])
+  );
+  program.addOption(
+      new Option('-c, --color <color>', 'color spec')
+          .default('color')
+          .choices(['color', 'grayscale', 'monochrome'])
+  );
+  program.option('-a, --anchors', 'show anchor ids and texts of headings');
+  program.addOption(new Option('-b, --base <path>').hideHelp());
+  program.version('0.0.1', '-v, --version', 'show version');
 
   program.parse();
   const args = program.args;
