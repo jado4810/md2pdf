@@ -2,6 +2,8 @@
 
 'use strict';
 
+const version = '0.1.0';
+
 import { Command, Option, InvalidArgumentError } from 'commander';
 
 import path from 'path';
@@ -237,7 +239,7 @@ async function main() {
   );
   program.option('-a, --anchors', 'show anchor ids and texts of headings');
   program.addOption(new Option('-b, --base <path>').hideHelp());
-  program.version('0.0.1', '-v, --version', 'show version');
+  program.version(version, '-v, --version', 'show version');
 
   program.parse();
   const args = program.args;
