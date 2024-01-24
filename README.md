@@ -129,7 +129,7 @@ will be rendered as:
 <img src="./doc-images/fig1.png" style="width:114px;height:auto">
 </p>
 
-Also consider specifying the `-r` options.
+Also consider specifying the `-r` option.
 
 ### Mermaid
 
