@@ -9,6 +9,7 @@ TITLE=''
 RATIO=''
 LANG=''
 COLOR=''
+ANCHORS=''
 REST=''
 parse() {
   OPTIND=$(($#+1))
@@ -21,7 +22,7 @@ parse() {
       -[trlc]?*) OPTARG=$1; shift
         eval 'set -- "${OPTARG%"${OPTARG#??}"}" "${OPTARG#??}"' ${1+'"$@"'}
         ;;
-      -[vh]?*) OPTARG=$1; shift
+      -[avh]?*) OPTARG=$1; shift
         eval 'set -- "${OPTARG%"${OPTARG#??}"}" -"${OPTARG#??}"' ${1+'"$@"'}
         OPTARG= ;;
     esac
@@ -46,6 +47,11 @@ parse() {
         OPTARG=$2
         COLOR="$OPTARG"
         shift ;;
+      '-a'|'--anchors')
+        [ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
+        eval '[ ${OPTARG+x} ] &&:' && OPTARG='1' || OPTARG=''
+        ANCHORS="$OPTARG"
+        ;;
       '-v'|'--version')
         echo "${VERSION}"
         exit 0 ;;
@@ -86,6 +92,7 @@ Options:
   -r, --ratio RATIO           image ratio in percent
   -l, --lang LANG             language spec
   -c, --color COLOR           color spec
+  -a, --anchors               show anchor ids and texts of headings
   -v, --version               show version
   -h, --help                  display help for command
 GETOPTIONSHERE
@@ -107,8 +114,7 @@ else
 fi
 
 OPTS=(${TITLE:+-t "$TITLE"} ${RATIO:+-r "$RATIO"})
-OPTS+=(${LANG:+-l "$LANG"} ${COLOR:+-c "$COLOR"})
-OPTS+=(-b /opt/app/mnt)
+OPTS+=(${LANG:+-l "$LANG"} ${COLOR:+-c "$COLOR"} ${ANCHORS:+-a} -b /opt/app/mnt)
 
 MOUNT=(-v "$DIRNAME:/opt/app/mnt")
 IMAGE="md2pdf${TAGNAME:+:$TAGNAME}"

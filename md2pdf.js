@@ -16,7 +16,8 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
-async function convert(markdown, title, ratio, langspec, colorspec, base) {
+async function convert(markdown, title,
+                       ratio, langspec, colorspec, anchors, base) {
   if (markdown == null) return;
 
   // 見出しからアンカーIDへの変換ルール(GitHub互換)
@@ -32,6 +33,7 @@ async function convert(markdown, title, ratio, langspec, colorspec, base) {
   renderer.heading = (text, level) => {
     const key = text.replaceAll(slugify_regexp, '')
         .replace(/ +$/, '').replaceAll(/ /g, '-').toLowerCase();
+    if (anchors) process.stderr.write(`Anchor id=${key}: ${text}\n`);
     return `<h${level} id="${key}">${text}</h${level}>`;
   };
 
@@ -228,7 +230,8 @@ async function main() {
       ).addOption(
           new Option('-c, --color <color>', 'color spec').default('color')
               .choices(['color', 'grayscale', 'monochrome'])
-      ).addOption(new Option('-b, --base <path>').hideHelp());
+      ).option('-a, --anchors', 'show anchor ids and texts of headings')
+          .addOption(new Option('-b, --base <path>').hideHelp());
 
   program.parse();
   const args = program.args;
@@ -238,6 +241,7 @@ async function main() {
   const ratio = opts.ratio;
   const langspec = opts.lang;
   const colorspec = opts.color;
+  const anchors = opts.anchors;
 
   if (args.length > 1) {
     process.stderr.write('Error: too many input files\n');
@@ -272,7 +276,8 @@ async function main() {
   if (markdown == null || markdown == '') return;
 
   // PDF変換
-  const pdf = await convert(markdown, title, ratio, langspec, colorspec, base);
+  const pdf = await convert(markdown, title,
+                            ratio, langspec, colorspec, anchors, base);
 
   // 標準出力に出力
   const stream = new streams.ReadableStream(pdf);
