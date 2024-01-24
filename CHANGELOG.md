@@ -1,5 +1,10 @@
 # md2pdf - Changelog
 
+## Version 0.1.0
+
+* Add anchors on headings to make internal links
+* Introduce -r option to show slugified anchor ids
+
 ## Version 0.0.4 (2024-1-16)
 
 * Fix parsing of code blocks specifiers
