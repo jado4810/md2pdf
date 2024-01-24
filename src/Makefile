@@ -6,7 +6,12 @@ parse.sh: parser_definition.sh ../third-party/getoptions/gengetoptions ../third-
 md2pdf.sh: md2pdf.sh.in parse.sh
 	sed -e '/%%%INSERT_HERE%%%/r parse.sh' -e '/%%%INSERT_HERE%%%/d' $< > $@
 
+dist: md2pdf.sh
+	cp -p $^ ..
+
 clean:
 	rm -f md2pdf.sh parse.sh
 
-.PHONY: all clean
+update: dist clean
+
+.PHONY: all dist clean update
