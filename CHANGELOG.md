@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.1.1
+
+* Add HTML escape on code blocks
+
 ## Version 0.1.0 (2024-1-24)
 
 * Add anchors on headings to make internal links
