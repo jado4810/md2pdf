@@ -8,18 +8,15 @@ Tiny PDF converter for Markdown, assumed for use in exporting documents.
 
 So the style is built with consciousness of single-column articles in academic journals:
 
-* A4 portrait
+* A3, A4, A5, letter or legal, portrait or landscape
 * Header with the document title (Auto extraction from H1 header available)
-* Footer with the page number
+* Footer with the page number (Can be omitted)
 * For Japanese, with universal-design fonts (Morisawa BIZ UD)
 
 Some styles are customizable:
 
 * Color scheme (color, grayscale, monochrome)
 * Language scheme (Latin, Japanese)
-
-And considering of others to be customizable in some days.
-Of course you can modify the style and rebuild it ;)
 
 It accepts Markdown format like below:
 
@@ -47,9 +44,19 @@ $ ./md2pdf.sh [options] [input] > output
 
 Options are available below:
 
+* `-p «paper»`
+    * Specify the paper size
+    * Available below for now:
+        * `a3` (ISO A3 portrait), `a3r` (ISO A3 landscape)
+        * `a4` (ISO A4 portrait, default), `a4r` (ISO A4 landscape)
+        * `a5` (ISO A5 portrait), `a5r` (ISO A5 landscape)
+        * `letter` (US letter portrait), `letterr` (US letter landscape)
+        * `legal` (US legal portrait), `legalr` (US legal landscape)
 * `-t «title»`
     * Specify the document title to be printed on the page header
     * If omitted, attempt to extract from H1 header
+* `-n`
+    * Omit page numbers
 * `-r «ratio»`
     * Specify the img magnify ratio in percentage
     * Recommended smaller (< 100) value on screenshots from zoomed screen to get clear images in PDF

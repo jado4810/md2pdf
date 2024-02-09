@@ -3,6 +3,8 @@
 ## Version 0.1.1
 
 * Add HTML escape on code blocks
+* Customizable paper size and orientation
+* Support omitting page numbers
 
 ## Version 0.1.0 (2024-1-24)
 
