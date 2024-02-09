@@ -19,8 +19,9 @@ else
   INFILE=$(basename "$1")
 fi
 
-OPTS=(${TITLE:+-t "$TITLE"} ${RATIO:+-r "$RATIO"})
-OPTS+=(${LANG:+-l "$LANG"} ${COLOR:+-c "$COLOR"} ${ANCHORS:+-a} -b /opt/app/mnt)
+OPTS=(${PAPER:+-p "$PAPER"} ${TITLE:+-t "$TITLE"} ${NOPAGE:+-n})
+OPTS+=(${RATIO:+-r "$RATIO"} ${LANG:+-l "$LANG"} ${COLOR:+-c "$COLOR"})
+OPTS+=(${ANCHORS:+-a} -b /opt/app/mnt)
 
 MOUNT=(-v "$DIRNAME:/opt/app/mnt")
 IMAGE="md2pdf${TAGNAME:+:$TAGNAME}"

@@ -18,7 +18,7 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
-async function convert(markdown, title,
+async function convert(markdown, psize, lscape, margin, title, nopage,
                        ratio, langspec, colorspec, anchors, base) {
   if (markdown == null) return;
 
@@ -207,11 +207,14 @@ async function convert(markdown, title,
   const hdrstyle = `style="${cmnstyle};text-align:left"`;
   const ftrstyle = `style="${cmnstyle};text-align:center"`;
   const header = `<div ${hdrstyle}><span class="title"></span></div>`;
-  const footer = `<div ${ftrstyle}><span class="pageNumber"></span></div>`;
+  const footer = nopage ?
+      `<div ${ftrstyle}></div>` :
+      `<div ${ftrstyle}><span class="pageNumber"></span></div>`;
   const pdf = await page.pdf({
-    format: 'A4',
+    format: psize,
+    landscape: lscape,
     displayHeaderFooter: true,
-    margin: {top: '16mm', bottom: '16mm', left: '12mm', right: '12mm'},
+    margin: margin,
     headerTemplate: header,
     footerTemplate: footer,
     printBackground: true,
@@ -232,7 +235,14 @@ async function main() {
       .description('Typeset Markdown to PDF for publishing')
       .argument('[infile]');
 
+  program.addOption(
+      new Option('-p, --paper <paper>', 'paper spec')
+          .default('a4')
+          .choices(['a3', 'a3r', 'a4', 'a4r', 'a5', 'a5r',
+                    'letter', 'letterr', 'legal', 'legalr'])
+  );
   program.option('-t, --title <title>', 'title');
+  program.option('-n, --nopage', 'disable page numbers');
   program.option('-r, --ratio <ratio>', 'image ratio in percent', (val) => {
     val = parseInt(val);
     if (isNaN(val)) throw new InvalidArgumentError("must be an integer");
@@ -256,11 +266,44 @@ async function main() {
   const args = program.args;
   const opts = program.opts();
 
+  const paper = opts.paper;
   const title = opts.title;
+  const nopage = opts.nopage;
   const ratio = opts.ratio;
   const langspec = opts.lang;
   const colorspec = opts.color;
   const anchors = opts.anchors;
+
+  // 紙サイズ・マージン
+  const papers = {
+    a3:      {size: 'a3',     orient: 'portrait' },
+    a3r:     {size: 'a3',     orient: 'landscape'},
+    a4:      {size: 'a4',     orient: 'portrait' },
+    a4r:     {size: 'a4',     orient: 'landscape'},
+    a5:      {size: 'a5',     orient: 'portrait' },
+    a5r:     {size: 'a5',     orient: 'landscape'},
+    letter:  {size: 'letter', orient: 'portrait' },
+    letterr: {size: 'letter', orient: 'landscape'},
+    legal:   {size: 'legal',  orient: 'portrait' },
+    legalr:  {size: 'legal',  orient: 'landscape'}
+  };
+  const landscapes = {
+    portrait:  false,
+    landscape: true
+  };
+  const margins = {
+    portrait:  {top: '16mm', bottom: '16mm', left: '12mm', right: '12mm'},
+    landscape: {top: '12mm', bottom: '12mm', left: '16mm', right: '16mm'}
+  };
+
+  const pspec = papers[paper];
+  if (!pspec) {
+    process.stderr.write('Error: paper not found\n');
+    return;
+  }
+  const psize = pspec.size;
+  const lscape = landscapes[pspec.orient];
+  const margin = margins[pspec.orient];
 
   if (args.length > 1) {
     process.stderr.write('Error: too many input files\n');
@@ -295,7 +338,7 @@ async function main() {
   if (markdown == null || markdown == '') return;
 
   // PDF変換
-  const pdf = await convert(markdown, title,
+  const pdf = await convert(markdown, psize, lscape, margin, title, nopage,
                             ratio, langspec, colorspec, anchors, base);
 
   // 標準出力に出力
