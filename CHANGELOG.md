@@ -1,6 +1,6 @@
 # md2pdf - Changelog
 
-## Version 0.1.1
+## Version 0.2.0 (2024-2-10)
 
 * Add HTML escape on code blocks
 * Customizable paper size and orientation
