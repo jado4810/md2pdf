@@ -1,6 +1,8 @@
 md2pdf - Typeset Markdown to PDF for publishing
 ===============================================
 
+![Node.js](https://img.shields.io/badge/-Node.js-339933.svg?logo=Node.js)
+![Docker](https://img.shields.io/badge/-Docker-2496ed.svg?logo=Docker)
 [![GitHub top language](https://img.shields.io/github/languages/top/jado4810/md2pdf.svg)](https://github.com/jado4810/md2pdf/search?l=JavaScript)
 [![License](https://img.shields.io/github/license/jado4810/md2pdf.svg)](https://github.com/jado4810/md2pdf/blob/main/LICENSE.txt)
 
