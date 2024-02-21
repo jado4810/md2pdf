@@ -8,11 +8,11 @@
     "type": "git",
     "url": "git+ssh://git@github.com/jado4810/md2pdf.git"
   },
-  "author": "Shun-ichi TAHARA <jado@flowernet.gr.jp> (https://github.com/jado4810/)",
+  "author": "Shun-ichi TAHARA <jado@flowernet.jp> (https://github.com/jado4810/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jado4810/md2pdf/issues",
-    "email": "jado@flowernet.gr.jp"
+    "email": "jado@flowernet.jp"
   },
   "homepage": "https://github.com/jado4810/md2pdf/",
   "dependencies": {
