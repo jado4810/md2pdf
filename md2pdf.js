@@ -29,14 +29,6 @@ async function convert(markdown, psize, lscape, margin, title, nopage,
     ].map((klass) => { return `\\p{${klass}}` }).join('')
   }]`, 'gu');
 
-  // HTMLエスケープ用テーブル
-  const html_escape = {
-    '"': 'quot', '&': 'amp', '\'': '#39', '<': 'lt', '>': 'gt', '`': '#96'
-  };
-  const html_escape_regexp = new RegExp(
-      '[' + Object.keys(html_escape).join('') + ']', 'g'
-  );
-
   // Markdownのレンダラー
   const renderer = new marked.Renderer();
 
@@ -85,9 +77,6 @@ async function convert(markdown, psize, lscape, margin, title, nopage,
       otags.push('<pre');
       otags.push(`>${file}<code>`);
       ctag = '</code></pre>\n';
-      code = code.replace(html_escape_regexp, (match) => {
-        return '&' + html_escape[match] + ';';
-      });
       if (lang != '') {
         try {
           code = hljs.highlight(code, {language: lang}).value;
