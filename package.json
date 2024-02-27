@@ -1,6 +1,6 @@
 {
   "name": "jado4810-md2pdf",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Typeset Markdown to PDF for publishing",
   "type": "module",
   "main": "md2pdf.js",

@@ -1,6 +1,6 @@
 # md2pdf - Changelog
 
-## Version 0.2.1
+## Version 0.2.1 (2024-2-27)
 
 * Remove HTML escape on code blocks to avoid breakage
 
