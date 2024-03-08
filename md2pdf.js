@@ -58,7 +58,7 @@ async function convert(markdown, psize, lscape, margin, title, nopage,
     let m;
 
     m = info.match(/^([^\[\"\s:]*):?(.*)$/);
-    const lang = m && m[1] || '';
+    const lang = m && m[1] || 'plaintext';
     info = m && m[2] || '';
 
     m = info.match(/^([^\[\"\s]*)(.*)?$/);
@@ -77,13 +77,7 @@ async function convert(markdown, psize, lscape, margin, title, nopage,
       otags.push('<pre');
       otags.push(`>${file}<code>`);
       ctag = '</code></pre>\n';
-      if (lang != '') {
-        try {
-          code = hljs.highlight(code, {language: lang}).value;
-        } catch (e) {
-          process.stderr.write('Error on highlight\n');
-        }
-      }
+      code = hljs.highlight(code, {language: lang, ignoreIllegals: true}).value;
     }
 
     m = info.match(/\[([^\]]+)\]/);
