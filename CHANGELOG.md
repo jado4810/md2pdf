@@ -1,9 +1,10 @@
 # md2pdf - Changelog
 
-## Version 0.2.2
+## Version 0.2.2 (2024-3-8)
 
 * Add HTML escape on code blocks again
     * Fixed all breakages on 0.2.0 and 0.2.1
+* Add highlight style on code blocks for monochrome color spec
 
 ## Version 0.2.1 (2024-2-27)
 
