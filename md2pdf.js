@@ -18,8 +18,9 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
-async function convert(markdown, psize, lscape, margin, title, nopage,
-                       ratio, langspec, colorspec, anchors, base) {
+async function convert(markdown, psize, lscape, margin,
+                       title, nopage, ratio, langspec,
+                       colorspec, hltheme, mtheme, anchors, base) {
   if (markdown == null) return;
 
   // 見出しからアンカーIDへの変換ルール(GitHub互換)
@@ -136,16 +137,14 @@ async function convert(markdown, psize, lscape, margin, title, nopage,
   });
   const page = await browser.newPage();
   const uri = `file://${path.resolve(process.cwd(), './resource/fake.html')}`;
+  const styles = './resource/style';
+  const themes = './node_modules/highlight.js/styles';
   await page.goto(uri);
   await page.setContent(html);
-  await page.addStyleTag({path: './resource/style/base.css'});
-  await page.addStyleTag({path: `./resource/style/lang/${langspec}.css`});
-  await page.addStyleTag({path: `./resource/style/color/${colorspec}.css`});
-  if (colorspec == 'color') {
-    await page.addStyleTag({
-      path: 'node_modules/highlight.js/styles/github.min.css'
-    });
-  }
+  await page.addStyleTag({path: `${styles}/base.css`});
+  await page.addStyleTag({path: `${styles}/lang/${langspec}.css`});
+  await page.addStyleTag({path: `${styles}/color/${colorspec}.css`});
+  if (hltheme) await page.addStyleTag({path: `${themes}/${hltheme}.min.css`});
 
   // 画像サイズの調整
   await page.addScriptTag({
@@ -159,19 +158,10 @@ async function convert(markdown, psize, lscape, margin, title, nopage,
   });
 
   // Mermaidのレンダリング
-  await page.addScriptTag({
-    path: 'node_modules/mermaid/dist/mermaid.min.js'
-  });
-  let styles = '';
-  switch (colorspec) {
-  case 'grayscale':
-  case 'monochrome':
-    styles = ',theme:"neutral"';
-    break;
-  }
-  await page.addScriptTag({
-    content: `mermaid.initialize({startOnLoad:false${styles}})`
-  });
+  const mscripts = './node_modules/mermaid/dist';
+  await page.addScriptTag({path: `${mscripts}/mermaid.min.js`});
+  const moptions = `startOnLoad:false,theme:"${mtheme}"`;
+  await page.addScriptTag({content: `mermaid.initialize({${moptions}})`});
   const result = await page.evaluateHandle(async () => {
     try {
       await window.mermaid.run({querySelector: '.mermaid'});
@@ -256,6 +246,7 @@ async function main() {
   const langspec = opts.lang;
   const colorspec = opts.color;
   const anchors = opts.anchors;
+  const base = opts.base || process.cwd();
 
   // 紙サイズ・マージン
   const papers = {
@@ -288,15 +279,32 @@ async function main() {
   const lscape = landscapes[pspec.orient];
   const margin = margins[pspec.orient];
 
+  // コードハイライトのカラーテーマ
+  const hlthemes = {
+    color:      'github',
+    grayscale:  'grayscale',
+    monochrome: ''
+  };
+
+  const hltheme = hlthemes[colorspec];
+
+  // Mermaidのカラーテーマ
+  const mthemes = {
+    color:      'default',
+    grayscale:  'neutral',
+    monochrome: 'neutral'
+  };
+
+  const mtheme = mthemes[colorspec];
+
+  // 入力データ取得
   if (args.length > 1) {
     process.stderr.write('Error: too many input files\n');
     return;
   }
-  const base = opts.base || process.cwd();
   const infile = (args.length < 1 || args[0] == '-') ?
       null : path.resolve(base, args[0]);
 
-  // 入力データ取得
   const markdown = await (async () => {
     try {
       if (infile != null) {
@@ -321,8 +329,9 @@ async function main() {
   if (markdown == null || markdown == '') return;
 
   // PDF変換
-  const pdf = await convert(markdown, psize, lscape, margin, title, nopage,
-                            ratio, langspec, colorspec, anchors, base);
+  const pdf = await convert(markdown, psize, lscape, margin,
+                            title, nopage, ratio, langspec,
+                            colorspec, hltheme, mtheme, anchors, base);
 
   // 標準出力に出力
   const stream = new streams.ReadableStream(pdf);
