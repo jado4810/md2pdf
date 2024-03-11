@@ -219,7 +219,7 @@ async function main() {
   program.option('-n, --nopage', 'disable page numbers');
   program.option('-r, --ratio <ratio>', 'image ratio in percent', (val) => {
     val = parseInt(val);
-    if (isNaN(val)) throw new InvalidArgumentError("must be an integer");
+    if (isNaN(val)) throw new InvalidArgumentError('must be an integer');
     return val;
   }, 100);
   program.addOption(
