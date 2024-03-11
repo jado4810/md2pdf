@@ -18,7 +18,7 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
-async function convert(markdown, psize, lscape, margin,
+async function convert(markdown, langprop, psize, lscape, margin,
                        title, nopage, ratio, langspec,
                        colorspec, hltheme, mtheme, anchors, base) {
   if (markdown == null) return;
@@ -123,7 +123,8 @@ async function convert(markdown, psize, lscape, margin,
   const head = (title == null || title == '') ?
       '' :
       `<head><title>${title}</title></head>`;
-  const html = `<html>${head}<body>${body}</body></html>`;
+  const lang = langprop ? ` lang="${langprop}"` : '';
+  const html = `<html>${head}<body${lang}>${body}</body></html>`;
 
   // PuppeteerでHTMLをレンダリング
   const browser = await puppeteer.launch({
@@ -279,6 +280,17 @@ async function main() {
   const lscape = landscapes[pspec.orient];
   const margin = margins[pspec.orient];
 
+  // 言語プロパティ
+  const langprops = {
+    latin: '',
+    ja:    'ja',
+    ko:    'ko',
+    cn:    'zh-CN',
+    tw:    'zh-TW',
+  };
+
+  const langprop = langprops[langspec];
+
   // コードハイライトのカラーテーマ
   const hlthemes = {
     color:      'github',
@@ -329,7 +341,7 @@ async function main() {
   if (markdown == null || markdown == '') return;
 
   // PDF変換
-  const pdf = await convert(markdown, psize, lscape, margin,
+  const pdf = await convert(markdown, langprop, psize, lscape, margin,
                             title, nopage, ratio, langspec,
                             colorspec, hltheme, mtheme, anchors, base);
 
