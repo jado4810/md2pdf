@@ -1,5 +1,6 @@
 body {
   font-size: 10.5pt;
+  line-break: strict;
   margin: 0;
 }
 
