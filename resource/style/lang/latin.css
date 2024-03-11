@@ -20,6 +20,10 @@ code {
   font-family: "Inconsolata";
 }
 
+li > p:nth-child(2) {
+  text-indent: 0;
+}
+
 th {
   font-family: "Noto Sans";
   font-weight: normal;
@@ -27,6 +31,10 @@ th {
 
 td {
   font-family: "Noto Serif";
+}
+
+p + p {
+  text-indent: 1.5em;
 }
 
 b, strong {

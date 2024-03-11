@@ -99,13 +99,18 @@ ul, ol {
   padding-left: 2em;
 }
 
+li:has(> p) {
+  margin: 4pt 0;
+}
+
 li > ul,
 li > ol {
   margin: 0;
 }
 
-li > p:first-child {
-  break-after: avoid-page;
+li > p:nth-child(2) {
+  break-before: avoid-page;
+  margin-top: 2pt;
 }
 
 table {
@@ -122,7 +127,7 @@ th, td {
 }
 
 p {
-  margin: 4pt 0;
+  margin: 0;
 }
 
 kbd {
