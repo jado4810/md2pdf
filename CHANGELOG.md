@@ -19,7 +19,7 @@
 ## Version 0.1.0 (2024-1-24)
 
 * Add anchors on headings to make internal links
-* Introduce -r option to show slugified anchor ids
+* Introduce -a option to show slugified anchor ids
 * Some minor fixes and tweaks
 
 ## Version 0.0.4 (2024-1-16)
