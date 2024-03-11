@@ -19,7 +19,7 @@ import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
 async function convert(markdown, langprop, psize, lscape, margin,
-                       title, nopage, ratio, langspec, noindent,
+                       family, title, nopage, ratio, langspec, noindent,
                        colorspec, hltheme, mtheme, anchors, base) {
   if (markdown == null) return;
 
@@ -177,10 +177,10 @@ async function convert(markdown, langprop, psize, lscape, margin,
   }
 
   // PDF出力
-  const cmnfont = '9pt \'Noto Serif\',\'BIZ UDPMincho\',\'Noto Serif CJK JP\'';
-  const cmnstyle = `font:${cmnfont};padding:0 12mm;width:100%`;
-  const hdrstyle = `style="${cmnstyle};text-align:left"`;
-  const ftrstyle = `style="${cmnstyle};text-align:center"`;
+  const fontspec = '9pt ' + family.map((f) => { return `'${f}'` }).join(',');
+  const hfstyle = `font:${fontspec};padding:0 12mm;width:100%`;
+  const hdrstyle = `style="${hfstyle};text-align:left"`;
+  const ftrstyle = `style="${hfstyle};text-align:center"`;
   const header = `<div ${hdrstyle}><span class="title"></span></div>`;
   const footer = nopage ?
       `<div ${ftrstyle}></div>` :
@@ -226,7 +226,7 @@ async function main() {
   program.addOption(
       new Option('-l, --lang <lang>', 'language spec')
           .default('latin')
-          .choices(['latin', 'ja'])
+          .choices(['latin', 'ja', 'ko', 'cn', 'tw'])
   );
   program.option('-i, --noindent', 'disable text indentation in paragraphs');
   program.addOption(
@@ -282,6 +282,21 @@ async function main() {
   const psize = pspec.size;
   const lscape = landscapes[pspec.orient];
   const margin = margins[pspec.orient];
+
+  // ヘッダー・フッターのスタイル
+  const families = {
+    latin: ['Noto Serif'],
+    ja:    ['Noto Serif', 'BIZ UDPMincho', 'Noto Serif CJK JP'],
+    ko:    ['Noto Serif', 'Noto Serif CJK KR'],
+    cn:    ['Noto Serif', 'Noto Serif CJK SC'],
+    tw:    ['Noto Serif', 'Noto Serif CJK TC']
+  };
+
+  const family = families[langspec];
+  if (!family) {
+    process.stderr.write('Error: lang not found\n');
+    return;
+  }
 
   // 言語プロパティ
   const langprops = {
@@ -345,7 +360,7 @@ async function main() {
 
   // PDF変換
   const pdf = await convert(markdown, langprop, psize, lscape, margin,
-                            title, nopage, ratio, langspec, noindent,
+                            family, title, nopage, ratio, langspec, noindent,
                             colorspec, hltheme, mtheme, anchors, base);
 
   // 標準出力に出力

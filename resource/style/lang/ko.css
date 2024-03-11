@@ -1,0 +1,56 @@
+body {
+  font-family: "Noto Serif", "Noto Serif CJK KR";
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "Noto Serif", "Noto Sans CJK KR";
+  font-weight: bold;
+}
+
+h6 {
+  font-family: "Noto Sans", "Noto Sans CJK KR";
+  font-weight: normal;
+}
+
+.filename {
+  font-family: "Noto Sans", "Noto Sans CJK KR";
+}
+
+code {
+  font-family: "Inconsolata", "Noto Sans Mono CJK KR";
+}
+
+li > p:first-child {
+  text-indent: 0;
+}
+
+th {
+  font-family: "Noto Sans", "Noto Sans CJK KR";
+  font-weight: normal;
+}
+
+td {
+  font-family: "Noto Serif", "Noto Serif CJK KR";
+}
+
+p {
+  text-indent: 1em;
+}
+
+b, strong {
+  font-family: "Noto Sans", "Noto Sans CJK KR";
+  font-weight: normal;
+}
+
+kbd {
+  font-family: "Noto Sans", "Noto Sans CJK KR";
+}
+
+.mermaid .cluster-label .nodeLabel,
+.mermaid .label .edgeLabel {
+  font-family: "Noto Sans", "Noto Sans CJK KR";
+}
+
+.mermaid .label .nodeLabel {
+  font-family: "Noto Serif", "Noto Serif CJK KR";
+}
