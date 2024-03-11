@@ -20,8 +20,8 @@ else
 fi
 
 OPTS=(${PAPER:+-p "$PAPER"} ${TITLE:+-t "$TITLE"} ${NOPAGE:+-n})
-OPTS+=(${RATIO:+-r "$RATIO"} ${LANG:+-l "$LANG"} ${COLOR:+-c "$COLOR"})
-OPTS+=(${ANCHORS:+-a} -b /opt/app/mnt)
+OPTS+=(${RATIO:+-r "$RATIO"} ${LANG:+-l "$LANG"} ${NOINDENT:+-i})
+OPTS+=(${COLOR:+-c "$COLOR"} ${ANCHORS:+-a} -b /opt/app/mnt)
 
 MOUNT=(-v "$DIRNAME:/opt/app/mnt")
 IMAGE="md2pdf${TAGNAME:+:$TAGNAME}"

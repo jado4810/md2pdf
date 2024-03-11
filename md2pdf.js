@@ -19,7 +19,7 @@ import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
 async function convert(markdown, langprop, psize, lscape, margin,
-                       title, nopage, ratio, langspec,
+                       title, nopage, ratio, langspec, noindent,
                        colorspec, hltheme, mtheme, anchors, base) {
   if (markdown == null) return;
 
@@ -144,6 +144,7 @@ async function convert(markdown, langprop, psize, lscape, margin,
   await page.setContent(html);
   await page.addStyleTag({path: `${styles}/base.css`});
   await page.addStyleTag({path: `${styles}/lang/${langspec}.css`});
+  if (noindent) await page.addStyleTag({path: `${styles}/noindent.css`});
   await page.addStyleTag({path: `${styles}/color/${colorspec}.css`});
   if (hltheme) await page.addStyleTag({path: `${themes}/${hltheme}.min.css`});
 
@@ -227,6 +228,7 @@ async function main() {
           .default('latin')
           .choices(['latin', 'ja'])
   );
+  program.option('-i, --noindent', 'disable text indentation in paragraphs');
   program.addOption(
       new Option('-c, --color <color>', 'color spec')
           .default('color')
@@ -245,6 +247,7 @@ async function main() {
   const nopage = opts.nopage;
   const ratio = opts.ratio;
   const langspec = opts.lang;
+  const noindent = opts.noindent;
   const colorspec = opts.color;
   const anchors = opts.anchors;
   const base = opts.base || process.cwd();
@@ -342,7 +345,7 @@ async function main() {
 
   // PDF変換
   const pdf = await convert(markdown, langprop, psize, lscape, margin,
-                            title, nopage, ratio, langspec,
+                            title, nopage, ratio, langspec, noindent,
                             colorspec, hltheme, mtheme, anchors, base);
 
   // 標準出力に出力

@@ -10,6 +10,7 @@ TITLE=''
 NOPAGE=''
 RATIO=''
 LANG=''
+NOINDENT=''
 COLOR=''
 ANCHORS=''
 REST=''
@@ -24,7 +25,7 @@ parse() {
       -[ptrlc]?*) OPTARG=$1; shift
         eval 'set -- "${OPTARG%"${OPTARG#??}"}" "${OPTARG#??}"' ${1+'"$@"'}
         ;;
-      -[navh]?*) OPTARG=$1; shift
+      -[niavh]?*) OPTARG=$1; shift
         eval 'set -- "${OPTARG%"${OPTARG#??}"}" -"${OPTARG#??}"' ${1+'"$@"'}
         OPTARG= ;;
     esac
@@ -54,6 +55,11 @@ parse() {
         OPTARG=$2
         LANG="$OPTARG"
         shift ;;
+      '-i'|'--noindent')
+        [ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
+        eval '[ ${OPTARG+x} ] &&:' && OPTARG='1' || OPTARG=''
+        NOINDENT="$OPTARG"
+        ;;
       '-c'|'--color')
         [ $# -le 1 ] && set "required" "$1" && break
         OPTARG=$2
@@ -105,6 +111,7 @@ Options:
   -n, --nopage                disable page numbers
   -r, --ratio RATIO           image ratio in percent
   -l, --lang LANG             language spec
+  -i, --noindent              disable text indentation in paragraphs
   -c, --color COLOR           color spec
   -a, --anchors               show anchor ids and texts of headings
   -v, --version               show version
@@ -128,8 +135,8 @@ else
 fi
 
 OPTS=(${PAPER:+-p "$PAPER"} ${TITLE:+-t "$TITLE"} ${NOPAGE:+-n})
-OPTS+=(${RATIO:+-r "$RATIO"} ${LANG:+-l "$LANG"} ${COLOR:+-c "$COLOR"})
-OPTS+=(${ANCHORS:+-a} -b /opt/app/mnt)
+OPTS+=(${RATIO:+-r "$RATIO"} ${LANG:+-l "$LANG"} ${NOINDENT:+-i})
+OPTS+=(${COLOR:+-c "$COLOR"} ${ANCHORS:+-a} -b /opt/app/mnt)
 
 MOUNT=(-v "$DIRNAME:/opt/app/mnt")
 IMAGE="md2pdf${TAGNAME:+:$TAGNAME}"
