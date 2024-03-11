@@ -1,5 +1,17 @@
 # md2pdf - Changelog
 
+## Version 0.3.0
+
+* More language specs for Chinese and Korean
+* Strict line breaking rules for CJK
+    * Now no line breaks before prolonged marks or small letters of Japanese
+* Adjust indents and gaps between paragraphs
+    * Indents for western-europe style for -l latin
+    * Remove gaps between paragraphs
+* Introduce -i option for "web style"
+    * Disable indents and retain gaps in paragraphs
+* Adjust some styles
+
 ## Version 0.2.2 (2024-3-8)
 
 * Add HTML escape on code blocks again
