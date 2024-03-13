@@ -9,16 +9,16 @@ md2pdf - Typeset Markdown to PDF for publishing
 What is this?
 -------------
 
-Tiny PDF converter for Markdown, assumed for use in exporting documents.
+The PDF converter for Markdown, assumed for use in exporting documents.
 
-So the style is built with consciousness of single-column articles in academic journals:
+Those style is built with consciousness of paper prints:
 
 * A3, A4, A5, letter or legal, portrait or landscape
 * Header with the document title (Auto extraction from H1 header available)
 * Footer with the page number (Can be omitted)
 * For Japanese, with universal-design fonts (Morisawa BIZ UD)
 
-Some styles are customizable:
+Some kinds of the style are customizable:
 
 * Color scheme (color, grayscale, monochrome)
 * Language scheme (Latin, Japanese, Korean, Chinese)
@@ -116,6 +116,8 @@ However we have confirmed to be available on Intel Linux and ARM macOS.
 ```console
 $ docker build -t md2pdf .
 ```
+
+The container image will be built with Chromium, an open source web browser component, introduced from the official debian package.
 
 ### Direct-run NodeJS
 
