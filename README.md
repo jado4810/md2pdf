@@ -21,7 +21,8 @@ So the style is built with consciousness of single-column articles in academic j
 Some styles are customizable:
 
 * Color scheme (color, grayscale, monochrome)
-* Language scheme (Latin, Japanese)
+* Language scheme (Latin, Japanese, Korean, Chinese)
+* Paragraph stye (indented, gapped)
 
 It accepts Markdown format like below:
 
@@ -66,10 +67,15 @@ Options are available below:
     * Specify the img magnify ratio in percentage
     * Recommended smaller (< 100) value on screenshots from zoomed screen to get clear images in PDF
 * `-l «lang»`
-    * Speciry the language scheme, to set some styles: fonts and indentation rules
+    * Speciry the language scheme, to decide font priorities, line break rules and text indentation rules
     * Available below for now:
         * `latin` (default) - For most european languages
-        * `ja` - For Japanese, use BIZ UD fonts and paragraph indentation
+        * `ja` - For Japanese
+        * `ko` - For Korean
+        * `cn` - For Simplified Chinese
+        * `tw` - For Traditional Chinese
+* `-i`
+    * Omit paragraph indentation and make gaps between paragraphs
 * `-c «color»`
     * Specify the color scheme
     * Available below for now:
