@@ -52,7 +52,7 @@ Options are available below:
 
 * `-p «paper»`
     * Specify the paper size
-    * Available below for now:
+    * Available below:
         * `a3` (ISO A3 portrait), `a3r` (ISO A3 landscape)
         * `a4` (ISO A4 portrait, default), `a4r` (ISO A4 landscape)
         * `a5` (ISO A5 portrait), `a5r` (ISO A5 landscape)
@@ -68,7 +68,7 @@ Options are available below:
     * Recommended smaller (< 100) value on screenshots from zoomed screen to get clear images in PDF
 * `-l «lang»`
     * Speciry the language scheme, to decide font priorities, line break rules and text indentation rules
-    * Available below for now:
+    * Available below:
         * `latin` (default) - For most european languages
         * `ja` - For Japanese
         * `ko` - For Korean
@@ -78,7 +78,7 @@ Options are available below:
     * Omit paragraph indentation and make gaps between paragraphs
 * `-c «color»`
     * Specify the color scheme
-    * Available below for now:
+    * Available below:
         * `color` (default)
         * `grayscale`
         * `monochrome`
