@@ -23,14 +23,14 @@ async function convert(markdown, langprop, psize, lscape, margin,
                        colorspec, hltheme, mtheme, anchors, base) {
   if (markdown == null) return;
 
-  // 見出しからアンカーIDへの変換ルール(GitHub互換)
+  // Conversion from headers to anchor IDs (GitHub compatible)
   const slugify_regexp = new RegExp(`[^- ${
     [
       'Lu', 'Ll', 'Lt', 'Lm', 'Lo', 'Nl', 'Nd', 'Mc', 'Me', 'Mn', 'Pc'
     ].map((klass) => { return `\\p{${klass}}` }).join('')
   }]`, 'gu');
 
-  // Markdownのレンダラー
+  // Markdown renderer
   const renderer = new marked.Renderer();
 
   renderer.heading = (text, level) => {
@@ -112,7 +112,7 @@ async function convert(markdown, langprop, psize, lscape, margin,
     }
   };
 
-  // Markdownを解析してHTMLに変換
+  // Convert markdown to HTML
   const body = marked(markdown, {renderer: renderer});
 
   if (title == null) {
@@ -126,7 +126,7 @@ async function convert(markdown, langprop, psize, lscape, margin,
   const lang = langprop ? ` lang="${langprop}"` : '';
   const html = `<html>${head}<body${lang}>${body}</body></html>`;
 
-  // PuppeteerでHTMLをレンダリング
+  // Render HTML with puppeteer
   const browser = await puppeteer.launch({
     headless: 'new',
     args: [
@@ -148,7 +148,7 @@ async function convert(markdown, langprop, psize, lscape, margin,
   await page.addStyleTag({path: `${styles}/color/${colorspec}.css`});
   if (hltheme) await page.addStyleTag({path: `${themes}/${hltheme}.min.css`});
 
-  // 画像サイズの調整
+  // Adjust image size
   await page.addScriptTag({
     content: `const ratio = ${ratio} / 100;`
   });
@@ -159,7 +159,7 @@ async function convert(markdown, langprop, psize, lscape, margin,
     });
   });
 
-  // Mermaidのレンダリング
+  // Render mermaid
   const mscripts = './node_modules/mermaid/dist';
   await page.addScriptTag({path: `${mscripts}/mermaid.min.js`});
   const moptions = `startOnLoad:false,theme:"${mtheme}"`;
@@ -176,7 +176,7 @@ async function convert(markdown, langprop, psize, lscape, margin,
     process.stderr.write(`Error on mermaid: ${result.remoteObject().value}\n`);
   }
 
-  // PDF出力
+  // Output PDF
   const fontspec = '9pt ' + family.map((f) => { return `'${f}'` }).join(',');
   const hfstyle = `font:${fontspec};padding:0 12mm;width:100%`;
   const hdrstyle = `style="${hfstyle};text-align:left"`;
@@ -202,7 +202,7 @@ async function convert(markdown, langprop, psize, lscape, margin,
 }
 
 async function main() {
-  // パラメーター解析
+  // Parse arguments and options
   const program = new Command();
 
   program
@@ -252,7 +252,7 @@ async function main() {
   const anchors = opts.anchors;
   const base = opts.base || process.cwd();
 
-  // 紙サイズ・マージン
+  // Props for paper size and margin
   const papers = {
     a3:      {size: 'a3',     orient: 'portrait' },
     a3r:     {size: 'a3',     orient: 'landscape'},
@@ -283,7 +283,7 @@ async function main() {
   const lscape = landscapes[pspec.orient];
   const margin = margins[pspec.orient];
 
-  // ヘッダー・フッターのスタイル
+  // Font families for header and footer
   const families = {
     latin: ['Noto Serif'],
     ja:    ['Noto Serif', 'BIZ UDPMincho', 'Noto Serif CJK JP'],
@@ -298,7 +298,7 @@ async function main() {
     return;
   }
 
-  // 言語プロパティ
+  // Language properties
   const langprops = {
     latin: '',
     ja:    'ja',
@@ -309,7 +309,7 @@ async function main() {
 
   const langprop = langprops[langspec];
 
-  // コードハイライトのカラーテーマ
+  // Color themes for code highlight
   const hlthemes = {
     color:      'github',
     grayscale:  'grayscale',
@@ -318,7 +318,7 @@ async function main() {
 
   const hltheme = hlthemes[colorspec];
 
-  // Mermaidのカラーテーマ
+  // Color themes for mermaid
   const mthemes = {
     color:      'default',
     grayscale:  'neutral',
@@ -327,7 +327,7 @@ async function main() {
 
   const mtheme = mthemes[colorspec];
 
-  // 入力データ取得
+  // Input file
   if (args.length > 1) {
     process.stderr.write('Error: too many input files\n');
     return;
@@ -340,7 +340,7 @@ async function main() {
       if (infile != null) {
         return await readFile(infile, 'utf-8');
       } else {
-        // 省略時・'-'指定時 - 標準入力から取得
+        // Use stdin if omitted or specified '-'
         process.stdin.setEncoding('utf-8');
         return await (async () => {
           const buf = [];
@@ -358,12 +358,12 @@ async function main() {
 
   if (markdown == null || markdown == '') return;
 
-  // PDF変換
+  // Convert to PDF
   const pdf = await convert(markdown, langprop, psize, lscape, margin,
                             family, title, nopage, ratio, langspec, noindent,
                             colorspec, hltheme, mtheme, anchors, base);
 
-  // 標準出力に出力
+  // Output to stdout
   const stream = new streams.ReadableStream(pdf);
   try {
     await pipeline(stream, process.stdout);
