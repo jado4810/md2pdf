@@ -18,9 +18,10 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
-async function convert(markdown, langprop, psize, lscape, margin,
-                       family, title, nopage, ratio, langspec, noindent,
-                       colorspec, hltheme, mtheme, anchors, base) {
+async function convert(
+    markdown, langprop, psize, lscape, margin, family, title, nopage,
+    ratio, langspec, noindent, colorspec, hltheme, mtheme, anchors, base
+) {
   if (markdown == null) return;
 
   // Conversion from headers to anchor IDs (GitHub compatible)
@@ -213,8 +214,10 @@ async function main() {
   program.addOption(
       new Option('-p, --paper <paper>', 'paper spec')
           .default('a4')
-          .choices(['a3', 'a3r', 'a4', 'a4r', 'a5', 'a5r',
-                    'letter', 'letterr', 'legal', 'legalr'])
+          .choices([
+            'a3', 'a3r', 'a4', 'a4r', 'a5', 'a5r',
+            'letter', 'letterr', 'legal', 'legalr'
+          ])
   );
   program.option('-t, --title <title>', 'title');
   program.option('-n, --nopage', 'disable page numbers');
@@ -359,9 +362,10 @@ async function main() {
   if (markdown == null || markdown == '') return;
 
   // Convert to PDF
-  const pdf = await convert(markdown, langprop, psize, lscape, margin,
-                            family, title, nopage, ratio, langspec, noindent,
-                            colorspec, hltheme, mtheme, anchors, base);
+  const pdf = await convert(
+      markdown, langprop, psize, lscape, margin, family, title, nopage,
+      ratio, langspec, noindent, colorspec, hltheme, mtheme, anchors, base
+  );
 
   // Output to stdout
   const stream = new streams.ReadableStream(pdf);
