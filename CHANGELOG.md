@@ -12,6 +12,7 @@
     * Disable indents and retain gaps in paragraphs
 * Adjust some styles
 * Fix error when direct run NodeJS with cwd not at where the script exists
+* Make the exit status set on any errors
 
 ## Version 0.2.2 (2024-3-8)
 

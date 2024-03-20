@@ -20,11 +20,51 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Node21.2 or after
 //const __dirname = import.meta.dir;
 
+class AppError extends Error {
+  toString() {
+    return `${this.constructor.name}: ${this.message}`;
+  }
+}
+
+class ReadError extends AppError {}
+
+async function inputFile(infile) {
+  try {
+    return await readFile(infile, 'utf-8');
+  } catch (e) {
+    throw new ReadError(e.message.replace(/^.*?: */, ''));
+  }
+}
+
+async function inputStdin() {
+  try {
+    const buf = [];
+    process.stdin.setEncoding('utf-8');
+    for await (const chunk of process.stdin) {
+      buf.push(chunk);
+    }
+    return buf.join('');
+  } catch (e) {
+    throw new ReadError(e.message.replace(/^.*?: */, ''));
+  }
+}
+
+class WriteError extends AppError {}
+
+async function outputStdout(data) {
+  const stream = new streams.ReadableStream(data);
+  try {
+    await pipeline(stream, process.stdout);
+  } catch (e) {
+    throw new WriteError(e.message.replace(/^.*?: */, ''));
+  }
+}
+
 async function convert(
     markdown, langprop, psize, lscape, margin, family, title, nopage,
     ratio, langspec, noindent, colorspec, hltheme, mtheme, anchors, base
 ) {
-  if (!markdown) return;
+  if (!markdown) return '';
 
   // Conversion from headers to anchor IDs (GitHub compatible)
   const slugify_regexp = new RegExp(`[^- ${
@@ -276,10 +316,7 @@ async function main() {
   };
 
   const pspec = papers[paper];
-  if (!pspec) {
-    process.stderr.write('Error: paper not found\n');
-    return;
-  }
+  if (!pspec) throw new Error('paper not found');
   const psize = pspec.size;
   const lscape = landscapes[pspec.orient];
   const margin = margins[pspec.orient];
@@ -294,10 +331,7 @@ async function main() {
   };
 
   const family = families[langspec];
-  if (!family) {
-    process.stderr.write('Error: lang not found\n');
-    return;
-  }
+  if (!family) throw new Error('lang not found');
 
   // Language properties
   const langprops = {
@@ -329,49 +363,30 @@ async function main() {
   const mtheme = mthemes[colorspec];
 
   // Input file
-  if (args.length > 1) {
-    process.stderr.write('Error: too many input files\n');
-    return;
-  }
+  if (args.length > 1) throw new Error('too many input files');
   const infile = (args.length < 1 || args[0] == '-') ?
       null : path.resolve(base, args[0]);
 
-  const markdown = await (async () => {
-    try {
-      if (infile != null) {
-        return await readFile(infile, 'utf-8');
-      } else {
-        // Use stdin if omitted or specified '-'
-        process.stdin.setEncoding('utf-8');
-        return await (async () => {
-          const buf = [];
-          for await (const chunk of process.stdin) {
-            buf.push(chunk);
-          }
-          return buf.join('');
-        })();
-      }
-    } catch (e) {
-      process.stderr.write(`Read error: ${e.message.replace(/^.*?: */, '')}\n`);
-      return;
-    }
-  })();
-
-  if (markdown == null || markdown == '') return;
+  // Use stdin if omitted or specified '-'
+  const markdown = infile ? await inputFile(infile) : await inputStdin();
+  if (!markdown) return 'Empty Markdown';
 
   // Convert to PDF
   const pdf = await convert(
       markdown, langprop, psize, lscape, margin, family, title, nopage,
       ratio, langspec, noindent, colorspec, hltheme, mtheme, anchors, base
   );
+  if (!pdf) return 'Empty PDF';
 
   // Output to stdout
-  const stream = new streams.ReadableStream(pdf);
-  try {
-    await pipeline(stream, process.stdout);
-  } catch (e) {
-    process.stderr.write(`Write error: ${e.message.replace(/^.*?: */, '')}\n`);
-  }
+  await outputStdout(pdf);
+
+  return 'done'
 }
 
-main();
+main().then((result) => {
+  process.exit(0);
+}).catch((e) => {
+  process.stderr.write(`${e.toString()}\n`);
+  process.exit(1);
+});
