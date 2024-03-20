@@ -5,6 +5,7 @@
 const version = '0.2.2';
 
 import path from 'path';
+import { fileURLToPath } from 'url'; // necessary if prior Node21.2
 import { readFile } from 'fs/promises';
 import { pipeline } from 'stream/promises';
 
@@ -13,6 +14,11 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 import streams from 'memory-streams';
+
+// prior Node21.2
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Node21.2 or after
+//const __dirname = import.meta.dir;
 
 async function convert(
     markdown, langprop, psize, lscape, margin, family, title, nopage,
@@ -132,7 +138,7 @@ async function convert(
     ]
   });
   const page = await browser.newPage();
-  const uri = `file://${path.resolve(process.cwd(), './resource/fake.html')}`;
+  const uri = `file://${path.resolve(__dirname, './resource/fake.html')}`;
   const styles = './resource/style';
   const themes = './node_modules/highlight.js/styles';
   await page.goto(uri);

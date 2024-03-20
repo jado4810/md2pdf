@@ -11,6 +11,7 @@
 * Introduce -i option for "web style"
     * Disable indents and retain gaps in paragraphs
 * Adjust some styles
+* Fix error when direct run NodeJS with cwd not at where the script exists
 
 ## Version 0.2.2 (2024-3-8)
 
