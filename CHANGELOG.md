@@ -13,6 +13,7 @@
 * Adjust some styles
 * Fix error when direct run NodeJS with cwd not at where the script exists
 * Make the exit status set on any errors
+* Temporary workaround for possible error on reading files with Docker Desktop
 
 ## Version 0.2.2 (2024-3-8)
 

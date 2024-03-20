@@ -28,11 +28,16 @@ class AppError extends Error {
 
 class ReadError extends AppError {}
 
-async function inputFile(infile) {
+async function inputFile(infile, retry) {
   try {
     return await readFile(infile, 'utf-8');
   } catch (e) {
-    throw new ReadError(e.message.replace(/^.*?: */, ''));
+    const msg = e.message.replace(/^.*?: */, '');
+    // xxx Retry when "function not implemented" error on Docker Desktop
+    if (!retry && msg.match(/function not implemented/)) {
+      return await inputFile(infile, true);
+    }
+    throw new ReadError(msg);
   }
 }
 
