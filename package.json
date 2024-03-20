@@ -2,7 +2,7 @@
   "name": "jado4810-md2pdf",
   "description": "Typeset Markdown to PDF for publishing",
   "type": "module",
-  "main": "md2pdf.js",
+  "exports": "./md2pdf.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/jado4810/md2pdf.git"
