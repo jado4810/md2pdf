@@ -4,25 +4,21 @@
 
 const version = '0.2.2';
 
-import { Command, Option, InvalidArgumentError } from 'commander';
-
 import path from 'path';
-import { promisify } from 'util';
-import fs from 'fs';
-const readFile = promisify(fs.readFile);
-
-import streams from 'memory-streams';
+import { readFile } from 'fs/promises';
 import { pipeline } from 'stream/promises';
 
+import { Command, Option, InvalidArgumentError } from 'commander';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
+import streams from 'memory-streams';
 
 async function convert(
     markdown, langprop, psize, lscape, margin, family, title, nopage,
     ratio, langspec, noindent, colorspec, hltheme, mtheme, anchors, base
 ) {
-  if (markdown == null) return;
+  if (!markdown) return;
 
   // Conversion from headers to anchor IDs (GitHub compatible)
   const slugify_regexp = new RegExp(`[^- ${
@@ -56,7 +52,7 @@ async function convert(
   renderer.code = (code, info) => {
     if (info == null) info = '';
 
-    let classes = [];
+    const classes = [];
     let m;
 
     m = info.match(/^([^\[\"\s:]*):?(.*)$/);
@@ -68,7 +64,7 @@ async function convert(
     info = m && m[2] || '';
     const file = filename ? `<code class="filename">${filename}</code>` : '';
 
-    let otags = [];
+    const otags = [];
     let ctag;
     if (lang == 'mermaid') {
       classes.push('mermaid');
@@ -121,9 +117,7 @@ async function convert(
     title = match ? match[1] : '';
   }
 
-  const head = (title == null || title == '') ?
-      '' :
-      `<head><title>${title}</title></head>`;
+  const head = title ? `<head><title>${title}</title></head>` : '';
   const lang = langprop ? ` lang="${langprop}"` : '';
   const html = `<html>${head}<body${lang}>${body}</body></html>`;
 
@@ -154,7 +148,7 @@ async function convert(
     content: `const ratio = ${ratio} / 100;`
   });
   await page.evaluate(async () => {
-    let imgs = document.getElementsByClassName('md-img');
+    const imgs = document.getElementsByClassName('md-img');
     Array.prototype.forEach.call(imgs, (img) => {
       img.style.width = `${Math.ceil(img.naturalWidth * ratio)}px`;
     });
@@ -165,17 +159,15 @@ async function convert(
   await page.addScriptTag({path: `${mscripts}/mermaid.min.js`});
   const moptions = `startOnLoad:false,theme:"${mtheme}"`;
   await page.addScriptTag({content: `mermaid.initialize({${moptions}})`});
-  const result = await page.evaluateHandle(async () => {
+  const merr = await page.evaluateHandle(async () => {
     try {
       await window.mermaid.run({querySelector: '.mermaid'});
       return null;
     } catch (e) {
       return e.message;
     }
-  });
-  if (result.remoteObject().value) {
-    process.stderr.write(`Error on mermaid: ${result.remoteObject().value}\n`);
-  }
+  }).then(async(result) => { return result.remoteObject().value });
+  if (merr) process.stderr.write(`Error on mermaid: ${merr}\n`);
 
   // Output PDF
   const fontspec = '9pt ' + family.map((f) => { return `'${f}'` }).join(',');
