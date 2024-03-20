@@ -1,6 +1,6 @@
 # md2pdf - Changelog
 
-## Version 0.3.0
+## Version 0.3.0 (2024-3-20)
 
 * More language specs for Chinese and Korean
 * Strict line breaking rules for CJK

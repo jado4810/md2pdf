@@ -2,7 +2,7 @@
 
 'use strict';
 
-const version = '0.2.2';
+const version = '0.3.0';
 
 import path from 'path';
 import { fileURLToPath } from 'url'; // necessary if prior Node21.2
