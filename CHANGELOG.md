@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.3.1 (2024-9-5)
+
+* Update shell option parser to getoptions-3.3.2
+
 ## Version 0.3.0 (2024-3-20)
 
 * More language specs for Chinese and Korean
