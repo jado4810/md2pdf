@@ -1,10 +1,25 @@
 # getoptions <!-- omit in toc -->
 
 [![Test](https://github.com/ko1nksm/getoptions/workflows/Test/badge.svg)](https://github.com/ko1nksm/getoptions/actions)
-[![codecov](https://codecov.io/gh/ko1nksm/getoptions/branch/master/graph/badge.svg)](https://codecov.io/gh/ko1nksm/getoptions)
-[![CodeFactor](https://www.codefactor.io/repository/github/ko1nksm/getoptions/badge)](https://www.codefactor.io/repository/github/ko1nksm/getoptions)
+[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/ko1nksm/getoptions?logo=codefactor)](https://www.codefactor.io/repository/github/ko1nksm/getoptions)
+[![Codecov](https://img.shields.io/codecov/c/github/ko1nksm/getoptions?logo=codecov)](https://codecov.io/gh/ko1nksm/getoptions)
+[![kcov](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fko1nksm.github.io%2Fgetoptions%2Fcoverage.json&query=percent_covered&label=kcov&suffix=%25)](https://ko1nksm.github.io/getoptions/)
 [![GitHub top language](https://img.shields.io/github/languages/top/ko1nksm/getoptions.svg)](https://github.com/ko1nksm/getoptions/search?l=Shell)
-[![License](https://img.shields.io/github/license/ko1nksm/getoptions.svg)](https://github.com/ko1nksm/getoptions/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/ko1nksm/getoptions.svg)](https://github.com/ko1nksm/getoptions/blob/master/LICENSE)<br>
+![Linux](https://img.shields.io/badge/Linux-ecd53f?style=flat)
+![macOS](https://img.shields.io/badge/macOS-ecd53f?style=flat)
+![BSD](https://img.shields.io/badge/BSD-ecd53f?style=flat)
+![Solaris](https://img.shields.io/badge/Solaris-ecd53f?style=flat)
+![AIX](https://img.shields.io/badge/AIX-ecd53f?style=flat)
+![BusyBox](https://img.shields.io/badge/BusyBox-ecd53f?style=flat)
+![Windows](https://img.shields.io/badge/Windows-ecd53f?style=flat)
+![sh](https://img.shields.io/badge/sh-cec7d1.svg?style=flat)
+![bash](https://img.shields.io/badge/bash-cec7d1.svg?style=flat)
+![dash](https://img.shields.io/badge/dash-cec7d1.svg?style=flat)
+![ksh](https://img.shields.io/badge/ksh-cec7d1.svg?style=flat)
+![mksh](https://img.shields.io/badge/mksh-cec7d1.svg?style=flat)
+![yash](https://img.shields.io/badge/yash-cec7d1.svg?style=flat)
+![zsh](https://img.shields.io/badge/zsh-cec7d1.svg?style=flat)
 
 An elegant option parser for shell scripts (full support for all POSIX shells)
 
@@ -25,7 +40,7 @@ parser_definition() {
   flag    FLAG    -f --flag                 -- "takes no arguments"
   param   PARAM   -p --param                -- "takes one argument"
   option  OPTION  -o --option on:"default"  -- "takes one optional argument"
-  disp    :usage  -h --help
+  disp    :usage     --help
   disp    VERSION    --version
 }
 
@@ -37,9 +52,15 @@ printf '%s\n' "$@" # rest arguments
 
 It generates a simple [option parser code](#how-to-see-the-option-parser-code) internally and parses the following arguments.
 
-```sh
-example.sh -f --flag -p VALUE --param VALUE -o --option -oVALUE --option=VALUE 1 2 3
+```console
+$ example.sh -f --flag -p value --param value -o --option -ovalue --option=value 1 2 3
+FLAG: 1, PARAM: value, OPTION: value
+1
+2
+3
 ```
+
+Automatic help generation is also provided.
 
 ```console
 $ example.sh --help
@@ -50,7 +71,7 @@ Options:
   -f, --flag                  takes no arguments
   -p, --param PARAM           takes one argument
   -o, --option[=OPTION]       takes one optional argument
-  -h, --help
+      --help
       --version
 ```
 
@@ -169,7 +190,7 @@ make
 make install PREFIX=$HOME
 ```
 
-### Homebrew / Linuxbrew
+### Homebrew
 
 ```sh
 brew tap ko1nksm/getoptions
@@ -205,8 +226,8 @@ parse "$@"
 eval "set -- $REST"
 ```
 
-The above code `exit 1` is the recommended option.
-This allows you to exit if the `getoptions` command is not found.
+The mysterious `exit 1` above is code for exiting when the `getoptions`
+command is not found. The last character output by `getoptions` is `#`.
 
 If you omit the option parser name or use `-`, it will define the default option
 parser and parse arguments immediately.
@@ -338,39 +359,58 @@ $ gengetoptions embed --overwrite example.sh
 Ubuntu (dash) Core i7 3.4 Ghz
 
 ```ini
-[command]
-Benchmark #1: ./example.sh --flag --param param --option=option a b c
-  Time (mean ± σ):       8.6 ms ±   0.3 ms    [User: 6.3 ms, System: 0.6 ms]
-  Range (min … max):     7.7 ms …  10.1 ms    300 runs
+[Use as command]
+Benchmark 1: sh ./example.sh --flag1 --flag2 --flag3 --param1 param1 --param2 param2 --param3 param3 --option1=option1 --option2=option2 --option3=option3 a b c d e f g
+  Time (mean ± σ):       4.9 ms ±   0.2 ms    [User: 4.8 ms, System: 0.6 ms]
+  Range (min … max):     4.5 ms …   5.8 ms    479 runs
 
-[library]
-Benchmark #1: ./example.sh --flag --param param --option=option a b c
-  Time (mean ± σ):       8.3 ms ±   0.4 ms    [User: 5.2 ms, System: 0.5 ms]
-  Range (min … max):     7.4 ms …  10.5 ms    322 runs
+[Use as library]
+Benchmark 1: sh ./example.sh --flag1 --flag2 --flag3 --param1 param1 --param2 param2 --param3 param3 --option1=option1 --option2=option2 --option3=option3 a b c d e f g
+  Time (mean ± σ):       4.1 ms ±   0.2 ms    [User: 3.9 ms, System: 0.4 ms]
+  Range (min … max):     3.7 ms …   5.0 ms    661 runs
 
-[generator]
-Benchmark #1: ./example.sh --flag --param param --option=option a b c
-  Time (mean ± σ):       4.7 ms ±   0.3 ms    [User: 1.4 ms, System: 0.1 ms]
-  Range (min … max):     4.4 ms …   6.5 ms    510 runs
+[Use as generator]
+Benchmark 1: sh ./example.sh --flag1 --flag2 --flag3 --param1 param1 --param2 param2 --param3 param3 --option1=option1 --option2=option2 --option3=option3 a b c d e f g
+  Time (mean ± σ):     827.0 µs ±  77.0 µs    [User: 759.0 µs, System: 100.1 µs]
+  Range (min … max):   702.2 µs … 3044.5 µs    2293 runs
+```
+
+Ubuntu (bash) Core i7 3.4 Ghz
+
+```ini
+[Use as command]
+Benchmark 1: bash ./example.sh --flag1 --flag2 --flag3 --param1 param1 --param2 param2 --param3 param3 --option1=option1 --option2=option2 --option3=option3 a b c d e f g
+  Time (mean ± σ):      18.9 ms ±   0.6 ms    [User: 17.9 ms, System: 1.5 ms]
+  Range (min … max):    17.7 ms …  22.0 ms    153 runs
+
+[Use as library]
+Benchmark 1: bash ./example.sh --flag1 --flag2 --flag3 --param1 param1 --param2 param2 --param3 param3 --option1=option1 --option2=option2 --option3=option3 a b c d e f g
+  Time (mean ± σ):      17.7 ms ±   0.6 ms    [User: 16.8 ms, System: 1.4 ms]
+  Range (min … max):    16.5 ms …  19.8 ms    160 runs
+
+[Use as generator]
+Benchmark 1: bash ./example.sh --flag1 --flag2 --flag3 --param1 param1 --param2 param2 --param3 param3 --option1=option1 --option2=option2 --option3=option3 a b c d e f g
+  Time (mean ± σ):       2.4 ms ±   0.2 ms    [User: 2.1 ms, System: 0.4 ms]
+  Range (min … max):     2.1 ms …   5.3 ms    882 runs
 ```
 
 macOS (bash), Core i5 2.4 GHz
 
 ```ini
-[command]
-Benchmark #1: ./example.sh --flag --param param --option=option a b c
-  Time (mean ± σ):      37.6 ms ±   3.2 ms    [User: 29.2 ms, System: 7.4 ms]
-  Range (min … max):    33.4 ms …  47.5 ms    66 runs
+[Use as command]
+Benchmark 1: sh ./example.sh --flag1 --flag2 --flag3 --param1 param1 --param2 param2 --param3 param3 --option1=option1 --option2=option2 --option3=option3 a b c d e f g
+  Time (mean ± σ):      68.5 ms ±   5.5 ms    [User: 55.2 ms, System: 12.3 ms]
+  Range (min … max):    63.8 ms …  87.8 ms    33 runs
 
-[library]
-Benchmark #1: ./example.sh --flag --param param --option=option a b c
-  Time (mean ± σ):      31.0 ms ±   3.7 ms    [User: 26.0 ms, System: 4.4 ms]
-  Range (min … max):    26.4 ms …  43.8 ms    77 runs
+[Use as library]
+Benchmark 1: sh ./example.sh --flag1 --flag2 --flag3 --param1 param1 --param2 param2 --param3 param3 --option1=option1 --option2=option2 --option3=option3 a b c d e f g
+  Time (mean ± σ):      57.1 ms ±   3.6 ms    [User: 49.4 ms, System: 7.3 ms]
+  Range (min … max):    54.3 ms …  75.7 ms    47 runs
 
-[generator]
-Benchmark #1: ./example.sh --flag --param param --option=option a b c
-  Time (mean ± σ):       5.6 ms ±   2.1 ms    [User: 2.8 ms, System: 2.0 ms]
-  Range (min … max):     3.9 ms …  15.1 ms    277 runs
+[Use as generator]
+Benchmark 1: sh ./example.sh --flag1 --flag2 --flag3 --param1 param1 --param2 param2 --param3 param3 --option1=option1 --option2=option2 --option3=option3 a b c d e f g
+  Time (mean ± σ):       9.6 ms ±   2.3 ms    [User: 4.6 ms, System: 3.9 ms]
+  Range (min … max):     7.4 ms …  19.2 ms    125 runs
 ```
 
 ## How to see the option parser code
@@ -611,7 +651,7 @@ which has number of options. [ShellSpec optparser][optparser] is another good ex
 
 ## NOTE: 3.x breaking changes
 
-- Renamed `lin/getoptions.sh` to `lin/getoptions_base.sh`
+- Renamed `lib/getoptions.sh` to `lib/getoptions_base.sh`
 - Renamed `getoptions-cli` to `gengetoptions`
 - Moved library generation feature of `getoptions` to `gengetoptions`
 - Removed scanning mode `=` and `#`
