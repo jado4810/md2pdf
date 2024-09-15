@@ -386,7 +386,7 @@ async function main() {
   // Output to stdout
   await outputStdout(pdf);
 
-  return 'done'
+  return 'done';
 }
 
 main().then((result) => {
