@@ -15,11 +15,10 @@
   },
   "homepage": "https://github.com/jado4810/md2pdf/",
   "dependencies": {
-    "commander": ">8.0.0",
+    "commander": "^8.3.0",
     "highlight.js": "*",
-    "marked": "*",
-    "memory-streams": "*",
-    "mermaid": "*",
+    "marked": "^14.0.0",
+    "mermaid": "^10.6.0",
     "puppeteer": ">21.0.0"
   }
 }

@@ -79,93 +79,100 @@ async function convert(
   }]`, 'gu');
 
   // Markdown renderer
-  const renderer = new marked.Renderer();
+  const renderer = {
+    heading({tokens, text, depth}) {
+      const parsed = this.parser.parseInline(tokens);
+      const key = text
+          .replaceAll(/\!\[.*?\]\(.*?\)/g, '')
+          .replaceAll(/\[(.*?)\]\(.*?\)/g, '$1')
+          .replaceAll(slugify_regexp, '')
+          .replace(/ +$/, '').replaceAll(/ /g, '-').toLowerCase();
+      if (anchors) process.stderr.write(`Anchor id=${key}: ${text}\n`);
+      return `<h${depth} id="${key}">${parsed}</h${depth}>`;
+    },
 
-  renderer.heading = (text, level) => {
-    const key = text
-        .replaceAll(/\!\[.*?\]\(.*?\)/g, '')
-        .replaceAll(/\[(.*?)\]\(.*?\)/g, '$1')
-        .replaceAll(slugify_regexp, '')
-        .replace(/ +$/, '').replaceAll(/ /g, '-').toLowerCase();
-    if (anchors) process.stderr.write(`Anchor id=${key}: ${text}\n`);
-    return `<h${level} id="${key}">${text}</h${level}>`;
-  };
+    image({href, title, text}) {
+      const uri = href.match(/^https?:\/\//) ? href : path.resolve(base, href);
+      const klass = uri.match(/\.svg$/i) ? 'md-img-vector' : 'md-img';
+      const alt = text ? ` alt="${text}"` : '';
+      const img = `<img class="${klass}" src="${uri}"${alt}>\n`;
+      if (title) {
+        const caption = `<figcaption>${title}</figcaption>\n`;
+        return `<figure>\n${img}${caption}</figure>\n`;
+      } else {
+        return img;
+      }
+    },
 
-  renderer.image = (href, title, alttext) => {
-    const uri = (href.match(/^https?:\/\//)) ? href : path.resolve(base, href);
-    const klass = uri.match(/\.svg$/i) ? 'md-img-vector' : 'md-img';
-    const alt = alttext ? ` alt="${alttext}"` : '';
-    const img = `<img class="${klass}" src="${uri}"${alt}>\n`;
-    if (title) {
-      const caption = `<figcaption>${title}</figcaption>\n`;
-      return `<figure>\n${img}${caption}</figure>\n`;
-    } else {
-      return img;
-    }
-  };
+    code({text, lang}) {
+      let info = (lang == null) ? '' : lang;
 
-  renderer.code = (code, info) => {
-    if (info == null) info = '';
+      const classes = [];
+      let match;
 
-    const classes = [];
-    let m;
+      match = info.match(/^([^\[\"\s:]*):?(.*)$/);
+      const hilit = match && match[1] || 'plaintext';
+      info = match && match[2] || '';
 
-    m = info.match(/^([^\[\"\s:]*):?(.*)$/);
-    const lang = m && m[1] || 'plaintext';
-    info = m && m[2] || '';
+      match = info.match(/^([^\[\"\s]*)(.*)?$/);
+      const filename = match && match[1] || '';
+      info = match && match[2] || '';
+      const file = filename ? `<code class="filename">${filename}</code>` : '';
 
-    m = info.match(/^([^\[\"\s]*)(.*)?$/);
-    const filename = m && m[1] || '';
-    info = m && m[2] || '';
-    const file = filename ? `<code class="filename">${filename}</code>` : '';
+      const otags = [];
+      let ctag;
+      if (hilit == 'mermaid') {
+        classes.push('mermaid');
+        otags.push('<div');
+        otags.push('>\n');
+        ctag = '\n</div>\n';
+      } else {
+        otags.push('<pre');
+        otags.push(`>${file}<code>`);
+        ctag = '</code></pre>\n';
+        text = hljs.highlight(text, {
+          language: hilit,
+          ignoreIllegals: true
+        }).value;
+      }
 
-    const otags = [];
-    let ctag;
-    if (lang == 'mermaid') {
-      classes.push('mermaid');
-      otags.push('<div');
-      otags.push('>\n');
-      ctag = '\n</div>\n';
-    } else {
-      otags.push('<pre');
-      otags.push(`>${file}<code>`);
-      ctag = '</code></pre>\n';
-      code = hljs.highlight(code, {language: lang, ignoreIllegals: true}).value;
-    }
+      match = info.match(/\[([^\]]+)\]/);
+      const paging = match && match[1] || '';
 
-    m = info.match(/\[([^\]]+)\]/);
-    const paging = m && m[1] || '';
+      switch (paging) {
+      case '':
+        break;
+      case 'float':
+      case 'newpage':
+      case 'isolated':
+        classes.push(paging);
+        break;
+      default:
+        process.stderr.write(`Unknown paging option: ${paging}\n`);
+      }
 
-    switch (paging) {
-    case '':
-      break;
-    case 'float':
-    case 'newpage':
-    case 'isolated':
-      classes.push(paging);
-      break;
-    default:
-      process.stderr.write(`Unknown paging option: ${paging}\n`);
-    }
+      if (classes.length > 0) {
+        otags.splice(1, 0, ` class="${classes.join(' ')}"`);
+      }
+      const base = otags.join('') + text + ctag;
 
-    if (classes.length > 0) {
-      otags.splice(1, 0, ` class="${classes.join(' ')}"`);
-    }
-    const base = otags.join('') + code + ctag;
+      match = info.match(/"([^\"]+)"/);
+      const title = match && match[1] || '';
 
-    m = info.match(/"([^\"]+)"/);
-    const title = m && m[1] || '';
-
-    if (title) {
-      const caption = `<figcaption>${title}</figcaption>\n`;
-      return `<figure>\n${base}${caption}</figure>\n`;
-    } else {
-      return base;
+      if (title) {
+        const caption = `<figcaption>${title}</figcaption>\n`;
+        return `<figure>\n${base}${caption}</figure>\n`;
+      } else {
+        return base;
+      }
     }
   };
 
   // Convert markdown to HTML
-  const body = marked(markdown, {renderer: renderer});
+  marked.use({
+    renderer: renderer
+  });
+  const body = marked.parse(markdown);
 
   if (title == null) {
     const match = body.match(/<h1(?: id=".+?")?>(.*?)<\/h1>/);
