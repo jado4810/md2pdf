@@ -82,7 +82,10 @@ async function convert(
   const renderer = new marked.Renderer();
 
   renderer.heading = (text, level) => {
-    const key = text.replaceAll(slugify_regexp, '')
+    const key = text
+        .replaceAll(/\!\[.*?\]\(.*?\)/g, '')
+        .replaceAll(/\[(.*?)\]\(.*?\)/g, '$1')
+        .replaceAll(slugify_regexp, '')
         .replace(/ +$/, '').replaceAll(/ /g, '-').toLowerCase();
     if (anchors) process.stderr.write(`Anchor id=${key}: ${text}\n`);
     return `<h${level} id="${key}">${text}</h${level}>`;
