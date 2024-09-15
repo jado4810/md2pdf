@@ -46,6 +46,11 @@ kbd {
   font-family: "Noto Sans", "Noto Sans CJK TC";
 }
 
+img {
+  position: relative;
+  top: -0.1em;
+}
+
 .mermaid .cluster-label .nodeLabel,
 .mermaid .label .edgeLabel {
   font-family: "Noto Sans", "Noto Sans CJK TC";
