@@ -65,6 +65,7 @@ Options are available below:
     * Omit page numbers
 * `-r «ratio»`
     * Specify the img magnify ratio in percentage
+    * No effect on SVG image
     * Recommended smaller (< 100) value on screenshots from zoomed screen to get clear images in PDF
 * `-l «lang»`
     * Speciry the language scheme, to decide font priorities, line break rules and text indentation rules
