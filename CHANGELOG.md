@@ -1,5 +1,14 @@
 # md2pdf - Changelog
 
+## Version 0.4.0 (2024-9-15)
+
+* Update MarkedJS to v14
+* Fix some issues about rendering images
+   * Adjust vertical-align of img for inline images
+   * Ignore image magnification ratio by -r option for SVG images
+* Fix anchor slugifying rule for images or links
+* Fix some points of breakage on current build
+
 ## Version 0.3.1 (2024-9-5)
 
 * Update shell option parser to getoptions-3.3.2
