@@ -13,7 +13,6 @@ import { Command, Option, InvalidArgumentError } from 'commander';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
-import streams from 'memory-streams';
 
 // prior Node21.2
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -57,7 +56,8 @@ async function inputStdin() {
 class WriteError extends AppError {}
 
 async function outputStdout(data) {
-  const stream = new streams.ReadableStream(data);
+  const blob = new Blob([data], {type: 'application/pdf'});
+  const stream = blob.stream();
   try {
     await pipeline(stream, process.stdout);
   } catch (e) {
