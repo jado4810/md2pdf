@@ -93,8 +93,9 @@ async function convert(
 
   renderer.image = (href, title, alttext) => {
     const uri = (href.match(/^https?:\/\//)) ? href : path.resolve(base, href);
+    const klass = uri.match(/\.svg$/i) ? 'md-img-vector' : 'md-img';
     const alt = alttext ? ` alt="${alttext}"` : '';
-    const img = `<img class="md-img" src="${uri}"${alt}>\n`;
+    const img = `<img class="${klass}" src="${uri}"${alt}>\n`;
     if (title) {
       const caption = `<figcaption>${title}</figcaption>\n`;
       return `<figure>\n${img}${caption}</figure>\n`;
