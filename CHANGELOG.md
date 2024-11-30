@@ -1,5 +1,11 @@
 # md2pdf - Changelog
 
+## Version 0.4.1 (2024-11-30)
+
+* Migrate Chromium131 and Puppeteer23.9 and fixed those versions
+* Fix base container versions to Debian12 with Node20LTS
+* Improve performance by a little
+
 ## Version 0.4.0 (2024-9-15)
 
 * Update MarkedJS to v14
