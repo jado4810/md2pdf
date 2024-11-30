@@ -185,8 +185,15 @@ async function convert(
 
   // Render HTML with puppeteer
   const browser = await puppeteer.launch({
-    headless: 'new',
+    browser: 'chrome',
+    executablePath: '/usr/bin/chromium',
+    headless: true,
     args: [
+      '--single-process',
+      '--disable-gpu',
+      '--disable-dev-shm-usage',
+      '--no-first-run',
+      '--no-zygote',
       '--no-sandbox',
       '--disable-setuid-sandbox',
       '--allow-file-access-from-files',

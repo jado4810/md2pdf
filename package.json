@@ -19,6 +19,6 @@
     "highlight.js": "*",
     "marked": "^14.0.0",
     "mermaid": "^10.6.0",
-    "puppeteer": ">21.0.0"
+    "puppeteer": "^23.8.0"
   }
 }
