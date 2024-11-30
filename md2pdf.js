@@ -213,29 +213,25 @@ async function convert(
   if (hltheme) await page.addStyleTag({path: `${themes}/${hltheme}.min.css`});
 
   // Adjust image size
-  await page.addScriptTag({
-    content: `const ratio = ${ratio} / 100;`
-  });
-  await page.evaluate(async () => {
+  await page.evaluate((ratio) => {
     const imgs = document.getElementsByClassName('md-img');
     Array.prototype.forEach.call(imgs, (img) => {
       img.style.width = `${Math.ceil(img.naturalWidth * ratio)}px`;
     });
-  });
+  }, ratio / 100);
 
   // Render mermaid
   const mscripts = './node_modules/mermaid/dist';
   await page.addScriptTag({path: `${mscripts}/mermaid.min.js`});
-  const moptions = `startOnLoad:false,theme:"${mtheme}"`;
-  await page.addScriptTag({content: `mermaid.initialize({${moptions}})`});
-  const merr = await page.evaluateHandle(async () => {
-    try {
-      await window.mermaid.run({querySelector: '.mermaid'});
-      return null;
-    } catch (e) {
-      return e.message;
-    }
-  }).then(async(result) => { return result.remoteObject().value });
+  const merr = await page.evaluate((mtheme) => {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: mtheme
+    });
+    return mermaid.run({
+      querySelector: '.mermaid'
+    }).then(() => null, (e) => e.message);
+  }, mtheme);
   if (merr) process.stderr.write(`Error on mermaid: ${merr}\n`);
 
   // Output PDF
