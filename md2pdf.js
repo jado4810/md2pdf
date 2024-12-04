@@ -258,7 +258,7 @@ async function convert(
       querySelector: '.mermaid'
     }).then(() => null, (e) => e.message);
   }, mtheme);
-  if (merr) process.stderr.write(`Error on mermaid: ${merr}\n`);
+  if (merr) process.stderr.write(`Mermaid parse error: ${merr}\n`);
 
   // Output PDF
   const fontspec = '9pt ' + family.map((f) => { return `'${f}'` }).join(',');
