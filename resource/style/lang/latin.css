@@ -46,10 +46,10 @@ kbd {
   font-family: "Noto Sans";
 }
 
-.mermaid :is(.cluster-label .nodeLabel, .label .edgeLabel) {
+.mermaid :is(.cluster-label .nodeLabel, .label .edgeLabel) p {
   font-family: "Noto Sans";
 }
 
-.mermaid .label .nodeLabel {
+.mermaid .label .nodeLabel p {
   font-family: "Noto Serif";
 }

@@ -156,14 +156,12 @@ figcaption {
   font-size: 9pt;
 }
 
-.mermaid {
-  text-align: center;
-}
-
-.mermaid .cluster-label .nodeLabel {
+.mermaid .cluster-label .nodeLabel p {
   font-size: 10.5pt;
+  text-indent: 0;
 }
 
-.mermaid .label :is(.nodeLabel, .edgeLabel) {
+.mermaid .label :is(.nodeLabel, .edgeLabel) p {
   font-size: 9pt;
+  text-indent: 0;
 }
