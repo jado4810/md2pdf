@@ -24,13 +24,8 @@ kbd {
   border: 1px solid #000;
 }
 
-.mermaid .node rect,
-.mermaid .node circle,
-.mermaid .node ellipse,
-.mermaid .node polygon,
-.mermaid .node path,
-.mermaid .edgeLabels rect,
-.mermaid .cluster rect {
+.mermaid .node :is(rect, circle, ellipse, polygon, path),
+.mermaid :is(.edgeLabels, .cluster) rect {
   fill: #fff !important;
   stroke: #000 !important;
 }

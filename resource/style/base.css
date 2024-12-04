@@ -50,12 +50,7 @@ figure > pre {
   margin: 0;
 }
 
-blockquote > h1:first-child,
-blockquote > h2:first-child,
-blockquote > h3:first-child,
-blockquote > h4:first-child,
-blockquote > h5:first-child,
-blockquote > h6:first-child {
+blockquote > :is(h1, h2, h3, h4, h5, h6):first-child {
   margin-top: 4px;
 }
 
@@ -103,8 +98,7 @@ li:has(> p) {
   margin: 4pt 0;
 }
 
-li > ul,
-li > ol {
+li > :is(ul, ol) {
   margin: 0;
 }
 
@@ -152,7 +146,7 @@ figure:has(> img) {
   align-items: center;
 }
 
-figure:has(> pre), figure:has(> .mermaid) {
+figure:has(> :is(pre, .mermaid)) {
   align-items: stretch;
 }
 
@@ -170,7 +164,6 @@ figcaption {
   font-size: 10.5pt;
 }
 
-.mermaid .label .nodeLabel,
-.mermaid .label .edgeLabel {
+.mermaid .label :is(.nodeLabel, .edgeLabel) {
   font-size: 9pt;
 }
