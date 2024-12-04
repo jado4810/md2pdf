@@ -10,6 +10,8 @@ import { pipeline } from 'stream/promises';
 
 import { Command, Option, InvalidArgumentError } from 'commander';
 import { marked } from 'marked';
+import katex from 'katex';
+import markedKatex from 'marked-katex-extension';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
@@ -165,10 +167,35 @@ async function convert(
   };
 
   // Convert markdown to HTML
+  const texmacros = {};
   marked.use({
     renderer: renderer
-  });
-  const body = marked.parse(markdown);
+  }, markedKatex({
+    output: 'html',
+    texmacros
+  }));
+
+  const body = (() => {
+    try {
+      return marked.parse(markdown);
+    } catch (e) {
+      if (e instanceof katex.ParseError) {
+        process.stderr.write(`${e.message.split('\n').at(0)}\n`);
+
+        // Fallback with error commands being rendered as colored text
+        const texmacros = {};
+        marked.use(markedKatex({
+          output: 'html',
+          throwOnError: false,
+          texmacros
+        }));
+
+        return marked.parse(markdown);
+      } else {
+        throw e;
+      }
+    }
+  })();
 
   if (title == null) {
     const match = body.match(/<h1(?: id=".+?")?>(.*?)<\/h1>/);
@@ -200,6 +227,7 @@ async function convert(
   const uri = `file://${path.resolve(__dirname, './resource/fake.html')}`;
   const styles = './resource/style';
   const themes = './node_modules/highlight.js/styles';
+  const texdist = './node_modules/katex/dist';
   await page.goto(uri);
   await page.setContent(html);
   await page.addStyleTag({path: `${styles}/base.css`});
@@ -207,6 +235,8 @@ async function convert(
   if (noindent) await page.addStyleTag({path: `${styles}/noindent.css`});
   await page.addStyleTag({path: `${styles}/color/${colorspec}.css`});
   if (hltheme) await page.addStyleTag({path: `${themes}/${hltheme}.min.css`});
+  await page.addStyleTag({path: `${texdist}/katex.min.css`});
+  await page.addStyleTag({path: `${styles}/katex-fonts.css`});
 
   // Adjust image size
   await page.evaluate((ratio) => {

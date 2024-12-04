@@ -1,0 +1,52 @@
+.katex {
+  font-size: 1em;
+  font-family: MathJax_Main;
+}
+
+.katex :is(.mainrm, .mathit, .mathbf, .textrm) {
+  font-family: MathJax_Main;
+}
+
+.katex :is(.mathtt, .texttt) {
+  font-family: MathJax_Typewriter;
+}
+
+.katex :is(.mathnormal, .boldsymbol) {
+  font-family: MathJax_Math;
+}
+
+.katex :is(.amsrm, .mathbb, .textbb) {
+  font-family: MathJax_AMS;
+}
+
+.katex .mathcal {
+  font-family: MathJax_Caligraphic;
+}
+
+.katex :is(.mathfrak, .mathboldfrak, .textfrak, .textboldfrak) {
+  font-family: MathJax_Fraktur;
+}
+
+.katex :is(.mathscr, .textscr) {
+  font-family: MathJax_Script;
+}
+
+.katex :is(.mathsf, .mathboldsf, .mathitsf, .textsf, .textboldsf, .textitsf) {
+  font-family: MathJax_SansSerif;
+}
+
+.katex :is(.delimsizing.size1, .delimsizing.mult .delim-size1 > span, .op-symbol.small-op) {
+  font-family: MathJax_Size1;
+}
+
+.katex :is(.delimsizing.size2, .op-symbol.large-op) {
+  font-family: MathJax_Size2;
+}
+
+.katex .delimsizing.size3 {
+  font-family: MathJax_Size3;
+}
+
+.katex :is(.delimsizing.size4, .delimsizing.mult .delim-size4 > span) {
+  font-family: MathJax_Size4;
+}
