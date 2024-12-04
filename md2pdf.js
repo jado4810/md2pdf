@@ -5,7 +5,6 @@
 const version = '0.4.1';
 
 import path from 'path';
-import { fileURLToPath } from 'url'; // necessary if prior Node21.2
 import { readFile } from 'fs/promises';
 import { pipeline } from 'stream/promises';
 
@@ -14,10 +13,7 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
 
-// prior Node21.2
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Node21.2 or after
-//const __dirname = import.meta.dir;
+const __dirname = import.meta.dirname;
 
 class AppError extends Error {
   toString() {
