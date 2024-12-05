@@ -26,9 +26,10 @@ Some kinds of the style are customizable:
 
 It accepts Markdown format like below:
 
-* Marked-recognizable formats
-* Mermaid
+* GitHub flavored Markdown
 * Code highlight
+* Mermaid
+* LaTeX
 
 How to Use
 ----------
@@ -133,7 +134,7 @@ Also needs a web browser installed, which is compatible with "headless mode", i.
 Markdown format
 ---------------
 
-Markdown documents are rendered by [marked](https://marked.js.org/).
+Markdown documents are rendered by [MarkedJS](https://marked.js.org/), and are recognized as [GitHub flavored syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
 
 In addition, the following extensions are provided.
 
@@ -162,29 +163,6 @@ will be rendered as:
 
 Also consider specifying the `-r` option.
 
-### Mermaid
-
-Code blocks with the language specifiers of "mermaid" are rendered by [mermaidjs](https://mermaid.js.org/).
-
-For example, code block below:
-
-````
-```mermaid
-flowchart LR
-  A[Start]-->B{Check}
-  C[Okay]
-  D[NG]
-  B-->|Yes| C
-  B-->|No| D
-```
-````
-
-will be rendered as:
-
-<p align="center">
-<img src="./doc-images/fig2.png" style="width:294px;height:auto">
-</p>
-
 ### Code highlight
 
 Language specifiers following code block openers are passed to [highlight.js](https://highlightjs.org/).
@@ -206,7 +184,30 @@ function highlight(code, lang) {
 will be:
 
 <p align="center">
-<img src="./doc-images/fig3.png" style="width:862px;height:auto">
+<img src="./doc-images/fig2.png" style="width:862px;height:auto">
+</p>
+
+### Mermaid
+
+Code blocks with the language specifiers of "mermaid" are rendered by [MermaidJS](https://mermaid.js.org/).
+
+For example, code block below:
+
+````
+```mermaid
+flowchart LR
+  A[Start]-->B{Check}
+  C[Okay]
+  D[NG]
+  B-->|Yes| C
+  B-->|No| D
+```
+````
+
+will be rendered as:
+
+<p align="center">
+<img src="./doc-images/fig3.png" style="width:294px;height:auto">
 </p>
 
 ### Caption for code block (and mermaid)
@@ -276,6 +277,38 @@ function long_proc(list) {
 }
 ```
 ````
+
+### LaTeX
+
+LaTeX forms surrounded by `$` or `$$` are passed to [KaTeX](https://katex.org/).
+The parts surrounded by `$` are rendered as inline formulas, and those by `$$` as block ones.
+
+For example, the inline form below:
+
+```
+Euler's formula: $e^{i\theta}=\cos\theta+i\sin\theta$
+```
+
+will be rendered as:
+
+<p align="center">
+<img src="./doc-images/fig5.png" style="width:256px;height:auto">
+</p>
+
+And the block form below:
+
+```
+$$
+ax^2+bx+c=0 \\
+\Leftrightarrow x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
+$$
+```
+
+will be:
+
+<p align="center">
+<img src="./doc-images/fig6.png" style="width:192px;height:auto">
+</p>
 
 Copyright and License
 ---------------------
