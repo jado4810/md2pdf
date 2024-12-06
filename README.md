@@ -158,7 +158,7 @@ For example, titled image below:
 will be rendered as:
 
 <p align="center">
-<img src="./doc-images/fig1.png" style="width:114px;height:auto">
+<img src="./doc-images/fig1.png" style="width:214px;height:auto">
 </p>
 
 Also consider specifying the `-r` option.
