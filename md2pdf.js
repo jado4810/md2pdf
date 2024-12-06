@@ -172,6 +172,7 @@ async function convert(
     renderer: renderer
   }, markedKatex({
     output: 'html',
+    strict: false,
     texmacros
   }));
 
@@ -186,6 +187,7 @@ async function convert(
         const texmacros = {};
         marked.use(markedKatex({
           output: 'html',
+          strict: false,
           throwOnError: false,
           texmacros
         }));
