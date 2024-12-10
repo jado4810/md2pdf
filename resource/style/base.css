@@ -161,7 +161,7 @@ figcaption {
   text-indent: 0;
 }
 
-.mermaid .label :is(.nodeLabel, .edgeLabel) p {
+.mermaid .label :is(.edgeLabel, .nodeLabel) p {
   font-size: 9pt;
   text-indent: 0;
 }
