@@ -20,16 +20,16 @@ Those style is built with consciousness of paper prints:
 
 Some kinds of the style are customizable:
 
-* Color scheme (color, grayscale, monochrome)
 * Language scheme (Latin, Japanese, Korean, Chinese)
 * Paragraph stye (indented, gapped)
+* Color scheme (color, grayscale, monochrome)
 
 It accepts Markdown format like below:
 
-* GitHub flavored Markdown
+* GitHub Flavored Markdown
 * Code highlight
 * Mermaid
-* LaTeX
+* Math formula with LaTeX
 
 How to Use
 ----------
@@ -46,39 +46,39 @@ Considering of preparing environments like font files, we recommend to run as a 
 Helper script `md2pdf.sh` is available.
 
 ```console
-$ ./md2pdf.sh [options] [input] > output
+$ ./md2pdf.sh [o̲p̲t̲i̲o̲n̲s̲] [i̲n̲p̲u̲t̲] > o̲u̲t̲p̲u̲t̲
 ```
 
 Options are available below:
 
-* `-p «paper»`
+* `-p p̲a̲p̲e̲r̲`
     * Specify the paper size
     * Available below:
-        * `a3` (ISO A3 portrait), `a3r` (ISO A3 landscape)
-        * `a4` (ISO A4 portrait, default), `a4r` (ISO A4 landscape)
-        * `a5` (ISO A5 portrait), `a5r` (ISO A5 landscape)
-        * `letter` (US letter portrait), `letterr` (US letter landscape)
-        * `legal` (US legal portrait), `legalr` (US legal landscape)
-* `-t «title»`
+        * `a3` - ISO A3 portrait, `a3r` - ISO A3 landscape
+        * `a4` - ISO A4 portrait (default), `a4r` - ISO A4 landscape
+        * `a5` - ISO A5 portrait, `a5r` - ISO A5 landscape
+        * `letter` - US letter portrait, `letterr` -  US letter landscape
+        * `legal` - US legal portrait, `legalr` - US legal landscape
+* `-t t̲i̲t̲l̲e̲`
     * Specify the document title to be printed on the page header
-    * If omitted, attempt to extract from H1 header
+    * If omitted, attempt to extract from H1 heading
 * `-n`
     * Omit page numbers
-* `-r «ratio»`
+* `-r r̲a̲t̲i̲o̲`
     * Specify the img magnify ratio in percentage
     * No effect on SVG image
     * Recommended smaller (< 100) value on screenshots from zoomed screen to get clear images in PDF
-* `-l «lang»`
+* `-l l̲a̲n̲g̲`
     * Speciry the language scheme, to decide font priorities, line break rules and text indentation rules
     * Available below:
-        * `latin` (default) - For most european languages
+        * `latin` - For most european languages (default)
         * `ja` - For Japanese
         * `ko` - For Korean
         * `cn` - For Simplified Chinese
         * `tw` - For Traditional Chinese
 * `-i`
     * Omit paragraph indentation and make gaps between paragraphs
-* `-c «color»`
+* `-c c̲o̲l̲o̲r̲`
     * Specify the color scheme
     * Available below:
         * `color` (default)
@@ -91,18 +91,18 @@ Options are available below:
 This script calls docker run like below:
 
 ```console
-$ docker run --rm -i -v «dir»:/opt/app/mnt md2pdf node md2pdf.js -b /opt/app/mnt «options» «input»
+$ docker run --rm -i -v d̲i̲r̲:/opt/app/mnt md2pdf node md2pdf.js -b /opt/app/mnt o̲p̲t̲i̲o̲n̲s̲ i̲n̲p̲u̲t̲
 ```
 
 * Extract base directory from input file path (or `$PWD`) and mount volume
-* Pass base directory to be extracted directory (or `$PWD`), so any resources are refered relative from the base directory
+* Pass base directory to be the mount point, so any resources are refered relative from the base directory
 
 ### Direct-run NodeJS
 
 Required web browser compatible with "headless mode" and proper fonts to be installed, and you can run it on the local NodeJS environment.
 
 ```console
-$ node md2pdf.js [options] [input] > output
+$ node md2pdf.js [o̲p̲t̲i̲o̲n̲s̲] [i̲n̲p̲u̲t̲] > o̲u̲t̲p̲u̲t̲
 ```
 
 You can append `-b` option to specify the base path for resources.
@@ -134,7 +134,7 @@ Also needs a web browser installed, which is compatible with "headless mode", i.
 Markdown format
 ---------------
 
-Markdown documents are rendered by [MarkedJS](https://marked.js.org/), and are recognized as [GitHub flavored syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+Markdown documents are rendered by [MarkedJS](https://marked.js.org/), and are recognized as [GitHub Flavored Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
 
 In addition, the following extensions are provided.
 
@@ -161,7 +161,7 @@ will be rendered as:
 <img src="./doc-images/fig1.png" style="width:214px;height:auto">
 </p>
 
-Also consider specifying the `-r` option.
+Also consider specifying the `-r` option to get clear images.
 
 ### 3\. Code block
 
@@ -282,10 +282,10 @@ function long_proc(list) {
 
 ### 4\. LaTeX
 
-LaTeX forms surrounded by `$` or `$$` are passed to [KaTeX](https://katex.org/).
+LaTeX formulas surrounded by `$` or `$$` are passed to [KaTeX](https://katex.org/).
 The parts surrounded by `$` are rendered as inline formulas, and those by `$$` as block ones.
 
-For example, the inline form below:
+For example, the inline formula below:
 
 ```
 Euler's formula: $e^{i\theta}=\cos\theta+i\sin\theta$
@@ -297,7 +297,7 @@ will be rendered as:
 <img src="./doc-images/fig5.png" style="width:256px;height:auto">
 </p>
 
-And the block form below:
+And the block formula below:
 
 ```
 $$
@@ -317,7 +317,4 @@ Copyright and License
 
 Copyright (c)2023-2024 Shun-ichi TAHARA &lt;jado@flowernet.jp&gt;
 
-Provided under [MIT license](./LICENSE.txt), with the exception of
-[third-party/getoptions](./third-party/getoptions/) directory, which is
-appropriated from [ko1nksm/getoptions](https://github.com/ko1nksm/getoptions) of
-[CC0 license](./third-party/getoptions/LICENSE).
+Provided under [MIT license](./LICENSE.txt), with the exception of [third-party/getoptions](./third-party/getoptions/) directory, which is appropriated from [ko1nksm/getoptions](https://github.com/ko1nksm/getoptions) of [CC0](./third-party/getoptions/LICENSE).
