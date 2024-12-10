@@ -6,6 +6,8 @@ md2pdf - Typeset Markdown to PDF for publishing
 [![GitHub top language](https://img.shields.io/github/languages/top/jado4810/md2pdf.svg)](https://github.com/jado4810/md2pdf/search?l=JavaScript)
 [![License](https://img.shields.io/github/license/jado4810/md2pdf.svg)](https://github.com/jado4810/md2pdf/blob/main/LICENSE.txt)
 
+EN|[JA](./README-ja.md)
+
 What is this?
 -------------
 
