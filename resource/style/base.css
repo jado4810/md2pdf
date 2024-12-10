@@ -156,6 +156,8 @@ figcaption {
   font-size: 9pt;
 }
 
+/* Mermaid Graph */
+
 .mermaid .cluster-label .nodeLabel p {
   font-size: 10.5pt;
   text-indent: 0;
@@ -164,4 +166,81 @@ figcaption {
 .mermaid .label :is(.edgeLabel, .nodeLabel) p {
   font-size: 9pt;
   text-indent: 0;
+}
+
+/* Mermaid Flowchart */
+
+.mermaid .flowchartTitleText {
+  font-size: 10.5pt !important;
+}
+
+/* Mermaid Class Diagram */
+
+.mermaid :is(.classDiagramTitleText, .label-group .label .nodeLabel p) {
+  font-size: 10.5pt;
+}
+
+/* Mermaid State Diagram */
+
+.mermaid .stateDiagramTitleText {
+  font-size: 10.5pt !important;
+}
+
+.mermaid .cluster-label .nodeLabel {
+  font-size: 10.5pt;
+}
+
+/* Mermaid Sequence Diagram */
+
+.mermaid .text tspan {
+  font-size: 10.5pt;
+}
+
+.mermaid :is(.labelText, .sequenceNumber) {
+  font-size: 9pt !important;
+}
+
+.mermaid :is(.actor, .noteText, .loopText) tspan {
+  font-size: 9pt;
+}
+
+.mermaid .messageText {
+  font-size: 9pt !important;
+  transform: translateY(.75em);
+}
+
+/* Mermaid Entity Relationship Diagram */
+
+.mermaid :is(.entityTitleText, .entityLabel:first-of-type) {
+  font-size: 10.5pt !important;
+}
+
+.mermaid :is(.entityLabel, .relationshipLabel) {
+  font-size: 9pt !important;
+}
+
+/* Mermaid User Journey Diagram */
+
+.mermaid :has(.journey-section) ~ text {
+  font-size: 10.5pt !important;
+}
+
+.mermaid .legend {
+  transform: translateY(-.2em);
+}
+
+.mermaid .legend tspan,
+.mermaid :is(.journey-section, .task) .label {
+  font-size: 9pt;
+}
+
+/* Mermaid Gantt Chart */
+
+.mermaid .titleText {
+  font-size: 10.5pt !important;
+}
+
+.mermaid :is(.sectionTitle tspan, .tick text),
+.mermaid :is(.taskText, .taskTextOutsideRight, .taskTextOutsideLeft) {
+  font-size: 9pt !important;
 }

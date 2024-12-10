@@ -46,10 +46,77 @@ kbd {
   font-family: "Noto Sans";
 }
 
+/* Mermaid Graph */
+
 .mermaid :is(.cluster-label .nodeLabel, .label .edgeLabel) p {
   font-family: "Noto Sans";
 }
 
 .mermaid .label .nodeLabel p {
   font-family: "Noto Serif";
+}
+
+/* Mermaid Flowchart */
+
+.mermaid .flowchartTitleText {
+  font-family: "Noto Sans";
+}
+
+/* Mermaid Class Diagram */
+
+.mermaid :is(.classDiagramTitleText, .label-group .label .nodeLabel p) {
+  font-family: "Noto Sans";
+}
+
+/* Mermaid State Diagram */
+
+.mermaid :is(.stateDiagramTitleText .cluster-label .nodeLabel) {
+  font-family: "Noto Sans";
+}
+
+/* Mermaid Sequence Diagram */
+
+.mermaid :is(.text tspan, .labelText) {
+  font-family: "Noto Sans";
+}
+
+.mermaid .sequenceNumber {
+  font-family: "Noto Sans" !important;
+}
+
+.mermaid :is(.actor, .noteText, .loopText) tspan,
+.mermaid .messageText {
+  font-family: "Noto Serif";
+}
+
+/* Mermaid Entity Relationship Diagram */
+
+.mermaid :is(.entityTitleText, .entityLabel:first-of-type, .relationshipLabel) {
+  font-family: "Noto Sans";
+}
+
+.mermaid .entityLabel {
+  font-family: "Noto Serif";
+}
+
+/* Mermaid User Journey Diagram */
+
+.mermaid :has(.journey-section) ~ text,
+.mermaid .legend tspan {
+  font-family: "Noto Sans";
+}
+
+.mermaid :is(.journey-section, .task) .label {
+  font-family: "Noto Serif" !important;
+}
+
+/* Mermaid Gantt Chart */
+
+.mermaid :is(.titleText, .sectionTitle tspan) {
+  font-family: "Noto Sans" !important;
+}
+
+.mermaid .tick text,
+.mermaid :is(.taskText, .taskTextOutsideRight, .taskTextOutsideLeft) {
+  font-family: "Noto Serif" !important;
 }

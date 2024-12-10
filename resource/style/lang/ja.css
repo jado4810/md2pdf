@@ -51,10 +51,77 @@ img {
   top: -0.1em;
 }
 
+/* Mermaid Graph */
+
 .mermaid :is(.cluster-label .nodeLabel, .label .edgeLabel) p {
   font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
 }
 
 .mermaid .label .nodeLabel p {
   font-family: "Noto Serif", "BIZ UDPMincho", "Noto Serif CJK JP";
+}
+
+/* Mermaid Flowchart */
+
+.mermaid .flowchartTitleText {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+}
+
+/* Mermaid Class Diagram */
+
+.mermaid :is(.classDiagramTitleText, .label-group .label .nodeLabel p) {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+}
+
+/* Mermaid State Diagram */
+
+.mermaid :is(.stateDiagramTitleText .cluster-label .nodeLabel) {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+}
+
+/* Mermaid Sequence Diagram */
+
+.mermaid :is(.text tspan, .labelText) {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+}
+
+.mermaid .sequenceNumber {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP" !important;
+}
+
+.mermaid :is(.actor, .noteText, .loopText) tspan,
+.mermaid .messageText {
+  font-family: "Noto Serif", "BIZ UDPMincho", "Noto Serif CJK JP";
+}
+
+/* Mermaid Entity Relationship Diagram */
+
+.mermaid :is(.entityTitleText, .entityLabel:first-of-type, .relationshipLabel) {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+}
+
+.mermaid .entityLabel {
+  font-family: "Noto Serif", "BIZ UDPMincho", "Noto Serif CJK JP";
+}
+
+/* Mermaid User Journey Diagram */
+
+.mermaid :has(.journey-section) ~ text,
+.mermaid .legend tspan {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP";
+}
+
+.mermaid :is(.journey-section, .task) .label {
+  font-family: "Noto Serif", "BIZ UDPMincho", "Noto Serif CJK JP" !important;
+}
+
+/* Mermaid Gantt Chart */
+
+.mermaid :is(.titleText, .sectionTitle tspan) {
+  font-family: "Noto Sans", "BIZ UDPGothic", "Noto Sans CJK JP" !important;
+}
+
+.mermaid .tick text,
+.mermaid :is(.taskText, .taskTextOutsideRight, .taskTextOutsideLeft) {
+  font-family: "Noto Serif", "BIZ UDPMincho", "Noto Serif CJK JP" !important;
 }
