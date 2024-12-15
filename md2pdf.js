@@ -63,10 +63,7 @@ async function outputStdout(data) {
   }
 }
 
-async function convert(
-    markdown, langprop, psize, lscape, margin, family, title, nopage,
-    ratio, langspec, noindent, colorspec, hltheme, mconfig, anchors, base
-) {
+async function convert({markdown, setting, lang, color, base, anchors}) {
   if (!markdown) return '';
 
   // Conversion from headers to anchor IDs (GitHub compatible)
@@ -199,14 +196,15 @@ async function convert(
     }
   })();
 
+  let title = setting.title;
   if (title == null) {
     const match = body.match(/<h1(?: id=".+?")?>(.*?)<\/h1>/);
     title = match && match[1];
   }
 
   const head = `<title>${title || '(No title)'}</title>`;
-  const lang = langprop ? ` lang="${langprop}"` : '';
-  const html = `<html><head>${head}</head><body${lang}>${body}</body></html>`;
+  const bprop = lang.property ? ` lang="${lang.property}"` : '';
+  const html = `<html><head>${head}</head><body${bprop}>${body}</body></html>`;
 
   // Render HTML with puppeteer
   const browser = await puppeteer.launch({
@@ -228,16 +226,20 @@ async function convert(
   const page = await browser.newPage();
   const uri = `file://${path.resolve(__dirname, './resource/fake.html')}`;
   const styles = './resource/style';
-  const themes = './node_modules/highlight.js/styles';
-  const texdist = './node_modules/katex/dist';
+  const hlstyles = './node_modules/highlight.js/styles';
+  const texstyles = './node_modules/katex/dist';
   await page.goto(uri);
   await page.setContent(html);
   await page.addStyleTag({path: `${styles}/base.css`});
-  await page.addStyleTag({path: `${styles}/lang/${langspec}.css`});
-  if (noindent) await page.addStyleTag({path: `${styles}/noindent.css`});
-  await page.addStyleTag({path: `${styles}/color/${colorspec}.css`});
-  if (hltheme) await page.addStyleTag({path: `${themes}/${hltheme}.min.css`});
-  await page.addStyleTag({path: `${texdist}/katex.min.css`});
+  await page.addStyleTag({path: `${styles}/lang/${lang.theme}.css`});
+  if (setting.noindent) {
+    await page.addStyleTag({path: `${styles}/noindent.css`});
+  }
+  await page.addStyleTag({path: `${styles}/color/${color.theme}.css`});
+  if (color.hilit) {
+    await page.addStyleTag({path: `${hlstyles}/${color.hilit}.min.css`});
+  }
+  await page.addStyleTag({path: `${texstyles}/katex.min.css`});
   await page.addStyleTag({path: `${styles}/katex-fonts.css`});
 
   // Adjust image size
@@ -246,37 +248,35 @@ async function convert(
     Array.prototype.forEach.call(imgs, (img) => {
       img.style.width = `${Math.ceil(img.naturalWidth * ratio)}px`;
     });
-  }, ratio / 100);
+  }, setting.ratio / 100);
 
   // Render mermaid
   const mscripts = './node_modules/mermaid/dist';
   await page.addScriptTag({path: `${mscripts}/mermaid.min.js`});
-  const merr = await page.evaluate((mconfig) => {
+  const merr = await page.evaluate((config) => {
     mermaid.initialize(Object.assign({
       startOnLoad: false
-    }, mconfig));
+    }, config));
     return mermaid.run({
       querySelector: '.mermaid'
     }).then(() => null, (e) => e.message);
-  }, mconfig);
+  }, color.mermaid);
   if (merr) process.stderr.write(`Mermaid parse error: ${merr}\n`);
 
   // Output PDF
-  const fontspec = '9pt ' + family.map((f) => { return `'${f}'` }).join(',');
-  const hfstyle = `font:${fontspec};padding:0 12mm;width:100%`;
-  const hdrstyle = `style="${hfstyle};text-align:left"`;
-  const ftrstyle = `style="${hfstyle};text-align:center"`;
-  const header = title ?
-      `<div ${hdrstyle}><span class="title"></span></div>` :
-      `<div ${hdrstyle}></div>`;
-  const footer = nopage ?
-      `<div ${ftrstyle}></div>` :
-      `<div ${ftrstyle}><span class="pageNumber"></span></div>`;
+  const fontspec = '9pt ' + setting.family.map((f) => `'${f}'`).join(',');
+  const cmnstyle = `font:${fontspec};padding:0 12mm;width:100%`;
+  const hdrstyle = `style="${cmnstyle};text-align:left"`;
+  const hdrtitle = title ? '<span class="title"></span>' : ''
+  const ftrstyle = `style="${cmnstyle};text-align:center"`;
+  const ftrpage = setting.nopage ? '' : '<span class="pageNumber"></span>';
+  const header = `<div ${hdrstyle}>${hdrtitle}</div>`;
+  const footer = `<div ${ftrstyle}>${ftrpage}</div>`;
   const pdf = await page.pdf({
-    format: psize,
-    landscape: lscape,
+    format: setting.size,
+    landscape: setting.landscape,
     displayHeaderFooter: true,
-    margin: margin,
+    margin: setting.margin,
     headerTemplate: header,
     footerTemplate: footer,
     printBackground: true,
@@ -331,45 +331,36 @@ async function main() {
   const args = program.args;
   const opts = program.opts();
 
-  const paper = opts.paper;
+  const ptype = opts.paper;
   const title = opts.title;
   const nopage = opts.nopage;
   const ratio = opts.ratio;
-  const langspec = opts.lang;
-  const noindent = opts.noindent;
-  const colorspec = opts.color;
+  const ltype = opts.lang;
+  const noidt = opts.noindent;
+  const ctype = opts.color;
   const anchors = opts.anchors;
   const base = opts.base || process.cwd();
 
-  // Props for paper size and margin
-  const papers = {
-    a3:      {size: 'a3',     orient: 'portrait' },
-    a3r:     {size: 'a3',     orient: 'landscape'},
-    a4:      {size: 'a4',     orient: 'portrait' },
-    a4r:     {size: 'a4',     orient: 'landscape'},
-    a5:      {size: 'a5',     orient: 'portrait' },
-    a5r:     {size: 'a5',     orient: 'landscape'},
-    letter:  {size: 'letter', orient: 'portrait' },
-    letterr: {size: 'letter', orient: 'landscape'},
-    legal:   {size: 'legal',  orient: 'portrait' },
-    legalr:  {size: 'legal',  orient: 'landscape'}
-  };
-  const landscapes = {
-    portrait:  false,
-    landscape: true
-  };
+  // Paper and format settings
   const margins = {
     portrait:  {top: '16mm', bottom: '16mm', left: '12mm', right: '12mm'},
     landscape: {top: '12mm', bottom: '12mm', left: '16mm', right: '16mm'}
   };
+  const papers = {
+    a3:      {size: 'a3',     landscape: false, margin: margins.portrait },
+    a3r:     {size: 'a3',     landscape: true , margin: margins.landscape},
+    a4:      {size: 'a4',     landscape: false, margin: margins.portrait },
+    a4r:     {size: 'a4',     landscape: true , margin: margins.landscape},
+    a5:      {size: 'a5',     landscape: false, margin: margins.portrait },
+    a5r:     {size: 'a5',     landscape: true , margin: margins.landscape},
+    letter:  {size: 'letter', landscape: false, margin: margins.portrait },
+    letterr: {size: 'letter', landscape: true , margin: margins.landscape},
+    legal:   {size: 'legal',  landscape: false, margin: margins.portrait },
+    legalr:  {size: 'legal',  landscape: true , margin: margins.landscape}
+  };
+  const paper = papers[ptype];
+  if (!paper) throw new Error('paper not found');
 
-  const pspec = papers[paper];
-  if (!pspec) throw new Error('paper not found');
-  const psize = pspec.size;
-  const lscape = landscapes[pspec.orient];
-  const margin = margins[pspec.orient];
-
-  // Font families for header and footer
   const families = {
     latin: ['Noto Serif'],
     ja:    ['Noto Serif', 'BIZ UDPMincho', 'Noto Serif CJK JP'],
@@ -378,11 +369,17 @@ async function main() {
     tw:    ['Noto Serif', 'Noto Serif CJK TC']
   };
 
-  const family = families[langspec];
-  if (!family) throw new Error('lang not found');
+  const setting = Object.assign({
+    family: families[ltype],
+    title,
+    nopage,
+    ratio,
+    noindent: noidt
+  }, paper);
+  if (!setting.family) throw new Error('lang not found');
 
-  // Language properties
-  const langprops = {
+  // Language theme and property
+  const lprops = {
     latin: '',
     ja:    'ja',
     ko:    'ko',
@@ -390,82 +387,88 @@ async function main() {
     tw:    'zh-TW',
   };
 
-  const langprop = langprops[langspec];
-
-  // Color themes for code highlight
-  const hlthemes = {
-    color:      'github',
-    grayscale:  'grayscale',
-    monochrome: ''
+  const lang = {
+    theme: ltype,
+    property: lprops[ltype]
   };
 
-  const hltheme = hlthemes[colorspec];
-
-  // Color themes for mermaid
-  const mconfigs = {
+  // Color themes
+  const colors = {
     color: {
-      theme: 'default',
-      themeVariables: {
-        taskTextLightColor: '#000'
+      hllit: 'github',
+      mermaid: {
+        theme: 'default',
+        themeVariables: {
+          taskTextLightColor: '#000'
+        }
       }
     },
     grayscale: {
-      theme: 'neutral',
-      themeVariables: {
-        noteTextColor: '#000',
-        noteBkgColor: '#ccc',
-        actor0: '#fff',
-        actor1: '#666',
-        actor2: '#ccc',
-        actor3: '#999',
-        actor4: '#eee',
-        actor5: '#444',
-        faceColor: '#fff',
-        taskTextLightColor: '#000',
-        critBkgColor: '#888',
-        critBorderColor: '#000',
-        todayLineColor: '#000'
+      hilit: 'grayscale',
+      mermaid: {
+        theme: 'neutral',
+        themeVariables: {
+          noteTextColor: '#000',
+          noteBkgColor: '#ccc',
+          actor0: '#fff',
+          actor1: '#666',
+          actor2: '#ccc',
+          actor3: '#999',
+          actor4: '#eee',
+          actor5: '#444',
+          faceColor: '#fff',
+          taskTextLightColor: '#000',
+          critBkgColor: '#888',
+          critBorderColor: '#000',
+          todayLineColor: '#000'
+        }
       }
     },
     monochrome: {
-      theme: 'base',
-      themeVariables: {
-        background: '#fff',
-        primaryColor: '#fff',
-        primaryBorderColor: '#000',
-        secondaryColor: '#fff',
-        secondaryBorderColor: '#000',
-        tertiaryColor: '#fff',
-        tertiaryBorderColor: '#000',
-        noteBkgColor: '#fff',
-        noteBorderColor: '#000',
-        attributeBackgroundColorEven: '#fff',
-        actor0: '#fff',
-        actor1: '#000',
-        actor2: '#fff',
-        actor3: '#000',
-        actor4: '#fff',
-        actor5: '#000',
-        faceColor: '#fff',
-        sectionBkgColor: '#fff',
-        sectionBkgColor2: '#fff',
-        altSectionBkgColor: '#fff',
-        gridColor: '#f00',
-        taskTextLightColor: '#000',
-        taskBkgColor: '#fff',
-        taskBorderColor: '#000',
-        activeTaskBkgColor: '#fff',
-        activeTaskBorderColor: '#000',
-        doneTaskBkgColor: '#fff',
-        doneTaskBorderColor: '#000',
-        critBkgColor: '#fff',
-        critBorderColor: '#000',
-        todayLineColor: '#000'
+      mermaid: {
+        theme: 'base',
+        themeVariables: {
+          background: '#fff',
+          primaryColor: '#fff',
+          primaryBorderColor: '#000',
+          secondaryColor: '#fff',
+          secondaryBorderColor: '#000',
+          tertiaryColor: '#fff',
+          tertiaryBorderColor: '#000',
+          noteBkgColor: '#fff',
+          noteBorderColor: '#000',
+          attributeBackgroundColorEven: '#fff',
+          actor0: '#fff',
+          actor1: '#000',
+          actor2: '#fff',
+          actor3: '#000',
+          actor4: '#fff',
+          actor5: '#000',
+          faceColor: '#fff',
+          sectionBkgColor: '#fff',
+          sectionBkgColor2: '#fff',
+          altSectionBkgColor: '#fff',
+          gridColor: '#f00',
+          taskTextLightColor: '#000',
+          taskBkgColor: '#fff',
+          taskBorderColor: '#000',
+          activeTaskBkgColor: '#fff',
+          activeTaskBorderColor: '#000',
+          doneTaskBkgColor: '#fff',
+          doneTaskBorderColor: '#000',
+          critBkgColor: '#fff',
+          critBorderColor: '#000',
+          todayLineColor: '#000'
+        }
       }
     }
   };
+  const auxtheme = colors[ctype];
+  if (!auxtheme) throw new Error('color not found');
 
-  const mconfig = mconfigs[colorspec];
+  const color = Object.assign({
+    theme: ctype
+  }, auxtheme);
 
   // Input file
   if (args.length > 1) throw new Error('too many input files');
@@ -477,10 +480,7 @@ async function main() {
   if (!markdown) return 'Empty Markdown';
 
   // Convert to PDF
-  const pdf = await convert(
-      markdown, langprop, psize, lscape, margin, family, title, nopage,
-      ratio, langspec, noindent, colorspec, hltheme, mconfig, anchors, base
-  );
+  const pdf = await convert({markdown, setting, lang, color, base, anchors});
   if (!pdf) return 'Empty PDF';
 
   // Output to stdout
