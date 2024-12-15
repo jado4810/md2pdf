@@ -25,7 +25,3 @@ kbd {
   background-color: #444;
   color: #fff;
 }
-
-.mermaid .taskText:not(.activeText0):not(.activeText1):not(.activeText2):not(.activeText3) {
-  fill: #000 !important;
-}

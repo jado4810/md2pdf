@@ -24,18 +24,54 @@ kbd {
   border: 1px solid #000;
 }
 
-.mermaid .node :is(rect, circle, ellipse, polygon, path),
-.mermaid :is(.edgeLabels, .cluster) rect {
-  fill: #fff !important;
+.mermaid [aria-roledescription="sequence"] .rect {
+  stroke: #000;
+}
+
+.mermaid [aria-roledescription="er"] .relationshipLine {
   stroke: #000 !important;
 }
 
-.mermaid .edgePaths path {
+.mermaid [aria-roledescription="er"] .relationshipLabelBox {
+  opacity: 1 !important;
+}
+
+.mermaid [aria-roledescription="er"] marker :is(circle, path) {
+  stroke: #000;
+}
+
+.mermaid [aria-roledescription="journey"] :is(.journey-section, .task) {
+  stroke: #000;
+}
+
+.mermaid [aria-roledescription="gantt"] .tick line {
+  stroke: #000;
+  stroke-dasharray: 3, 1;
+  stroke-width: 1;
+}
+
+.mermaid [aria-roledescription="gantt"] .exclude-range {
   fill: none !important;
-  stroke: #000 !important;
 }
 
-.mermaid .marker {
-  fill: #000 !important;
-  stroke: #000 !important;
+.mermaid [aria-roledescription="gantt"] :is(.task0, .task1, .task2, .task3) {
+  stroke-width: 1 !important;
+}
+
+.mermaid [aria-roledescription="gantt"] :is(.active0, .active1, .active2, .active3) {
+  stroke-dasharray: 4, 4;
+  stroke-width: 1 !important;
+}
+
+.mermaid [aria-roledescription="gantt"] :is(.done0, .done1, .done2, .done3) {
+  stroke-dasharray: 3, 1;
+  stroke-width: 1 !important;
+}
+
+.mermaid [aria-roledescription="gantt"] :is(.activeCrit0, .activeCrit1, .activeCrit2, .activeCrit3) {
+  stroke-dasharray: 4, 4;
+}
+
+.mermaid [aria-roledescription="gantt"] :is(.doneCrit0, .doneCrit1, .doneCrit2, .doneCrit3) {
+  stroke-dasharray: 3, 1;
 }

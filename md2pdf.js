@@ -65,7 +65,7 @@ async function outputStdout(data) {
 
 async function convert(
     markdown, langprop, psize, lscape, margin, family, title, nopage,
-    ratio, langspec, noindent, colorspec, hltheme, mtheme, anchors, base
+    ratio, langspec, noindent, colorspec, hltheme, mconfig, anchors, base
 ) {
   if (!markdown) return '';
 
@@ -251,15 +251,14 @@ async function convert(
   // Render mermaid
   const mscripts = './node_modules/mermaid/dist';
   await page.addScriptTag({path: `${mscripts}/mermaid.min.js`});
-  const merr = await page.evaluate((mtheme) => {
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: mtheme
-    });
+  const merr = await page.evaluate((mconfig) => {
+    mermaid.initialize(Object.assign({
+      startOnLoad: false
+    }, mconfig));
     return mermaid.run({
       querySelector: '.mermaid'
     }).then(() => null, (e) => e.message);
-  }, mtheme);
+  }, mconfig);
   if (merr) process.stderr.write(`Mermaid parse error: ${merr}\n`);
 
   // Output PDF
@@ -401,13 +400,70 @@ async function main() {
   const hltheme = hlthemes[colorspec];
 
   // Color themes for mermaid
-  const mthemes = {
-    color:      'default',
-    grayscale:  'neutral',
-    monochrome: 'neutral'
+  const mconfigs = {
+    color: {
+      theme: 'default',
+      themeVariables: {
+        taskTextLightColor: '#000'
+      }
+    },
+    grayscale: {
+      theme: 'neutral',
+      themeVariables: {
+        noteTextColor: '#000',
+        noteBkgColor: '#ccc',
+        actor0: '#fff',
+        actor1: '#666',
+        actor2: '#ccc',
+        actor3: '#999',
+        actor4: '#eee',
+        actor5: '#444',
+        faceColor: '#fff',
+        taskTextLightColor: '#000',
+        critBkgColor: '#888',
+        critBorderColor: '#000',
+        todayLineColor: '#000'
+      }
+    },
+    monochrome: {
+      theme: 'base',
+      themeVariables: {
+        background: '#fff',
+        primaryColor: '#fff',
+        primaryBorderColor: '#000',
+        secondaryColor: '#fff',
+        secondaryBorderColor: '#000',
+        tertiaryColor: '#fff',
+        tertiaryBorderColor: '#000',
+        noteBkgColor: '#fff',
+        noteBorderColor: '#000',
+        attributeBackgroundColorEven: '#fff',
+        actor0: '#fff',
+        actor1: '#000',
+        actor2: '#fff',
+        actor3: '#000',
+        actor4: '#fff',
+        actor5: '#000',
+        faceColor: '#fff',
+        sectionBkgColor: '#fff',
+        sectionBkgColor2: '#fff',
+        altSectionBkgColor: '#fff',
+        gridColor: '#f00',
+        taskTextLightColor: '#000',
+        taskBkgColor: '#fff',
+        taskBorderColor: '#000',
+        activeTaskBkgColor: '#fff',
+        activeTaskBorderColor: '#000',
+        doneTaskBkgColor: '#fff',
+        doneTaskBorderColor: '#000',
+        critBkgColor: '#fff',
+        critBorderColor: '#000',
+        todayLineColor: '#000'
+      }
+    }
   };
 
-  const mtheme = mthemes[colorspec];
+  const mconfig = mconfigs[colorspec];
 
   // Input file
   if (args.length > 1) throw new Error('too many input files');
@@ -421,7 +477,7 @@ async function main() {
   // Convert to PDF
   const pdf = await convert(
       markdown, langprop, psize, lscape, margin, family, title, nopage,
-      ratio, langspec, noindent, colorspec, hltheme, mtheme, anchors, base
+      ratio, langspec, noindent, colorspec, hltheme, mconfig, anchors, base
   );
   if (!pdf) return 'Empty PDF';
 
