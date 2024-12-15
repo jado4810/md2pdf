@@ -155,7 +155,7 @@ async function convert(
       const base = otags.join('') + text + ctag;
 
       match = info.match(/"([^\"]+)"/);
-      const title = match && match[1] || '';
+      const title = match && match[1];
 
       if (title) {
         const caption = `<figcaption>${title}</figcaption>\n`;
@@ -201,12 +201,12 @@ async function convert(
 
   if (title == null) {
     const match = body.match(/<h1(?: id=".+?")?>(.*?)<\/h1>/);
-    title = match ? match[1] : '';
+    title = match && match[1];
   }
 
-  const head = title ? `<head><title>${title}</title></head>` : '';
+  const head = `<title>${title || '(No title)'}</title>`;
   const lang = langprop ? ` lang="${langprop}"` : '';
-  const html = `<html>${head}<body${lang}>${body}</body></html>`;
+  const html = `<html><head>${head}</head><body${lang}>${body}</body></html>`;
 
   // Render HTML with puppeteer
   const browser = await puppeteer.launch({
@@ -266,7 +266,9 @@ async function convert(
   const hfstyle = `font:${fontspec};padding:0 12mm;width:100%`;
   const hdrstyle = `style="${hfstyle};text-align:left"`;
   const ftrstyle = `style="${hfstyle};text-align:center"`;
-  const header = `<div ${hdrstyle}><span class="title"></span></div>`;
+  const header = title ?
+      `<div ${hdrstyle}><span class="title"></span></div>` :
+      `<div ${hdrstyle}></div>`;
   const footer = nopage ?
       `<div ${ftrstyle}></div>` :
       `<div ${ftrstyle}><span class="pageNumber"></span></div>`;
