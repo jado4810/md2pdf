@@ -68,6 +68,10 @@ kbd {
   font-family: "Noto Sans";
 }
 
+.mermaid .edgeTerminals foreignObject {
+  font-family: "Noto Serif";
+}
+
 /* Mermaid State Diagram */
 
 .mermaid :is(.stateDiagramTitleText .cluster-label .nodeLabel) {

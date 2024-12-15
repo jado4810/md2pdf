@@ -180,6 +180,12 @@ figcaption {
   font-size: 10.5pt;
 }
 
+.mermaid .edgeTerminals foreignObject {
+  font-size: 8pt;
+  height: 1.5em !important;
+  transform: translateY(-.25em);
+}
+
 /* Mermaid State Diagram */
 
 .mermaid .stateDiagramTitleText {
