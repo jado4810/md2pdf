@@ -156,6 +156,11 @@ figcaption {
   font-size: 9pt;
 }
 
+.mermaid {
+  display: flex;
+  justify-content: center;
+}
+
 /* Mermaid Graph */
 
 .mermaid .cluster-label .nodeLabel p {
