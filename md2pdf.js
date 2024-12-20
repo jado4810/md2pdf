@@ -255,7 +255,21 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
   await page.addScriptTag({path: `${mscripts}/mermaid.min.js`});
   const merr = await page.evaluate((config) => {
     mermaid.initialize(Object.assign({
-      startOnLoad: false
+      startOnLoad: false,
+      flowchart: {
+        padding: 10
+      },
+      class: {
+        padding: 10
+      },
+      sequence: {
+        height: 40,
+        width: 120
+      },
+      er: {
+        entityPadding: 10,
+        minEntityHeight: 50
+      }
     }, config));
     return mermaid.run({
       querySelector: '.mermaid'
