@@ -1,8 +1,24 @@
 # md2pdf - Changelog
 
+## Version 0.5.0 (2024-12-21)
+
+* Support KaTeX formulas
+* Migrate to Marked15 and Mermaid11
+    * Note that it breaks some mermaid blocks
+* Migrate container image to Node22LTS
+    * Also works locally on Node20
+* Adjust more styles for mermaid
+    * Class diagram
+    * State diagram
+    * Sequence diagram
+    * Entity relationship diagram
+    * User journey diagram
+    * Gantt chart
+* Fix property of PDF without title
+
 ## Version 0.4.1 (2024-11-30)
 
-* Migrate Chromium131 and Puppeteer23.9 and fixed those versions
+* Migrate to Chromium131 and Puppeteer23.9 and fixed those versions
 * Fix base container versions to Debian12 with Node20LTS
 * Improve performance by a little
 
