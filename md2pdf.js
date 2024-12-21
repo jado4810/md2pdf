@@ -2,7 +2,7 @@
 
 'use strict';
 
-const version = '0.4.1';
+const version = '0.5.0';
 
 import path from 'path';
 import { readFile } from 'fs/promises';
