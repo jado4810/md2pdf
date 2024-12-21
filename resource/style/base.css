@@ -157,8 +157,7 @@ figcaption {
 }
 
 .mermaid {
-  display: flex;
-  justify-content: center;
+  text-align: center;
 }
 
 /* Mermaid Graph */
@@ -248,10 +247,14 @@ figcaption {
 /* Mermaid Gantt Chart */
 
 .mermaid .titleText {
-  font-size: 10.5pt !important;
+  font-size: 10.5pt;
 }
 
-.mermaid :is(.sectionTitle tspan, .tick text),
+.mermaid .sectionTitle tspan,
 .mermaid :is(.taskText, .taskTextOutsideRight, .taskTextOutsideLeft) {
-  font-size: 9pt !important;
+  font-size: 9pt;
+}
+
+.mermaid .tick text {
+  font-size: 8pt;
 }

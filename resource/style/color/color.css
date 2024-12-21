@@ -25,3 +25,11 @@ kbd {
   background-color: #444;
   color: #fff;
 }
+
+.mermaid [aria-roledescription="er"] .relationshipLabelBox {
+  opacity: 1 !important;
+}
+
+.mermaid [aria-roledescription="gantt"] .today {
+  stroke-width: 1 !important;
+}

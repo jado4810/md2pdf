@@ -30,3 +30,11 @@ kbd {
   border: 1px solid #666;
   color: #000;
 }
+
+.mermaid [aria-roledescription="er"] .relationshipLabelBox {
+  opacity: 1 !important;
+}
+
+.mermaid [aria-roledescription="gantt"] .today {
+  stroke-width: 1 !important;
+}

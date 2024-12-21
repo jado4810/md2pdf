@@ -413,6 +413,7 @@ async function main() {
       mermaid: {
         theme: 'default',
         themeVariables: {
+          edgeLabelBackground: '#eee',
           taskTextLightColor: '#000'
         }
       }
@@ -422,6 +423,7 @@ async function main() {
       mermaid: {
         theme: 'neutral',
         themeVariables: {
+          edgeLabelBackground: '#eee',
           noteTextColor: '#000',
           noteBkgColor: '#ccc',
           actor0: '#fff',
@@ -449,6 +451,7 @@ async function main() {
           secondaryBorderColor: '#000',
           tertiaryColor: '#fff',
           tertiaryBorderColor: '#000',
+          edgeLabelBackground: '#fff',
           noteBkgColor: '#fff',
           noteBorderColor: '#000',
           attributeBackgroundColorEven: '#fff',

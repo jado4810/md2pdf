@@ -75,3 +75,8 @@ kbd {
 .mermaid [aria-roledescription="gantt"] :is(.doneCrit0, .doneCrit1, .doneCrit2, .doneCrit3) {
   stroke-dasharray: 3, 1;
 }
+
+.mermaid [aria-roledescription="gantt"] .today {
+  stroke-dasharray: 10, 2, 2, 2;
+  stroke-width: 1 !important;
+}
