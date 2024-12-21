@@ -409,7 +409,7 @@ async function main() {
   // Color themes
   const colors = {
     color: {
-      hllit: 'github',
+      hilit: 'github',
       mermaid: {
         theme: 'default',
         themeVariables: {
