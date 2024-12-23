@@ -1,9 +1,10 @@
 md2pdf - Typeset Markdown to PDF for publishing
 ===============================================
 
+[![JavaScript](https://img.shields.io/badge/JavaScript-f7df1e?logo=javascript&logoColor=000)](https://github.com/jado4810/md2pdf/search?l=JavaScript)
+[![CSS](https://img.shields.io/github/languages/top/jado4810/md2pdf?logo=css&logoColor=fff&label=CSS&labelColor=639&color=666)](https://github.com/jado4810/md2pdf/search?l=CSS)
 [![Node.js](https://img.shields.io/badge/-Node.js-393.svg?logo=Node.js&logoColor=fff)](https://github.com/nodejs)
 [![Docker](https://img.shields.io/badge/-Docker-2496ed.svg?logo=Docker&logoColor=fff)](https://github.com/docker)
-[![GitHub top language](https://img.shields.io/github/languages/top/jado4810/md2pdf.svg)](https://github.com/jado4810/md2pdf/search?l=JavaScript)
 [![License](https://img.shields.io/github/license/jado4810/md2pdf.svg)](https://github.com/jado4810/md2pdf/blob/main/LICENSE.txt)
 
 EN|[JA](./README-ja.md)
