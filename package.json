@@ -20,6 +20,6 @@
     "marked": "^15.0.0",
     "marked-katex-extension": "^5.0.0",
     "mermaid": "^11.0.0",
-    "puppeteer": "^23.8.0"
+    "puppeteer": "^24.1.0"
   }
 }
