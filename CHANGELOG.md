@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.5.1 (2025-1-xx)
+
+* Migrate to Chromium132 and Puppeteer24.1
+
 ## Version 0.5.0 (2024-12-21)
 
 * Support KaTeX formulas
