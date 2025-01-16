@@ -318,6 +318,6 @@ will be:
 Copyright and License
 ---------------------
 
-Copyright (c)2023-2024 Shun-ichi TAHARA &lt;jado@flowernet.jp&gt;
+Copyright (c)2023-2025 Shun-ichi TAHARA &lt;jado@flowernet.jp&gt;
 
 Provided under [MIT license](./LICENSE.txt), with the exception of [third-party/getoptions](./third-party/getoptions/) directory, which is appropriated from [ko1nksm/getoptions](https://github.com/ko1nksm/getoptions) of [CC0](./third-party/getoptions/LICENSE).
