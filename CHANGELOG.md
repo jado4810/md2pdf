@@ -3,6 +3,7 @@
 ## Version 0.5.1 (2025-1-xx)
 
 * Migrate to Chromium132 and Puppeteer24.1
+* Migrate some other NodeJS libraries
 
 ## Version 0.5.0 (2024-12-21)
 
