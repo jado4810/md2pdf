@@ -1,6 +1,6 @@
 # md2pdf - Changelog
 
-## Version 0.5.1 (2025-1-xx)
+## Version 0.5.1 (2025-1-19)
 
 * Migrate to Chromium132 and Puppeteer24.1
 * Migrate some other NodeJS libraries
