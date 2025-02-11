@@ -4,7 +4,7 @@ RUN apt update \
  && apt install -y \
         fonts-morisawa-bizud-mincho fonts-morisawa-bizud-gothic \
         fonts-noto-cjk fonts-noto-core fonts-inconsolata fonts-mathjax \
-        libxss1 chromium=132.* --no-install-recommends \
+        libxss1 chromium --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/app
