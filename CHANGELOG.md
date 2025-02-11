@@ -1,5 +1,10 @@
 # md2pdf - Changelog
 
+## Version 0.5.2 (2025-2-11)
+
+* Migrate to Chromium133 and Puppeteer24.2
+* Remove version forcing of Chroimum to avoid failing building
+
 ## Version 0.5.1 (2025-1-19)
 
 * Migrate to Chromium132 and Puppeteer24.1
