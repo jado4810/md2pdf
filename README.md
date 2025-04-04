@@ -49,12 +49,12 @@ Considering of preparing environments like font files, we recommend to run as a 
 Helper script `md2pdf.sh` is available.
 
 ```console
-$ ./md2pdf.sh [o̲p̲t̲i̲o̲n̲s̲] [i̲n̲p̲u̲t̲] > o̲u̲t̲p̲u̲t̲
+$ ./md2pdf.sh [o̲pt̲i̲o̲n̲s̲] [i̲n̲pu̲t̲] > o̲u̲t̲pu̲t̲
 ```
 
 Options are available below:
 
-* `-p p̲a̲p̲e̲r̲`
+* `-p pa̲pe̲r̲`
     * Specify the paper size
     * Available below:
         * `a3` - ISO A3 portrait, `a3r` - ISO A3 landscape
@@ -95,7 +95,7 @@ Options are available below:
 This script calls docker run like below:
 
 ```console
-$ docker run --rm -i -v d̲i̲r̲:/opt/app/mnt md2pdf node md2pdf.js -b /opt/app/mnt o̲p̲t̲i̲o̲n̲s̲ i̲n̲p̲u̲t̲
+$ docker run --rm -i -v d̲i̲r̲:/opt/app/mnt md2pdf node md2pdf.js -b /opt/app/mnt o̲pt̲i̲o̲n̲s̲ i̲n̲pu̲t̲
 ```
 
 * Extract base directory from input file path (or `$PWD`) and mount volume
@@ -106,7 +106,7 @@ $ docker run --rm -i -v d̲i̲r̲:/opt/app/mnt md2pdf node md2pdf.js -b /opt/app
 Required web browser compatible with "headless mode" and proper fonts to be installed, and you can run it on the local NodeJS environment.
 
 ```console
-$ node md2pdf.js [o̲p̲t̲i̲o̲n̲s̲] [i̲n̲p̲u̲t̲] > o̲u̲t̲p̲u̲t̲
+$ node md2pdf.js [o̲pt̲i̲o̲n̲s̲] [i̲n̲pu̲t̲] > o̲u̲t̲pu̲t̲
 ```
 
 You can append `-b` option to specify the base path for resources.
