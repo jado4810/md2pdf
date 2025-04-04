@@ -1,4 +1,5 @@
 body {
+  font-feature-settings: "palt" 1;
   font-size: 10.5pt;
   line-break: strict;
   margin: 0;
