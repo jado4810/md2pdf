@@ -71,14 +71,15 @@ Options are available below:
     * Specify the img magnify ratio in percentage
     * No effect on SVG image
     * Recommended smaller (< 100) value on screenshots from zoomed screen to get clear images in PDF
-* `-l l̲a̲n̲g̲`
-    * Speciry the language scheme, to decide font priorities, line break rules and text indentation rules
-    * Available below:
-        * `latin` - For most european languages (default)
+* `-l l̲o̲c̲a̲l̲e̲` **(CHANGED ON VER.0.6)**
+    * Specify the language and company code of the texts as locale description
+    * It affects on font priorities, text indentation rules, line break rules and hypenations
+    * Values example:
+        * `en` - For English (default)
         * `ja` - For Japanese
         * `ko` - For Korean
-        * `cn` - For Simplified Chinese
-        * `tw` - For Traditional Chinese
+        * `zh-cn` - For Simplified Chinese
+        * `zh-tw` - For Traditional Chinese
 * `-i`
     * Omit paragraph indentation and make gaps between paragraphs
 * `-c c̲o̲l̲o̲r̲`

@@ -203,7 +203,7 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
   }
 
   const head = `<title>${title || '(No title)'}</title>`;
-  const bprop = lang.property ? ` lang="${lang.property}"` : '';
+  const bprop = lang.locale ? ` lang="${lang.locale}"` : '';
   const html = `<html><head>${head}</head><body${bprop}>${body}</body></html>`;
 
   // Render HTML with puppeteer
@@ -327,9 +327,8 @@ async function main() {
     return val;
   }, 100);
   program.addOption(
-      new Option('-l, --lang <lang>', 'language spec')
-          .default('latin')
-          .choices(['latin', 'ja', 'ko', 'cn', 'tw'])
+      new Option('-l, --lang <lang>', 'locale spec')
+          .default('en')
   );
   program.option('-i, --noindent', 'disable text indentation in paragraphs');
   program.addOption(
@@ -349,31 +348,35 @@ async function main() {
   const title = opts.title;
   const nopage = opts.nopage;
   const ratio = opts.ratio;
-  const ltype = opts.lang;
-  const noidt = opts.noindent;
-  const ctype = opts.color;
+  const locale = opts.lang.toLowerCase().replace('_', '-');
+  const noindent = opts.noindent;
+  const ctheme = opts.color;
   const anchors = opts.anchors;
   const base = opts.base || process.cwd();
 
   // Paper and format settings
-  const margins = {
-    portrait:  {top: '16mm', bottom: '16mm', left: '12mm', right: '12mm'},
-    landscape: {top: '12mm', bottom: '12mm', left: '16mm', right: '16mm'}
-  };
   const papers = {
-    a3:      {size: 'a3',     landscape: false, margin: margins.portrait },
-    a3r:     {size: 'a3',     landscape: true , margin: margins.landscape},
-    a4:      {size: 'a4',     landscape: false, margin: margins.portrait },
-    a4r:     {size: 'a4',     landscape: true , margin: margins.landscape},
-    a5:      {size: 'a5',     landscape: false, margin: margins.portrait },
-    a5r:     {size: 'a5',     landscape: true , margin: margins.landscape},
-    letter:  {size: 'letter', landscape: false, margin: margins.portrait },
-    letterr: {size: 'letter', landscape: true , margin: margins.landscape},
-    legal:   {size: 'legal',  landscape: false, margin: margins.portrait },
-    legalr:  {size: 'legal',  landscape: true , margin: margins.landscape}
+    a3:      {size: 'a3',     landscape: false},
+    a3r:     {size: 'a3',     landscape: true },
+    a4:      {size: 'a4',     landscape: false},
+    a4r:     {size: 'a4',     landscape: true },
+    a5:      {size: 'a5',     landscape: false},
+    a5r:     {size: 'a5',     landscape: true },
+    letter:  {size: 'letter', landscape: false},
+    letterr: {size: 'letter', landscape: true },
+    legal:   {size: 'legal',  landscape: false},
+    legalr:  {size: 'legal',  landscape: true }
   };
-  const paper = papers[ptype];
-  if (!paper) throw new Error('paper not found');
+  if (!papers[ptype]) throw new Error('paper not found');
+
+  const themes = {
+    'ja':    'ja',
+    'ko':    'ko',
+    'zh':    'cn',
+    'zh-cn': 'cn',
+    'zh-tw': 'tw'
+  };
+  const ltheme = themes[locale] || themes[locale.replace(/-.*/, '')] || 'latin';
 
   const families = {
     latin: ['Noto Serif'],
@@ -383,30 +386,27 @@ async function main() {
     tw:    ['Noto Serif', 'Noto Serif CJK TC']
   };
 
+  const margins = {
+    portrait:  {top: '16mm', bottom: '16mm', left: '12mm', right: '12mm'},
+    landscape: {top: '12mm', bottom: '12mm', left: '16mm', right: '16mm'}
+  };
+
   const setting = Object.assign({
-    family: families[ltype],
+    family: families[ltheme],
     title,
     nopage,
     ratio,
-    noindent: noidt
-  }, paper);
-  if (!setting.family) throw new Error('lang not found');
+    noindent,
+    margin: margins[papers[ptype].landscape ? 'landscape' : 'portrait']
+  }, papers[ptype]);
 
-  // Language theme and property
-  const lprops = {
-    latin: '',
-    ja:    'ja',
-    ko:    'ko',
-    cn:    'zh-CN',
-    tw:    'zh-TW',
-  };
-
+  // Language settings
   const lang = {
-    theme: ltype,
-    property: lprops[ltype]
+    theme: ltheme,
+    locale
   };
 
-  // Color themes
+  // Color settings
   const colors = {
     color: {
       hilit: 'github',
@@ -480,12 +480,11 @@ async function main() {
       }
     }
   };
-  const auxtheme = colors[ctype];
-  if (!auxtheme) throw new Error('color not found');
+  if (!colors[ctheme]) throw new Error('color not found');
 
   const color = Object.assign({
-    theme: ctype
-  }, auxtheme);
+    theme: ctheme
+  }, colors[ctheme]);
 
   // Input file
   if (args.length > 1) throw new Error('too many input files');

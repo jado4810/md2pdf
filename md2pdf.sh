@@ -110,7 +110,7 @@ Options:
   -t, --title TITLE           title
   -n, --nopage                disable page numbers
   -r, --ratio RATIO           image ratio in percent
-  -l, --lang LANG             language spec
+  -l, --lang LANG             locale spec
   -i, --noindent              disable text indentation in paragraphs
   -c, --color COLOR           color spec
   -a, --anchors               show anchor ids and texts of headings

@@ -7,7 +7,7 @@ parser_definition() {
   param   TITLE    -t --title    -- 'title'
   flag    NOPAGE   -n --nopage   -- 'disable page numbers'
   param   RATIO    -r --ratio    -- 'image ratio in percent'
-  param   LANG     -l --lang     -- 'language spec'
+  param   LANG     -l --lang     -- 'locale spec'
   flag    NOINDENT -i --noindent -- 'disable text indentation in paragraphs'
   param   COLOR    -c --color    -- 'color spec'
   flag    ANCHORS  -a --anchors  -- 'show anchor ids and texts of headings'
