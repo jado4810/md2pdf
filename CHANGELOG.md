@@ -1,5 +1,11 @@
 # md2pdf - Changelog
 
+## Version 0.6.0 (2025-4-19)
+
+* Propotional pitches for Chinese or Korean texts
+* Line break with hypenations for most latin texts
+    * Must specify locale by -l option
+
 ## Version 0.5.4 (2025-4-10)
 
 * Migrate to Chromium135 and Puppeteer24.6
