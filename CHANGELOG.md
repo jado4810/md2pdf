@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.6.1 (2025-5-5)
+
+* Migrate to Chromium136 and Puppeteer24.8
+
 ## Version 0.6.0 (2025-4-19)
 
 * Propotional pitches for Chinese or Korean texts
