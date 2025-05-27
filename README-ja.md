@@ -155,7 +155,7 @@ IDは内部リンクを行う際に有用です。
 
 例えば、以下のようなタイトル付きの画像は、
 
-```
+```markdown
 ![fig](image.png "Fig1. Sample image")
 ```
 
@@ -174,7 +174,7 @@ IDは内部リンクを行う際に有用です。
 コードブロックの開始部に付与した言語指定子は[highlight.js](https://highlightjs.org/)によってコードの強調に用いられます。
 言語指定子の後に、コロンで区切ってファイル名を追加することも可能です。
 
-````
+````markdown
 ```javascript:sample.js
 function highlight(code, lang) {
   try {
@@ -199,7 +199,7 @@ function highlight(code, lang) {
 
 例えば、以下のようなコードブロックは、
 
-````
+````markdown
 ```mermaid
 flowchart LR
   A[Start]-->B{Check}
@@ -224,7 +224,7 @@ flowchart LR
 
 見出しはMermaidブロックにも指定可能です。
 
-````
+````markdown
 ```javascript:sample.js "List 1. highlight sample"
 function highlight(code, lang) {
   try {
@@ -266,7 +266,7 @@ function highlight(code, lang) {
 
 例えば、以下のようなコードブロックは、コードブロックだけを含む独立したページに出力されます。
 
-````
+````markdown
 ```javascript:long.js [isolated]
 function long_proc(list) {
   var a = 1;
@@ -291,7 +291,7 @@ function long_proc(list) {
 
 例えば、以下のようなインライン数式は、
 
-```
+```markdown
 Euler's formula: $e^{i\theta}=\cos\theta+i\sin\theta$
 ```
 
@@ -303,7 +303,7 @@ Euler's formula: $e^{i\theta}=\cos\theta+i\sin\theta$
 
 また、以下のようなブロック数式は、
 
-```
+```markdown
 $$
 ax^2+bx+c=0 \\
 \Leftrightarrow x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}

@@ -155,7 +155,7 @@ Images with titles are rendered as `figure` elements with `figurecaption` holdin
 
 For example, titled image below:
 
-```
+```markdown
 ![fig](image.png "Fig1. Sample image")
 ```
 
@@ -174,7 +174,7 @@ Also consider specifying the `-r` option to get clear images.
 Language specifiers following code block openers are passed to [highlight.js](https://highlightjs.org/).
 And additional filenames separated by colon are also available.
 
-````
+````markdown
 ```javascript:sample.js
 function highlight(code, lang) {
   try {
@@ -199,7 +199,7 @@ Code blocks with the language specifiers of "mermaid" are rendered by [MermaidJS
 
 For example, code block below:
 
-````
+````markdown
 ```mermaid
 flowchart LR
   A[Start]-->B{Check}
@@ -224,7 +224,7 @@ Note that spaces are required after code block openers and language specifiers t
 
 Captions are available also on mermaid blocks.
 
-````
+````markdown
 ```javascript:sample.js "List 1. highlight sample"
 function highlight(code, lang) {
   try {
@@ -266,7 +266,7 @@ The following controls are available:
 
 For example, the list below will be rendered in separate page.
 
-````
+````markdown
 ```javascript:long.js [isolated]
 function long_proc(list) {
   var a = 1;
@@ -291,7 +291,7 @@ The parts surrounded by `$` are rendered as inline formulas, and those by `$$` a
 
 For example, the inline formula below:
 
-```
+```markdown
 Euler's formula: $e^{i\theta}=\cos\theta+i\sin\theta$
 ```
 
@@ -303,7 +303,7 @@ will be rendered as:
 
 And the block formula below:
 
-```
+```markdown
 $$
 ax^2+bx+c=0 \\
 \Leftrightarrow x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
