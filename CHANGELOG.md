@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.6.2 (2025-6-3)
+
+* Migrate to Chromium137 and Puppeteer24.10
+
 ## Version 0.6.1 (2025-5-5)
 
 * Migrate to Chromium136 and Puppeteer24.8
