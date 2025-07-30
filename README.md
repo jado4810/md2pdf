@@ -73,7 +73,7 @@ Options are available below:
     * Recommended smaller (< 100) value on screenshots from zoomed screen to get clear images in PDF
 * `-l l̲o̲c̲a̲l̲e̲` **(CHANGED ON VER.0.6)**
     * Specify the language and company code of the texts as locale description
-    * It affects on font priorities, text indentation rules, line break rules and hypenations
+    * It affects on font priorities, text indentation rules, line break rules and hyphenation
     * Values example:
         * `en` - For English (default)
         * `ja` - For Japanese
