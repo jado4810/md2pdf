@@ -1,5 +1,11 @@
 # md2pdf - Changelog
 
+## Version 0.7.0 (2025-9-9)
+
+* Change base image of web interface container from Debian12 to 13 with the release of trixie
+* Migrate to Chromium140 and Puppeteer24.18
+* Migrate some other NodeJS libraries
+
 ## Version 0.6.4 (2025-8-7)
 
 * Migrate to Chromium139 and Puppeteer24.16
