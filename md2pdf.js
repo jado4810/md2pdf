@@ -7,6 +7,7 @@ const version = '0.7.0';
 import path from 'path';
 import { readFile } from 'fs/promises';
 import { pipeline } from 'stream/promises';
+import cld from 'cld';
 
 import { Command, Option, InvalidArgumentError } from 'commander';
 import { marked } from 'marked';
@@ -60,6 +61,23 @@ async function outputStdout(data) {
     await pipeline(stream, process.stdout);
   } catch (e) {
     throw new WriteError(e.message.replace(/^.*?: */, ''));
+  }
+}
+
+async function guessLocale(markdown) {
+  const locales = {
+    'zh':      'zh-cn',
+    'zh-Hant': 'zh-tw'
+  };
+
+  try {
+    const result = await cld.detect(markdown, {bestEffort: true});
+    const code = result.languages[0].code;
+    const locale = locales[code] || code;
+    process.stderr.write(`Guessed locale: ${locale}\n`);
+    return locale;
+  } catch (e) {
+    return 'en';
   }
 }
 
@@ -333,10 +351,7 @@ async function main() {
     if (isNaN(val)) throw new InvalidArgumentError('must be an integer');
     return val;
   }, 100);
-  program.addOption(
-      new Option('-l, --lang <lang>', 'locale spec')
-          .default('en')
-  );
+  program.option('-l, --lang <lang>', 'locale spec');
   program.option('-i, --noindent', 'disable text indentation in paragraphs');
   program.addOption(
       new Option('-c, --color <color>', 'color spec')
@@ -355,7 +370,7 @@ async function main() {
   const title = opts.title;
   const nopage = opts.nopage;
   const ratio = opts.ratio;
-  const locale = opts.lang.toLowerCase().replace('_', '-');
+  const ltype = opts.lang?.toLowerCase()?.replace('_', '-');
   const noindent = opts.noindent;
   const ctheme = opts.color;
   const anchors = opts.anchors;
@@ -375,43 +390,6 @@ async function main() {
     legalr:  {size: 'legal',  landscape: true }
   };
   if (!papers[ptype]) throw new Error('paper not found');
-
-  const themes = {
-    'ja':    'ja',
-    'ko':    'ko',
-    'zh':    'cn',
-    'zh-cn': 'cn',
-    'zh-tw': 'tw'
-  };
-  const ltheme = themes[locale] || themes[locale.replace(/-.*/, '')] || 'latin';
-
-  const families = {
-    latin: ['Noto Serif'],
-    ja:    ['Noto Serif', 'BIZ UDPMincho', 'Noto Serif CJK JP'],
-    ko:    ['Noto Serif', 'Noto Serif CJK KR'],
-    cn:    ['Noto Serif', 'Noto Serif CJK SC'],
-    tw:    ['Noto Serif', 'Noto Serif CJK TC']
-  };
-
-  const margins = {
-    portrait:  {top: '16mm', bottom: '16mm', left: '12mm', right: '12mm'},
-    landscape: {top: '12mm', bottom: '12mm', left: '16mm', right: '16mm'}
-  };
-
-  const setting = Object.assign({
-    family: families[ltheme],
-    title,
-    nopage,
-    ratio,
-    noindent,
-    margin: margins[papers[ptype].landscape ? 'landscape' : 'portrait']
-  }, papers[ptype]);
-
-  // Language settings
-  const lang = {
-    theme: ltheme,
-    locale
-  };
 
   // Color settings
   const colors = {
@@ -501,6 +479,46 @@ async function main() {
   // Use stdin if omitted or specified '-'
   const markdown = infile ? await inputFile(infile) : await inputStdin();
   if (!markdown) return 'Empty Markdown';
+
+  // Guess locale if omitted
+  const locale = ltype || await guessLocale(markdown);
+
+  const themes = {
+    'ja':    'ja',
+    'ko':    'ko',
+    'zh':    'cn',
+    'zh-cn': 'cn',
+    'zh-tw': 'tw'
+  };
+  const ltheme = themes[locale] || themes[locale.replace(/-.*/, '')] || 'latin';
+
+  const families = {
+    latin: ['Noto Serif'],
+    ja:    ['Noto Serif', 'BIZ UDPMincho', 'Noto Serif CJK JP'],
+    ko:    ['Noto Serif', 'Noto Serif CJK KR'],
+    cn:    ['Noto Serif', 'Noto Serif CJK SC'],
+    tw:    ['Noto Serif', 'Noto Serif CJK TC']
+  };
+
+  const margins = {
+    portrait:  {top: '16mm', bottom: '16mm', left: '12mm', right: '12mm'},
+    landscape: {top: '12mm', bottom: '12mm', left: '16mm', right: '16mm'}
+  };
+
+  const setting = Object.assign({
+    family: families[ltheme],
+    title,
+    nopage,
+    ratio,
+    noindent,
+    margin: margins[papers[ptype].landscape ? 'landscape' : 'portrait']
+  }, papers[ptype]);
+
+  // Language settings
+  const lang = {
+    theme: ltheme,
+    locale
+  };
 
   // Convert to PDF
   const pdf = await convert({markdown, setting, lang, color, base, anchors});

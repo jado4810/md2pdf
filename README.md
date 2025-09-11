@@ -71,11 +71,12 @@ Options are available below:
     * Specify the img magnify ratio in percentage
     * No effect on SVG image
     * Recommended smaller (< 100) value on screenshots from zoomed screen to get clear images in PDF
-* `-l l̲o̲c̲a̲l̲e̲` **(CHANGED ON VER.0.6)**
+* `-l l̲o̲c̲a̲l̲e̲` **(CHANGED ON VER.0.6 AND CHANGED DEFAULT ON VER.0.8)**
     * Specify the language and company code of the texts as locale description
     * It affects on font priorities, text indentation rules, line break rules and hyphenation
+    * If omitted, attempt to guess from actual input
     * Values example:
-        * `en` - For English (default)
+        * `en` - For English
         * `ja` - For Japanese
         * `ko` - For Korean
         * `zh-cn` - For Simplified Chinese

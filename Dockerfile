@@ -1,3 +1,17 @@
+FROM node:22-trixie-slim AS builder
+
+RUN apt update \
+ && apt install -y python3 make g++ \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/app
+
+COPY package.json package-lock.json .
+
+RUN npm init -y \
+ && npm install \
+ && rm -rf node_modules/cld/deps/cld
+
 FROM node:22-trixie-slim
 
 RUN apt update \
@@ -10,11 +24,10 @@ RUN apt update \
 WORKDIR /opt/app
 RUN mkdir mnt
 
-COPY package.json package-lock.json .
+COPY --from=builder /opt/app/package.json /opt/app/package-lock.json .
+COPY --from=builder /opt/app/node_modules node_modules/
 
-RUN npm init -y \
- && npm install \
- && groupadd -r user && useradd -r -g user -G audio,video user \
+RUN groupadd -r user && useradd -r -g user -G audio,video user \
  && mkdir -p /home/user/Downloads \
  && chown -R user:user /home/user \
  && chown -R user:user /opt/app

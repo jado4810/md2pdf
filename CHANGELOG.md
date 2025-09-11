@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.8.0 (2025-xx-xx)
+
+* Now detect language automatically if omitted -l option
+
 ## Version 0.7.0 (2025-9-9)
 
 * Change base image of web interface container from Debian12 to 13 with the release of trixie
