@@ -63,19 +63,12 @@ async function outputStdout(data) {
   }
 }
 
-function extractTitle(body) {
-  const match = body.match(/<h1(?: id=".+?")?>(.*?)<\/h1>/);
-  const title = match && match[1];
-  if (title) {
-    process.stderr.write(`Extracted title: ${title}\n`);
-    return title;
-  } else {
-    return null;
-  }
-}
-
 async function convert({markdown, setting, lang, color, base, anchors}) {
   if (!markdown) return '';
+
+  const extracted = {
+    title: ''
+  };
 
   // Conversion from headers to anchor IDs (GitHub compatible)
   const slugify_regexp = new RegExp(`[^- ${
@@ -93,6 +86,13 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
           .replaceAll(/\[(.*?)\]\(.*?\)/g, '$1')
           .replaceAll(slugify_regexp, '')
           .replace(/ +$/, '').replaceAll(/ /g, '-').toLowerCase();
+      if (setting.title == null && !extracted.title) {
+        const raw = parsed.replaceAll(/<.*?>/g, '');
+        if (raw) {
+          extracted.title = raw;
+          process.stderr.write(`Extracted title: ${raw}\n`);
+        }
+      }
       if (anchors) process.stderr.write(`Anchor id=${key}: ${text}\n`);
       return `<h${depth} id="${key}">${parsed}</h${depth}>`;
     },
@@ -207,7 +207,7 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
     }
   })();
 
-  const title = (setting.title != null) ? setting.title : extractTitle(body);
+  const title = (setting.title != null) ? setting.title : extracted.title;
 
   const head = `<title>${title || '(No title)'}</title>`;
   const bprop = lang.locale ? ` lang="${lang.locale}"` : '';
