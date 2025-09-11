@@ -72,8 +72,10 @@ async function guessLocale(markdown) {
 
   try {
     const result = await cld.detect(markdown, {bestEffort: true});
-    const locale = result.languages[0].code;
-    return locales[locale] || locale;
+    const code = result.languages[0].code;
+    const locale = locales[code] || code;
+    process.stderr.write(`Guessed locale: ${locale}\n`);
+    return locale;
   } catch (e) {
     return 'en';
   }
