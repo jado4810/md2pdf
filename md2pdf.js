@@ -63,6 +63,17 @@ async function outputStdout(data) {
   }
 }
 
+function extractTitle(body) {
+  const match = body.match(/<h1(?: id=".+?")?>(.*?)<\/h1>/);
+  const title = match && match[1];
+  if (title) {
+    process.stderr.write(`Extracted title: ${title}\n`);
+    return title;
+  } else {
+    return null;
+  }
+}
+
 async function convert({markdown, setting, lang, color, base, anchors}) {
   if (!markdown) return '';
 
@@ -196,11 +207,7 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
     }
   })();
 
-  let title = setting.title;
-  if (title == null) {
-    const match = body.match(/<h1(?: id=".+?")?>(.*?)<\/h1>/);
-    title = match && match[1];
-  }
+  const title = (setting.title != null) ? setting.title : extractTitle(body);
 
   const head = `<title>${title || '(No title)'}</title>`;
   const bprop = lang.locale ? ` lang="${lang.locale}"` : '';
