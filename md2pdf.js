@@ -5,6 +5,7 @@
 const version = '0.7.0';
 
 import path from 'path';
+import fs from 'fs';
 import { readFile } from 'fs/promises';
 import { pipeline } from 'stream/promises';
 import cld from 'cld';
@@ -359,6 +360,7 @@ async function main() {
           .choices(['color', 'grayscale', 'monochrome'])
   );
   program.option('-a, --anchors', 'show anchor ids and texts of headings');
+  program.option('-q, --quiet', 'suppress console output');
   program.addOption(new Option('-b, --base <path>').hideHelp());
   program.version(version, '-v, --version', 'show version');
 
@@ -374,6 +376,7 @@ async function main() {
   const noindent = opts.noindent;
   const ctheme = opts.color;
   const anchors = opts.anchors;
+  const quiet = opts.quiet;
   const base = opts.base || process.cwd();
 
   // Paper and format settings
@@ -475,6 +478,12 @@ async function main() {
   if (args.length > 1) throw new Error('too many input files');
   const infile = (args.length < 1 || args[0] == '-') ?
       null : path.resolve(base, args[0]);
+
+  // Suppress stderr on quiet mode
+  if (quiet) {
+    const stream = fs.createWriteStream('/dev/null');
+    process.stderr.write = stream.write.bind(stream);
+  }
 
   // Use stdin if omitted or specified '-'
   const markdown = infile ? await inputFile(infile) : await inputStdin();

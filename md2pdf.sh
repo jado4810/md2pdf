@@ -13,6 +13,7 @@ LANG=''
 NOINDENT=''
 COLOR=''
 ANCHORS=''
+QUIET=''
 REST=''
 parse() {
   OPTIND=$(($#+1))
@@ -25,7 +26,7 @@ parse() {
       -[ptrlc]?*) OPTARG=$1; shift
         eval 'set -- "${OPTARG%"${OPTARG#??}"}" "${OPTARG#??}"' ${1+'"$@"'}
         ;;
-      -[niavh]?*) OPTARG=$1; shift
+      -[niaqvh]?*) OPTARG=$1; shift
         eval 'set -- "${OPTARG%"${OPTARG#??}"}" -"${OPTARG#??}"' ${1+'"$@"'}
         case $2 in --*) set -- "$1" unknown "$2" && REST=x; esac;OPTARG= ;;
     esac
@@ -69,6 +70,11 @@ parse() {
         [ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
         eval '[ ${OPTARG+x} ] &&:' && OPTARG='1' || OPTARG=''
         ANCHORS="$OPTARG"
+        ;;
+      '-q'|'--quiet')
+        [ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
+        eval '[ ${OPTARG+x} ] &&:' && OPTARG='1' || OPTARG=''
+        QUIET="$OPTARG"
         ;;
       '-v'|'--version')
         echo "${VERSION}"
@@ -114,6 +120,7 @@ Options:
   -i, --noindent              disable text indentation in paragraphs
   -c, --color COLOR           color spec
   -a, --anchors               show anchor ids and texts of headings
+  -q, --quiet                 suppress console output
   -v, --version               show version
   -h, --help                  display help for command
 GETOPTIONSHERE
@@ -136,7 +143,7 @@ fi
 
 OPTS=(${PAPER:+-p "$PAPER"} ${TITLE:+-t "$TITLE"} ${NOPAGE:+-n})
 OPTS+=(${RATIO:+-r "$RATIO"} ${LANG:+-l "$LANG"} ${NOINDENT:+-i})
-OPTS+=(${COLOR:+-c "$COLOR"} ${ANCHORS:+-a} -b /opt/app/mnt)
+OPTS+=(${COLOR:+-c "$COLOR"} ${ANCHORS:+-a} ${QUIET:+-q} -b /opt/app/mnt)
 
 MOUNT=(-v "$DIRNAME:/opt/app/mnt")
 IMAGE="md2pdf${TAGNAME:+:$TAGNAME}"
