@@ -23,7 +23,7 @@ Those style is built with consciousness of paper prints:
 
 Some kinds of the style are customizable:
 
-* Language scheme (Latin, Japanese, Korean, Chinese)
+* Language scheme (Latin, Japanese, Korean, Chinese; auto guess available)
 * Paragraph stye (indented, gapped)
 * Color scheme (color, grayscale, monochrome)
 
@@ -92,6 +92,9 @@ Options are available below:
 * `-a`
     * Show anchor ids and texts of headings
     * Useful for making internal links to the headings
+* `-q`
+    * Suppress console output
+    * If specified, `-a` has no effect
 
 This script calls docker run like below:
 
