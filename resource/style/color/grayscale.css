@@ -1,5 +1,5 @@
 blockquote {
-  border: 1px solid #666;
+  border: 0.5pt solid #666;
   border-radius: 4pt;
 }
 
@@ -27,7 +27,7 @@ a {
 
 kbd {
   background-color: #ddd;
-  border: 1px solid #666;
+  border: 0.5pt solid #666;
   color: #000;
 }
 

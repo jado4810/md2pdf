@@ -54,7 +54,7 @@ figure > pre {
 }
 
 blockquote > :is(h1, h2, h3, h4, h5, h6):first-child {
-  margin-top: 4px;
+  margin-top: 4pt;
 }
 
 pre {
@@ -118,7 +118,7 @@ table {
 
 th, td {
   border-style: solid;
-  border-width: 1px;
+  border-width: 0.5pt;
   font-size: 10.5pt;
   padding: 0 2pt;
 }

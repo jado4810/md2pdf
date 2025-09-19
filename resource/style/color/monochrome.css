@@ -1,14 +1,14 @@
 blockquote {
-  border: 1px solid #000;
+  border: 0.5pt solid #000;
   border-radius: 4pt;
 }
 
 pre {
-  border: 1px solid #000;
+  border: 0.5pt solid #000;
 }
 
 .filename {
-  border: 1px solid #000;
+  border: 0.5pt solid #000;
   border-top: none;
 }
 
@@ -21,7 +21,7 @@ a {
 }
 
 kbd {
-  border: 1px solid #000;
+  border: 0.5pt solid #000;
 }
 
 .mermaid [aria-roledescription="sequence"] .rect {
