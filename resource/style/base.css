@@ -159,6 +159,10 @@ figcaption {
   font-size: 9pt;
 }
 
+.katex .newline {
+  margin-top: 8pt;
+}
+
 .mermaid {
   text-align: center;
 }
