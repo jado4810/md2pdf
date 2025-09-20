@@ -3,9 +3,13 @@
 ## Version 0.8.0 (2025-xx-xx)
 
 * Now detect language automatically if omitted -l option
+* Fix title extraction on formatted headings
+* Adjust some styles
+    * Reduce font sizes of headings
+    * Make margin between lines for block formulas
+    * Some more minor tweaks
 * Introduce -q option to suppress console output
 * Show guessed language and extracted title unless specified -q option
-* Fix title extraction on formatted headings
 * Reduce container image size
 
 ## Version 0.7.0 (2025-9-9)
