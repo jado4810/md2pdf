@@ -14,7 +14,7 @@
 
 ## Version 0.7.0 (2025-9-9)
 
-* Change base image of web interface container from Debian12 to 13 with the release of trixie
+* Change base image from Debian12 to 13 with the release of trixie
 * Migrate to Chromium140 and Puppeteer24.19
 * Migrate some other NodeJS libraries
 
