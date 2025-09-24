@@ -9,7 +9,7 @@ body {
 
 h1 {
   break-after: avoid-page;
-  font-size: 18pt;
+  font-size: 20pt;
   margin: 8pt 0 16pt;
   padding: 0;
   text-align: center;
@@ -17,21 +17,21 @@ h1 {
 
 h2 {
   break-after: avoid-page;
-  font-size: 16pt;
+  font-size: 14pt;
   margin: 16pt 0 8pt;
   padding: 0;
 }
 
 h3 {
   break-after: avoid-page;
-  font-size: 14pt;
+  font-size: 12pt;
   margin: 12pt 0 8pt;
   padding: 0;
 }
 
 h4 {
   break-after: avoid-page;
-  font-size: 12pt;
+  font-size: 11pt;
   margin: 12pt 0 8pt;
   padding: 0;
 }
