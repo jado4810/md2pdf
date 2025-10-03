@@ -11,6 +11,7 @@ parser_definition() {
   flag    NOINDENT -i --noindent -- 'disable text indentation in paragraphs'
   param   COLOR    -c --color    -- 'color spec'
   flag    ANCHORS  -a --anchors  -- 'show anchor ids and texts of headings'
+  flag    QUIET    -q --quiet    -- 'suppress console output'
   disp    VERSION  -v --version  -- 'show version'
   disp    :usage   -h --help     -- 'display help for command'
 }

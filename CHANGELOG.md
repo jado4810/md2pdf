@@ -1,5 +1,18 @@
 # md2pdf - Changelog
 
+## Version 0.8.0 (2025-10-3)
+
+* Now detect language automatically if omitted -l option
+* Fix title extraction on formatted headings
+* Adjust some styles
+    * Reduce font sizes of headings
+    * Make margin between lines for block formulas
+    * Some more minor tweaks
+* Introduce -q option to suppress console output
+* Show guessed language and extracted title unless specified -q option
+* Migrate to Chromium141 and Puppeteer24.23
+* Reduce container image size
+
 ## Version 0.7.0 (2025-9-9)
 
 * Change base image from Debian12 to 13 with the release of trixie

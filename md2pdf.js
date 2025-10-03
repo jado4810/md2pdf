@@ -2,11 +2,13 @@
 
 'use strict';
 
-const version = '0.7.0';
+const version = '0.8.0';
 
 import path from 'path';
+import fs from 'fs';
 import { readFile } from 'fs/promises';
 import { pipeline } from 'stream/promises';
+import cld from 'cld';
 
 import { Command, Option, InvalidArgumentError } from 'commander';
 import { marked } from 'marked';
@@ -63,8 +65,29 @@ async function outputStdout(data) {
   }
 }
 
+async function guessLocale(markdown) {
+  const locales = {
+    'zh':      'zh-cn',
+    'zh-Hant': 'zh-tw'
+  };
+
+  try {
+    const result = await cld.detect(markdown, {bestEffort: true});
+    const code = result.languages[0].code;
+    const locale = locales[code] || code;
+    process.stderr.write(`Guessed locale: ${locale}\n`);
+    return locale;
+  } catch (e) {
+    return 'en';
+  }
+}
+
 async function convert({markdown, setting, lang, color, base, anchors}) {
   if (!markdown) return '';
+
+  const extracted = {
+    title: ''
+  };
 
   // Conversion from headers to anchor IDs (GitHub compatible)
   const slugify_regexp = new RegExp(`[^- ${
@@ -82,6 +105,13 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
           .replaceAll(/\[(.*?)\]\(.*?\)/g, '$1')
           .replaceAll(slugify_regexp, '')
           .replace(/ +$/, '').replaceAll(/ /g, '-').toLowerCase();
+      if (setting.title == null && !extracted.title) {
+        const raw = parsed.replaceAll(/<.*?>/g, '');
+        if (raw) {
+          extracted.title = raw;
+          process.stderr.write(`Extracted title: ${raw}\n`);
+        }
+      }
       if (anchors) process.stderr.write(`Anchor id=${key}: ${text}\n`);
       return `<h${depth} id="${key}">${parsed}</h${depth}>`;
     },
@@ -196,11 +226,7 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
     }
   })();
 
-  let title = setting.title;
-  if (title == null) {
-    const match = body.match(/<h1(?: id=".+?")?>(.*?)<\/h1>/);
-    title = match && match[1];
-  }
+  const title = (setting.title != null) ? setting.title : extracted.title;
 
   const head = `<title>${title || '(No title)'}</title>`;
   const bprop = lang.locale ? ` lang="${lang.locale}"` : '';
@@ -326,10 +352,7 @@ async function main() {
     if (isNaN(val)) throw new InvalidArgumentError('must be an integer');
     return val;
   }, 100);
-  program.addOption(
-      new Option('-l, --lang <lang>', 'locale spec')
-          .default('en')
-  );
+  program.option('-l, --lang <lang>', 'locale spec');
   program.option('-i, --noindent', 'disable text indentation in paragraphs');
   program.addOption(
       new Option('-c, --color <color>', 'color spec')
@@ -337,6 +360,7 @@ async function main() {
           .choices(['color', 'grayscale', 'monochrome'])
   );
   program.option('-a, --anchors', 'show anchor ids and texts of headings');
+  program.option('-q, --quiet', 'suppress console output');
   program.addOption(new Option('-b, --base <path>').hideHelp());
   program.version(version, '-v, --version', 'show version');
 
@@ -348,10 +372,11 @@ async function main() {
   const title = opts.title;
   const nopage = opts.nopage;
   const ratio = opts.ratio;
-  const locale = opts.lang.toLowerCase().replace('_', '-');
+  const ltype = opts.lang?.toLowerCase()?.replace('_', '-');
   const noindent = opts.noindent;
   const ctheme = opts.color;
   const anchors = opts.anchors;
+  const quiet = opts.quiet;
   const base = opts.base || process.cwd();
 
   // Paper and format settings
@@ -368,43 +393,6 @@ async function main() {
     legalr:  {size: 'legal',  landscape: true }
   };
   if (!papers[ptype]) throw new Error('paper not found');
-
-  const themes = {
-    'ja':    'ja',
-    'ko':    'ko',
-    'zh':    'cn',
-    'zh-cn': 'cn',
-    'zh-tw': 'tw'
-  };
-  const ltheme = themes[locale] || themes[locale.replace(/-.*/, '')] || 'latin';
-
-  const families = {
-    latin: ['Noto Serif'],
-    ja:    ['Noto Serif', 'BIZ UDPMincho', 'Noto Serif CJK JP'],
-    ko:    ['Noto Serif', 'Noto Serif CJK KR'],
-    cn:    ['Noto Serif', 'Noto Serif CJK SC'],
-    tw:    ['Noto Serif', 'Noto Serif CJK TC']
-  };
-
-  const margins = {
-    portrait:  {top: '16mm', bottom: '16mm', left: '12mm', right: '12mm'},
-    landscape: {top: '12mm', bottom: '12mm', left: '16mm', right: '16mm'}
-  };
-
-  const setting = Object.assign({
-    family: families[ltheme],
-    title,
-    nopage,
-    ratio,
-    noindent,
-    margin: margins[papers[ptype].landscape ? 'landscape' : 'portrait']
-  }, papers[ptype]);
-
-  // Language settings
-  const lang = {
-    theme: ltheme,
-    locale
-  };
 
   // Color settings
   const colors = {
@@ -491,9 +479,55 @@ async function main() {
   const infile = (args.length < 1 || args[0] == '-') ?
       null : path.resolve(base, args[0]);
 
+  // Suppress stderr on quiet mode
+  if (quiet) {
+    const stream = fs.createWriteStream('/dev/null');
+    process.stderr.write = stream.write.bind(stream);
+  }
+
   // Use stdin if omitted or specified '-'
   const markdown = infile ? await inputFile(infile) : await inputStdin();
   if (!markdown) return 'Empty Markdown';
+
+  // Guess locale if omitted
+  const locale = ltype || await guessLocale(markdown);
+
+  const themes = {
+    'ja':    'ja',
+    'ko':    'ko',
+    'zh':    'cn',
+    'zh-cn': 'cn',
+    'zh-tw': 'tw'
+  };
+  const ltheme = themes[locale] || themes[locale.replace(/-.*/, '')] || 'latin';
+
+  const families = {
+    latin: ['Noto Serif'],
+    ja:    ['Noto Serif', 'BIZ UDPMincho', 'Noto Serif CJK JP'],
+    ko:    ['Noto Serif', 'Noto Serif CJK KR'],
+    cn:    ['Noto Serif', 'Noto Serif CJK SC'],
+    tw:    ['Noto Serif', 'Noto Serif CJK TC']
+  };
+
+  const margins = {
+    portrait:  {top: '16mm', bottom: '16mm', left: '12mm', right: '12mm'},
+    landscape: {top: '12mm', bottom: '12mm', left: '16mm', right: '16mm'}
+  };
+
+  const setting = Object.assign({
+    family: families[ltheme],
+    title,
+    nopage,
+    ratio,
+    noindent,
+    margin: margins[papers[ptype].landscape ? 'landscape' : 'portrait']
+  }, papers[ptype]);
+
+  // Language settings
+  const lang = {
+    theme: ltheme,
+    locale
+  };
 
   // Convert to PDF
   const pdf = await convert({markdown, setting, lang, color, base, anchors});

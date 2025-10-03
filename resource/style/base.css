@@ -9,7 +9,7 @@ body {
 
 h1 {
   break-after: avoid-page;
-  font-size: 24pt;
+  font-size: 20pt;
   margin: 8pt 0 16pt;
   padding: 0;
   text-align: center;
@@ -17,28 +17,28 @@ h1 {
 
 h2 {
   break-after: avoid-page;
-  font-size: 18pt;
+  font-size: 14pt;
   margin: 16pt 0 8pt;
   padding: 0;
 }
 
 h3 {
   break-after: avoid-page;
-  font-size: 16pt;
+  font-size: 12pt;
   margin: 12pt 0 8pt;
   padding: 0;
 }
 
 h4 {
   break-after: avoid-page;
-  font-size: 14pt;
+  font-size: 11pt;
   margin: 12pt 0 8pt;
   padding: 0;
 }
 
 h5, h6 {
   break-after: avoid-page;
-  font-size: 12pt;
+  font-size: 10.5pt;
   margin: 8pt 0;
   padding: 0;
 }
@@ -54,7 +54,7 @@ figure > pre {
 }
 
 blockquote > :is(h1, h2, h3, h4, h5, h6):first-child {
-  margin-top: 4px;
+  margin-top: 4pt;
 }
 
 pre {
@@ -118,7 +118,7 @@ table {
 
 th, td {
   border-style: solid;
-  border-width: 1px;
+  border-width: 0.5pt;
   font-size: 10.5pt;
   padding: 0 2pt;
 }
@@ -157,6 +157,10 @@ figcaption {
   align-self: center;
   break-before: avoid-page;
   font-size: 9pt;
+}
+
+.katex .newline {
+  margin-top: 8pt;
 }
 
 .mermaid {
