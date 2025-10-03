@@ -1,4 +1,4 @@
-FROM node:22-trixie-slim AS builder
+FROM node:24-trixie-slim AS builder
 
 RUN apt update \
  && apt install -y python3 make g++ \
@@ -12,7 +12,7 @@ RUN npm init -y \
  && npm install \
  && rm -rf node_modules/cld/deps/cld
 
-FROM node:22-trixie-slim
+FROM node:24-trixie-slim
 
 RUN apt update \
  && apt install -y \
