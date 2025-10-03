@@ -1,6 +1,6 @@
 # md2pdf - Changelog
 
-## Version 0.8.0 (2025-xx-xx)
+## Version 0.8.0 (2025-10-3)
 
 * Now detect language automatically if omitted -l option
 * Fix title extraction on formatted headings
@@ -10,6 +10,7 @@
     * Some more minor tweaks
 * Introduce -q option to suppress console output
 * Show guessed language and extracted title unless specified -q option
+* Migrate to Chromium141 and Puppeteer24.23
 * Reduce container image size
 
 ## Version 0.7.0 (2025-9-9)
