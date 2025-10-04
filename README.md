@@ -23,16 +23,16 @@ Those style is built with consciousness of paper prints:
 
 Some kinds of the style are customizable:
 
-* Language scheme (Latin, Japanese, Korean, Chinese; auto guess available)
-* Paragraph stye (indented, gapped)
-* Color scheme (color, grayscale, monochrome)
+* Language scheme (Auto guess available)
+* Paragraph stye (indented or gapped)
+* Color scheme (color, grayscale or monochrome)
 
 It accepts Markdown format like below:
 
 * GitHub Flavored Markdown
 * Code highlight
-* Mermaid
-* Math formula with LaTeX
+* Diagram with Mermaid
+* Math formula with KaTeX
 
 How to Use
 ----------
@@ -288,9 +288,9 @@ function long_proc(list) {
 ```
 ````
 
-### 4\. LaTeX
+### 4\. KaTeX
 
-LaTeX formulas surrounded by `$` or `$$` are passed to [KaTeX](https://katex.org/).
+TeX-style formulas surrounded by `$` or `$$` are passed to [KaTeX](https://katex.org/).
 The parts surrounded by `$` are rendered as inline formulas, and those by `$$` as block ones.
 
 For example, the inline formula below:
@@ -309,8 +309,10 @@ And the block formula below:
 
 ```markdown
 $$
-ax^2+bx+c=0 \\
-\Leftrightarrow x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\begin{split}
+  &ax^2+bx+c=0 \\
+  \Leftrightarrow {}&x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\end{split}
 $$
 ```
 

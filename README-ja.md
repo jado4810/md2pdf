@@ -24,7 +24,7 @@ MarkdownのPDFコンバーターです。
 
 以下のスタイルについてはカスタマイズが可能です。
 
-* 言語設定(西欧・日本語・韓国語・中国語、自動推測可)
+* 言語設定(自動推測可)
 * 段落スタイル(インデントあり・段落間マージンあり)
 * 色設定(カラー・グレイスケール・モノクロ)
 
@@ -32,8 +32,8 @@ MarkdownのPDFコンバーターです。
 
 * GitHub Flavored Markdown
 * コードのハイライト
-* Mermaid
-* LaTeXによる数式
+* Mermaidによる図表
+* KaTeXによる数式
 
 使い方
 ------
@@ -288,9 +288,9 @@ function long_proc(list) {
 ```
 ````
 
-### 4\. LaTeX
+### 4\. KaTeX
 
-`$`〜`$`または`$$`〜`$$`で囲んだLaTeXの数式記述は、[KaTeX](https://katex.org/)で描画されます。
+`$`〜`$`または`$$`〜`$$`で囲んだTeX形式の数式は、[KaTeX](https://katex.org/)で描画されます。
 `$`〜`$`で囲んだ部分はインライン数式として、`$$`〜`$$`で囲んだ部分はブロック数式として、それぞれ描画されます。
 
 例えば、以下のようなインライン数式は、
@@ -309,8 +309,10 @@ Euler's formula: $e^{i\theta}=\cos\theta+i\sin\theta$
 
 ```markdown
 $$
-ax^2+bx+c=0 \\
-\Leftrightarrow x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\begin{split}
+  &ax^2+bx+c=0 \\
+  \Leftrightarrow {}&x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\end{split}
 $$
 ```
 
