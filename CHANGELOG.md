@@ -1,5 +1,11 @@
 # md2pdf - Changelog
 
+## Version 0.9.0
+
+* Migrate container image to Node24LTS
+* Migrate to Marked16
+* Some security updates on libraries
+
 ## Version 0.8.0 (2025-10-3)
 
 * Now detect language automatically if omitted -l option
