@@ -496,18 +496,18 @@ async function main() {
   const themes = {
     'ja':    'ja',
     'ko':    'ko',
-    'zh':    'cn',
-    'zh-cn': 'cn',
-    'zh-tw': 'tw'
+    'zh':    'zh-cn',
+    'zh-cn': 'zh-cn',
+    'zh-tw': 'zh-tw'
   };
   const ltheme = themes[locale] || themes[locale.replace(/-.*/, '')] || 'latin';
 
   const families = {
-    latin: ['Noto Serif'],
-    ja:    ['Noto Serif', 'BIZ UDPMincho', 'Noto Serif CJK JP'],
-    ko:    ['Noto Serif', 'Noto Serif CJK KR'],
-    cn:    ['Noto Serif', 'Noto Serif CJK SC'],
-    tw:    ['Noto Serif', 'Noto Serif CJK TC']
+    'latin': ['Noto Serif'],
+    'ja':    ['Noto Serif', 'BIZ UDPMincho', 'Noto Serif CJK JP'],
+    'ko':    ['Noto Serif', 'Noto Serif CJK KR'],
+    'zh-cn': ['Noto Serif', 'Noto Serif CJK SC'],
+    'zh-tw': ['Noto Serif', 'Noto Serif CJK TC']
   };
 
   const margins = {
