@@ -4,6 +4,7 @@
 
 * Migrate container image to Node24LTS
 * Migrate to Marked16
+* Migrate to Chromium142 and Puppeteer24.27
 * Some security updates on libraries
 
 ## Version 0.8.0 (2025-10-3)
