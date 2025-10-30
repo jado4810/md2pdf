@@ -8,9 +8,10 @@ import path from 'path';
 import fs from 'fs';
 import { readFile } from 'fs/promises';
 import { pipeline } from 'stream/promises';
-import cld from 'cld';
 
 import { Command, Option, InvalidArgumentError } from 'commander';
+import cld from 'cld';
+
 import { marked } from 'marked';
 import katex from 'katex';
 import markedKatex from 'marked-katex-extension';
