@@ -109,7 +109,9 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
           .replaceAll(slugify_regexp, '')
           .replaceAll(/ /g, '-').toLowerCase();
       if (setting.title == null && !extracted.title) {
-        const raw = parsed.replaceAll(/<.*?>/g, '');
+        const raw = parsed
+            .replaceAll(/<.*?>/g, '')
+            .replace(/^\s+/, '').replace(/\s+$/, '');
         if (raw) {
           extracted.title = raw;
           process.stderr.write(`Extracted title: ${raw}\n`);
