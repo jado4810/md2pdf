@@ -322,6 +322,13 @@ will be:
 <img src="./doc-images/fig6.png" style="width:192px;height:auto">
 </p>
 
+### 5\. Forcing page feed
+
+Insert raw HTML comment like `<!-- PageFeed -->` to force page feed where that comment is inserted at.
+
+Any combination of spaces between words and upper or lower cases; `Page feed`, `pagefeed` and `pageFeed` are to be recognized.
+Additionally, acronymized patterns such as `pf` or `PF` are also available.
+
 Copyright and License
 ---------------------
 
