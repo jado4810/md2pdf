@@ -11,6 +11,10 @@ body > :has(.force-pf) {
   break-before: page;
 }
 
+.force-pf {
+  display: none;
+}
+
 h1 {
   break-after: avoid-page;
   font-size: 20pt;
