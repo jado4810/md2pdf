@@ -102,9 +102,9 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
     heading({tokens, text, depth}) {
       const parsed = this.parser.parseInline(tokens);
       const key = text
+          .replaceAll(/<.*?>/g, '')
           .replaceAll(/!\[.*?\]\(.*?\)/g, '')
           .replaceAll(/\[(.*?)\]\(.*?\)/g, '$1')
-          .replaceAll(/<.*?>/g, '')
           .replaceAll(slugify_regexp, '')
           .replaceAll(/ /g, '-').toLowerCase();
       if (setting.title == null && !extracted.title) {
