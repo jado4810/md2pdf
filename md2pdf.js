@@ -88,11 +88,11 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
 
   const extracted = {
     title: '',
-    keys: {}
+    ids: {}
   };
 
   // Conversion from headers to anchor IDs (GitHub compatible)
-  const slug = new RegExp(`[^- ${
+  const sre = new RegExp(`[^- ${
     [
       'Lu', 'Ll', 'Lt', 'Lm', 'Lo', 'Nl', 'Nd', 'Mc', 'Me', 'Mn', 'Pc'
     ].map((klass) => { return `\\p{${klass}}` }).join('')
@@ -103,12 +103,20 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
     heading({tokens, text, depth}) {
       const parsed = this.parser.parseInline(tokens);
       const raw = parsed.replaceAll(/<.*?>/g, '');
-      const key = raw.replaceAll(slug, '').replaceAll(/ /g, '-').toLowerCase();
-      if (extracted.keys[key]) {
-        key = key + '-' + extracted.keys[key]++;
-      } else {
-        extracted.keys[key] = 1;
-      }
+
+      const id = (() => {
+        const key = raw.replaceAll(sre, '').replaceAll(/ /g, '-').toLowerCase();
+        if (!key) return '';
+
+        if (extracted.ids[key]) {
+          return key + '-' + extracted.ids[key]++;
+        } else {
+          extracted.ids[key] = 1;
+          return key;
+        }
+      })();
+      const attr_id = id ? ` id="${id}"` : '';
+
       if (setting.title == null && !extracted.title) {
         const title = raw.trim();
         if (title) {
@@ -116,8 +124,9 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
           process.stderr.write(`Extracted title: ${title}\n`);
         }
       }
-      if (anchors) process.stderr.write(`Anchor id=${key}: ${text}\n`);
-      return `<h${depth} id="${key}">${parsed}</h${depth}>`;
+
+      if (id && anchors) process.stderr.write(`Anchor id=${id}: ${text}\n`);
+      return `<h${depth}${attr_id}>${parsed}</h${depth}>`;
     },
 
     image({href, title, text}) {
