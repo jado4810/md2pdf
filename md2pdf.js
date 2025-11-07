@@ -92,7 +92,7 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
   };
 
   // Conversion from headers to anchor IDs (GitHub compatible)
-  const slugify_regexp = new RegExp(`[^- ${
+  const slug = new RegExp(`[^- ${
     [
       'Lu', 'Ll', 'Lt', 'Lm', 'Lo', 'Nl', 'Nd', 'Mc', 'Me', 'Mn', 'Pc'
     ].map((klass) => { return `\\p{${klass}}` }).join('')
@@ -102,20 +102,18 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
   const renderer = {
     heading({tokens, text, depth}) {
       const parsed = this.parser.parseInline(tokens);
-      const key = parsed
-          .replaceAll(/<.*?>/g, '')
-          .replaceAll(slugify_regexp, '')
-          .replaceAll(/ /g, '-').toLowerCase();
+      const raw = parsed.replaceAll(/<.*?>/g, '');
+      const key = raw.replaceAll(slug, '').replaceAll(/ /g, '-').toLowerCase();
       if (extracted.keys[key]) {
         key = key + '-' + extracted.keys[key]++;
       } else {
         extracted.keys[key] = 1;
       }
       if (setting.title == null && !extracted.title) {
-        const raw = parsed.replaceAll(/<.*?>/g, '').trim();
-        if (raw) {
-          extracted.title = raw;
-          process.stderr.write(`Extracted title: ${raw}\n`);
+        const title = raw.trim();
+        if (title) {
+          extracted.title = title;
+          process.stderr.write(`Extracted title: ${title}\n`);
         }
       }
       if (anchors) process.stderr.write(`Anchor id=${key}: ${text}\n`);
