@@ -2,7 +2,7 @@
 
 'use strict';
 
-const version = '0.9.0';
+const version = '0.9.1';
 
 import path from 'path';
 import fs from 'fs';
