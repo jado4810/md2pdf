@@ -100,6 +100,14 @@ async function convert({markdown, setting, lang, color, base, flags}) {
 
   // Markdown renderer
   const renderer = {
+    html({text}) {
+      if (text.match(/<!--\s*(?:pf|page\s*feed)\s*-->/i)) {
+        return '<span class="force-pf"></span>';
+      } else {
+        return text;
+      }
+    },
+
     heading({tokens, text, depth}) {
       const parsed = this.parser.parseInline(tokens);
       const raw = parsed.replaceAll(/<.*?>/g, '');
