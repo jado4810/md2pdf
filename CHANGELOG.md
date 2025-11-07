@@ -1,5 +1,10 @@
 # md2pdf - Changelog
 
+## Version 0.9.1 (2025-11-7)
+
+* Fix title extraction to trim trailing whitespaces
+* Fix anchor slugifying rule with markdown formats or HTML tags
+
 ## Version 0.9.0 (2025-10-31)
 
 * Migrate container image to Node24LTS
