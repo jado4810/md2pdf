@@ -83,7 +83,7 @@ async function guessLocale(markdown) {
   }
 }
 
-async function convert({markdown, setting, lang, color, base, anchors}) {
+async function convert({markdown, setting, lang, color, base, flags}) {
   if (!markdown) return '';
 
   const extracted = {
@@ -125,7 +125,9 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
         }
       }
 
-      if (id && anchors) process.stderr.write(`Anchor id=${id}: ${text}\n`);
+      if (id && flags.anchors) {
+        process.stderr.write(`Anchor id=${id}: ${text}\n`);
+      }
       return `<h${depth}${attr_id}>${parsed}</h${depth}>`;
     },
 
@@ -244,6 +246,8 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
   const head = `<title>${title || '(No title)'}</title>`;
   const bprop = lang.locale ? ` lang="${lang.locale}"` : '';
   const html = `<html><head>${head}</head><body${bprop}>${body}</body></html>`;
+
+  if (flags.debug) process.stderr.write(`Rendered html:\n${html}\n`);
 
   // Render HTML with puppeteer
   const browser = await puppeteer.launch({
@@ -374,6 +378,7 @@ async function main() {
   );
   program.option('-a, --anchors', 'show anchor ids and texts of headings');
   program.option('-q, --quiet', 'suppress console output');
+  program.addOption(new Option('-d, --debug').hideHelp());
   program.addOption(new Option('-b, --base <path>').hideHelp());
   program.version(version, '-v, --version', 'show version');
 
@@ -390,6 +395,7 @@ async function main() {
   const ctheme = opts.color;
   const anchors = opts.anchors;
   const quiet = opts.quiet;
+  const debug = opts.debug;
   const base = opts.base || process.cwd();
 
   // Paper and format settings
@@ -542,8 +548,14 @@ async function main() {
     locale
   };
 
+  // Flags
+  const flags = {
+    anchors,
+    debug
+  };
+
   // Convert to PDF
-  const pdf = await convert({markdown, setting, lang, color, base, anchors});
+  const pdf = await convert({markdown, setting, lang, color, base, flags});
   if (!pdf) return 'Empty PDF';
 
   // Output to stdout

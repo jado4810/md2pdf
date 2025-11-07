@@ -21,7 +21,8 @@ fi
 
 OPTS=(${PAPER:+-p "$PAPER"} ${TITLE:+-t "$TITLE"} ${NOPAGE:+-n})
 OPTS+=(${RATIO:+-r "$RATIO"} ${LANG:+-l "$LANG"} ${NOINDENT:+-i})
-OPTS+=(${COLOR:+-c "$COLOR"} ${ANCHORS:+-a} ${QUIET:+-q} -b /opt/app/mnt)
+OPTS+=(${COLOR:+-c "$COLOR"} ${ANCHORS:+-a} ${QUIET:+-q} ${DEBUG:+-d})
+OPTS+=(-b /opt/app/mnt)
 
 MOUNT=(-v "$DIRNAME:/opt/app/mnt")
 IMAGE="md2pdf${TAGNAME:+:$TAGNAME}"
