@@ -87,7 +87,8 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
   if (!markdown) return '';
 
   const extracted = {
-    title: ''
+    title: '',
+    keys: {}
   };
 
   // Conversion from headers to anchor IDs (GitHub compatible)
@@ -105,6 +106,11 @@ async function convert({markdown, setting, lang, color, base, anchors}) {
           .replaceAll(/<.*?>/g, '')
           .replaceAll(slugify_regexp, '')
           .replaceAll(/ /g, '-').toLowerCase();
+      if (extracted.keys[key]) {
+        key = key + '-' + extracted.keys[key]++;
+      } else {
+        extracted.keys[key] = 1;
+      }
       if (setting.title == null && !extracted.title) {
         const raw = parsed.replaceAll(/<.*?>/g, '').trim();
         if (raw) {
