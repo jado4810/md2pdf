@@ -37,7 +37,7 @@ h3 {
   padding: 0;
 }
 
-h4 {
+h4, .markdown-alert-title {
   break-after: avoid-page;
   font-size: 11pt;
   margin: 12pt 0 8pt;
@@ -51,7 +51,7 @@ h5, h6 {
   padding: 0;
 }
 
-blockquote, pre {
+blockquote, .markdown-alert, pre {
   break-inside: avoid-page;
   margin: 8pt 12pt;
   padding: 4pt 8pt;
@@ -61,8 +61,21 @@ figure > pre {
   margin: 0;
 }
 
-blockquote > :is(h1, h2, h3, h4, h5, h6):first-child {
+:is(blockquote, .markdown-alert) > :is(h1, h2, h3, h4, h5, h6, .markdown-alert-title):first-child {
   margin-top: 4pt;
+}
+
+.markdown-alert-title {
+  align-items: center;
+  border-left-style: solid;
+  border-left-width: 6pt;
+  display: flex;
+}
+
+.markdown-alert-title > .octicon {
+  height: 13pt;
+  margin: 0 4pt 0 8pt;
+  width: 13pt;
 }
 
 pre {

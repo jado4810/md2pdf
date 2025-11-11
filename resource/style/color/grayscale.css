@@ -1,6 +1,24 @@
-blockquote {
+blockquote, .markdown-alert {
   border: 0.5pt solid #666;
   border-radius: 4pt;
+}
+
+:is(.markdown-alert-note, .markdown-alert-tip) > .markdown-alert-title {
+  border-color: #666;
+  color: #666;
+  fill: #666;
+}
+
+.markdown-alert-warning > .markdown-alert-title {
+  border-color: #444;
+  color: #444;
+  fill: #444;
+}
+
+:is(.markdown-alert-important, .markdown-alert-caution) > .markdown-alert-title {
+  border-color: #000;
+  color: #000;
+  fill: #000;
 }
 
 pre {

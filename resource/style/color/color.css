@@ -1,6 +1,36 @@
-blockquote {
+blockquote, .markdown-alert {
   background-color: #fec;
   border-radius: 4pt;
+}
+
+.markdown-alert-note > .markdown-alert-title {
+  border-color: #05c;
+  color: #05c;
+  fill: #05c;
+}
+
+.markdown-alert-tip > .markdown-alert-title {
+  border-color: #063;
+  color: #063;
+  fill: #063;
+}
+
+.markdown-alert-important > .markdown-alert-title {
+  border-color: #63a;
+  color: #63a;
+  fill: #63a;
+}
+
+.markdown-alert-warning > .markdown-alert-title {
+  border-color: #850;
+  color: #850;
+  fill: #850;
+}
+
+.markdown-alert-caution > .markdown-alert-title {
+  border-color: #b12;
+  color: #b12;
+  fill: #b12;
 }
 
 pre {
