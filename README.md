@@ -322,7 +322,33 @@ will be:
 <img src="./doc-images/fig6.png" style="width:192px;height:auto">
 </p>
 
-### 5\. Forcing page feed
+### 5\. Alerts
+
+Alert tags like `[!AlertType]` in quoted blocks, beginning with '> ', are rendered as emphasized critical information header just like GFM Alerts.
+
+The following `AlertType`s are recognized:
+
+* `NOTE`
+
+    Highlights information that users should take into account.
+
+* `TIP`
+
+    Optional information to help a user be more successful.
+
+* `IMPORTANT`
+
+    Crucial information necessary for users to succeed.
+
+* `WARNING`
+
+    Critical content demanding immediate user attention due to potential risks.
+
+* `CAUTION`
+
+    Negative potential consequences of an action.
+
+### 6\. Forcing page feed
 
 Insert raw HTML comment like `<!-- PageFeed -->` to force page feed where that comment is inserted at.
 
