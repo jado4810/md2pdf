@@ -14,6 +14,7 @@ import cld from 'cld';
 
 import { marked } from 'marked';
 import katex from 'katex';
+import markedAlert from 'marked-alert';
 import markedKatex from 'marked-katex-extension';
 import hljs from 'highlight.js';
 import puppeteer from 'puppeteer';
@@ -217,10 +218,14 @@ async function convert({markdown, setting, lang, color, base, flags}) {
   };
 
   // Convert markdown to HTML
-  const texmacros = {};
   marked.use({
     renderer: renderer
-  }, markedKatex({
+  });
+
+  marked.use(markedAlert());
+
+  const texmacros = {};
+  marked.use(markedKatex({
     output: 'html',
     strict: false,
     texmacros
