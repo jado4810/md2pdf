@@ -22,7 +22,7 @@
     "marked-alert": "^2.0.0",
     "marked-katex-extension": "^5.0.0",
     "mermaid": "^11.0.0",
-    "puppeteer": "^24.27.0"
+    "puppeteer": "^24.32.0"
   },
   "overrides": {
     "glob": "^9.0.0"
