@@ -1,5 +1,11 @@
 # md2pdf - Changelog
 
+## Version 0.10.0
+
+* Support GFM alerts
+* Support forcing pagefeeds
+* Migrate to Chromium143 and Puppeteer24.32
+
 ## Version 0.9.1 (2025-11-7)
 
 * Fix title extraction to trim trailing whitespaces
