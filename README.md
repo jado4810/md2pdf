@@ -348,6 +348,19 @@ The following `AlertType`s are recognized:
 
     Negative potential consequences of an action.
 
+For example, the alert in the quote below:
+
+```markdown
+> [!WARNING]
+> Be sure to set this option to avoid the image corruption.
+```
+
+will be rendered as:
+
+<p align="center">
+<img src="./doc-images/fig7.png" style="width:862px;height:auto">
+</p>
+
 ### 6\. Forcing page feed
 
 Insert raw HTML comment like `<!-- PageFeed -->` to force page feed where that comment is inserted at.

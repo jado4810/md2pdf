@@ -348,6 +348,19 @@ $$
 
     実行することによって発生するおそれのある好ましくない事象。
 
+例えば、以下のようなアラートタグを含む引用ブロックは、
+
+```markdown
+> [!WARNING]
+> Be sure to set this option to avoid the image corruption.
+```
+
+このように描画されます。
+
+<p align="center">
+<img src="./doc-images/fig7.png" style="width:862px;height:auto">
+</p>
+
 ### 6\. 強制改ページ
 
 `<!-- PageFeed -->`のように、生のHTMLコメントを挿入することで、その場所で強制的に改ページすることができます。
