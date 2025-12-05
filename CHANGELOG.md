@@ -1,6 +1,6 @@
 # md2pdf - Changelog
 
-## Version 0.10.0
+## Version 0.10.0 (2025-12-5)
 
 * Support GFM alerts
 * Support forcing pagefeeds
