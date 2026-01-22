@@ -9,6 +9,7 @@ body {
 
 body > :has(.force-pf) {
   break-before: page;
+  margin-top: 0 !important;
 }
 
 .force-pf {
