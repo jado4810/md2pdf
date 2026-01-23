@@ -1,5 +1,10 @@
 # md2pdf - Changelog
 
+## Version 0.10.1 (2026-1-23)
+
+* Fix margin at the top of page after forced pagefeed
+* Migrate to Chromium144 and Puppeteer24.36
+
 ## Version 0.10.0 (2025-12-5)
 
 * Support GFM alerts
