@@ -103,7 +103,7 @@ async function convert({markdown, setting, lang, color, base, flags}) {
   const renderer = {
     html({text}) {
       if (text.match(/<!--\s*(?:pf|page\s*feed)\s*-->/i)) {
-        return '<span class="force-pf"></span>';
+        return '<hr class="force-pf">\n';
       } else {
         return text;
       }

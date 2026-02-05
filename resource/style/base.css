@@ -7,13 +7,49 @@ body {
   margin: 0;
 }
 
-body > :has(.force-pf) {
-  break-before: page;
+:has(+ .force-pf) {
+  margin-bottom: 0 !important;
+}
+
+.force-pf + * {
+  margin-top: 0 !important;
+}
+
+li:is(
+  :has(> .force-pf:last-child),
+  :has(> li:last-child > .force-pf:last-child),
+  :has(> li:last-child > li:last-child > .force-pf:last-child),
+  :has(> li:last-child > li:last-child > li:last-child > .force-pf:last-child)
+),
+:is(ul, ol):is(
+  :has(> li:last-child > .force-pf:last-child),
+  :has(> li:last-child > li:last-child > .force-pf:last-child),
+  :has(> li:last-child > li:last-child > li:last-child > .force-pf:last-child),
+  :has(> li:last-child > li:last-child > li:last-child > li:last-child > .force-pf:last-child)
+) {
+  margin-bottom: 0 !important;
+}
+
+li:is(
+  :has(> .force-pf:last-child),
+  :has(> li:last-child > .force-pf:last-child),
+  :has(> li:last-child > li:last-child > .force-pf:last-child),
+  :has(> li:last-child > li:last-child > li:last-child > .force-pf:last-child)
+) + li,
+:is(ul, ol):is(
+  :has(> li:last-child > .force-pf:last-child),
+  :has(> li:last-child > li:last-child > .force-pf:last-child),
+  :has(> li:last-child > li:last-child > li:last-child > .force-pf:last-child),
+  :has(> li:last-child > li:last-child > li:last-child > li:last-child > .force-pf:last-child)
+) + :is(ul, ol) {
   margin-top: 0 !important;
 }
 
 .force-pf {
-  display: none;
+  break-before: page;
+  height: 0;
+  margin: 0;
+  visibility: hidden;
 }
 
 h1 {

@@ -363,7 +363,7 @@ will be rendered as:
 
 ### 6\. Forcing page feed
 
-Add a HTML comment like `<!-- PageFeed -->` at the end of the first line of the block to force page feed just before the block where that comment is added.
+Insert a HTML comment line like `<!-- PageFeed -->` to force page feed.
 
 Any combination of spaces between words and upper or lower cases; `Page feed`, `pagefeed` and `pageFeed` are to be recognized.
 Additionally, acronymized patterns such as `pf` or `PF` are also available.

@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.10.2 (2026-2-5)
+
+* Fix forcing pagefeed; now the pagefeed comments can be put as separate lines
+
 ## Version 0.10.1 (2026-1-23)
 
 * Fix margin at the top of page after forced pagefeed
