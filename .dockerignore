@@ -1,8 +1,6 @@
 .git
 .gitignore
 Dockerfile
-src
-third-party
 md2pdf.sh
 *.pdf
 *.N
