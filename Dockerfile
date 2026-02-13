@@ -37,3 +37,4 @@ COPY resource resource/
 COPY doc-images doc-images/
 
 USER user
+ENTRYPOINT ["node", "md2pdf.js"]

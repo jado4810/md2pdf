@@ -66,4 +66,4 @@ OPTS+=(-b /opt/app/mnt)
 MOUNT=(-v "$DIRNAME:/opt/app/mnt")
 IMAGE="md2pdf${TAGNAME:+:$TAGNAME}"
 
-docker run --rm -i "${MOUNT[@]}" "$IMAGE" node md2pdf.js "${OPTS[@]}" "$INFILE"
+docker run --rm -i "${MOUNT[@]}" "$IMAGE" "${OPTS[@]}" "$INFILE"
