@@ -98,9 +98,10 @@ $ ./md2pdf.sh [オプション] [入力ファイル] > 出力ファイル
     * 指定した場合、`-a`オプションは意味を持たなくなります
 
 このスクリプトは、内部で以下のdocker runコマンドを呼び出します。
+**(Ver.0.11で仕様変更: コンテナのエントリーポイント指定により不要となった `node md2pdf.js` を削除)**
 
 ```console
-$ docker run --rm -i -v ベースディレクトリー:/opt/app/mnt md2pdf node md2pdf.js -b /opt/app/mnt オプション 入力ファイル
+$ docker run --rm --init -i -v ベースディレクトリー:/opt/app/mnt md2pdf オプション -b /opt/app/mnt 入力ファイル
 ```
 
 * 入力ファイルのパス(標準入力の場合は`$PWD`)を抽出し、ボリュームマウントを実施

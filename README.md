@@ -96,10 +96,10 @@ Options are available below:
     * Suppress console output
     * If specified, `-a` has no effect
 
-This script calls docker run like below:
+This script calls docker run like below: **(CHANGED ON VER.0.11: REMOVED UNNECESSARY `node md2pdf.js` DUE TO CONTAINER ENTRYPOINT)**
 
 ```console
-$ docker run --rm -i -v d̲i̲r̲:/opt/app/mnt md2pdf node md2pdf.js -b /opt/app/mnt o̲pt̲i̲o̲n̲s̲ i̲n̲pu̲t̲
+$ docker run --rm --init -i -v d̲i̲r̲:/opt/app/mnt md2pdf o̲pt̲i̲o̲n̲s̲ -b /opt/app/mnt i̲n̲pu̲t̲
 ```
 
 * Extract base directory from input file path (or `$PWD`) and mount volume
