@@ -1,8 +1,16 @@
 # md2pdf - Changelog
 
+## Version 0.11.0 (2026-2-15)
+
+* Add `ENTRYPOINT` to the container image
+    * Now no need to specify `node md2pdf.js` in the container launch parameters
+* Remove parameter parsing from the helper script, and enhance help messages
+* Migrate to Chromium145 and Puppeteer24.37
+
 ## Version 0.10.2 (2026-2-5)
 
-* Fix forcing pagefeed; now the pagefeed comments can be put as separate lines
+* Fix forcing pagefeed
+    * Now the pagefeed comments can be put as separate lines
 
 ## Version 0.10.1 (2026-1-23)
 
