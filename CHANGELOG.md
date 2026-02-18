@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.11.1 (2026-2-18)
+
+* Fix wrong parameter passing from the helper script to the container
+
 ## Version 0.11.0 (2026-2-15)
 
 * Add `ENTRYPOINT` to the container image
