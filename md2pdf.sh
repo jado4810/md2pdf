@@ -33,10 +33,20 @@ for p in "${@}"; do
       ;;
     --*)
       ;;
-    -*[ptrlc])
-      NEXT=param
-      ;;
     -*)
+      sw=${p:1}
+      while [ -n "$sw" ]; do
+        if [ $NEXT = "param" ]; then
+          NEXT=switch
+          break
+        fi
+        case "${sw:0:1}" in
+        [ptrlc])
+          NEXT=param
+          ;;
+        esac
+        sw=${sw:1}
+      done
       ;;
     *)
       getfile "$p"
