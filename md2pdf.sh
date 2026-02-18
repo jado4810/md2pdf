@@ -25,6 +25,7 @@ for p in "${@}"; do
     case "$p" in
     --)
       NEXT=path
+      continue
       ;;
     --*=*)
       ;;
@@ -71,7 +72,7 @@ for p in "${@}"; do
   esac
 done
 
-OPTS+=(-b /opt/app/mnt)
+OPTS+=(-b /opt/app/mnt --)
 
 MOUNT=(-v "$DIRNAME:/opt/app/mnt")
 IMAGE="md2pdf${TAGNAME:+:$TAGNAME}"
