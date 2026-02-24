@@ -2,6 +2,7 @@
 .gitignore
 Dockerfile
 md2pdf.sh
+node_modules
 *.pdf
 *.N
 .DS_Store
