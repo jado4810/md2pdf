@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.11.2 (2026-3-13)
+
+* Migrate to Chromium146 and Puppeteer24.39
+
 ## Version 0.11.1 (2026-2-18)
 
 * Fix wrong parameter passing from the helper script to the container
