@@ -34,6 +34,10 @@ for p in "${@}"; do
       ;;
     --*)
       ;;
+    -)
+      NEXT=end
+      continue
+      ;;
     -*)
       sw=${p:1}
       while [ -n "$sw" ]; do
@@ -62,7 +66,9 @@ for p in "${@}"; do
     OPTS+=("$p")
     ;;
   path)
-    getfile "$p"
+    if [ ! "$p" = "-" ]; then
+      getfile "$p"
+    fi
     NEXT=end
     ;;
   *)
