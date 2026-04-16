@@ -1,5 +1,10 @@
 # md2pdf - Changelog
 
+## Version 0.11.3 (2026-4-16)
+
+* Fix error when explicitly specified "-" for stdin to the helper script
+* Migrate to Chromium147 and Puppeteer24.41
+
 ## Version 0.11.2 (2026-3-13)
 
 * Migrate to Chromium146 and Puppeteer24.39
