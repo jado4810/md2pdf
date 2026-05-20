@@ -133,12 +133,14 @@ $ docker build -t md2pdf .
 ### NodeJSの直接実行
 
 NodeJS環境で直接実行する場合、まず必要なライブラリーをインストールしてください。
+環境変数`PUPPETEER_SKIP_DOWNLOAD`を設定しておくことを推奨します。
 
 ```console
-$ npm install
+$ PUPPETEER_SKIP_DOWNLOAD=true npm install
 ```
 
-他に、Google ChromeやMicrosoft Edgeなどの、ヘッドレスモードに対応したWEBブラウザーが必要です。
+別途、Google ChromeやMicrosoft Edgeなどの、ヘッドレスモードに対応したWEBブラウザーが必要です。
+ブラウザーの種別と実行ファイルのパスを、スクリプト先頭付近の`browser_type`および`browser_exec`に指定してください。
 
 Markdownフォーマット
 --------------------

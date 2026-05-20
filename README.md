@@ -132,12 +132,14 @@ $ docker build -t md2pdf .
 ### Direct-run NodeJS
 
 If you want to run NodeJS directly, install required libraries first.
+Recommended setting environment variable `PUPPETEER_SKIP_DOWNLOAD`.
 
 ```console
-$ npm install
+$ PUPPETEER_SKIP_DOWNLOAD=true npm install
 ```
 
 Also needs a web browser installed, which is compatible with "headless mode", i.e. Google Chrome, Microsoft Edge.
+Set the type and executable path of the browser to `browser_type` and `browser_exec` near the beginning of the script.
 
 Markdown format
 ---------------
