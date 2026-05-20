@@ -8,6 +8,7 @@ WORKDIR /opt/app
 
 COPY package.json package-lock.json .
 
+ARG PUPPETEER_SKIP_DOWNLOAD=y
 RUN npm init -y \
  && npm install \
  && rm -rf node_modules/cld/deps/cld
