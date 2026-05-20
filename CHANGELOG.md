@@ -1,5 +1,12 @@
 # md2pdf - Changelog
 
+## Version 0.12.0
+
+* Migrate to Chromium149 and Puppeteer25.x
+* Replace language detection library from node-cld to eld-js
+    * Use Simplified-Traditional conversion table to determine zh-cn or zh-tw
+* Migrate some other NodeJS libraries
+
 ## Version 0.11.4 (2026-5-8)
 
 * Migrate to Chromium148 and Puppeteer24.43
