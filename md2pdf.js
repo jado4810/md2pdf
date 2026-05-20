@@ -4,6 +4,9 @@
 
 const version = '0.11.4';
 
+const browser_type = 'chrome';
+const browser_exec = '/usr/bin/chromium';
+
 import path from 'path';
 import fs from 'fs';
 import { readFile } from 'fs/promises';
@@ -276,8 +279,8 @@ async function convert({markdown, setting, lang, color, base, flags}) {
 
   // Render HTML with puppeteer
   const browser = await puppeteer.launch({
-    browser: 'chrome',
-    executablePath: '/usr/bin/chromium',
+    browser: browser_type,
+    executablePath: browser_exec,
     headless: true,
     args: [
       '--single-process',
