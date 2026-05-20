@@ -72,8 +72,8 @@ async function outputStdout(data) {
 }
 
 function guessZhLocale(markdown) {
-  const score_cn = markdown.replaceAll(re_cn, '').length;
-  const score_tw = markdown.replaceAll(re_tw, '').length;
+  const score_cn = Array.from(markdown.replaceAll(re_cn, '')).length;
+  const score_tw = Array.from(markdown.replaceAll(re_tw, '')).length;
   return (score_tw > score_cn) ? 'zh-tw' : 'zh-cn';
 }
 
