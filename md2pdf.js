@@ -13,9 +13,6 @@ import { Command, Option, InvalidArgumentError } from 'commander';
 import { eld } from 'eld/large';
 import { table_cn2tw, table_tw2cn } from '@lazy-cjk/static-build-zh-convert';
 
-const re_cn = new RegExp(`[^${Object.keys(table_cn2tw).join('')}]`, 'g');
-const re_tw = new RegExp(`[^${Object.keys(table_tw2cn).join('')}]`, 'g');
-
 import { marked } from 'marked';
 import katex from 'katex';
 import markedAlert from 'marked-alert';
@@ -71,10 +68,20 @@ async function outputStdout(data) {
   }
 }
 
+const re_cn = new RegExp(`[^${Object.keys(table_cn2tw).join('')}]`, 'g');
+const re_tw = new RegExp(`[^${Object.keys(table_tw2cn).join('')}]`, 'g');
+
 function guessZhLocale(markdown) {
   const score_cn = Array.from(markdown.replaceAll(re_cn, '')).length;
   const score_tw = Array.from(markdown.replaceAll(re_tw, '')).length;
-  return (score_tw > score_cn) ? 'zh-tw' : 'zh-cn';
+
+  if (score_cn > score_tw * 2) {
+    return 'zh-cn';
+  } else if (score_tw > score_cn * 2) {
+    return 'zh-tw';
+  } else {
+    return 'zh';
+  }
 }
 
 function guessLocale(markdown) {
