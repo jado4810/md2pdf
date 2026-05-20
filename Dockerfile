@@ -1,8 +1,5 @@
 FROM node:24-trixie-slim AS builder
 
-RUN apt update \
- && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /opt/app
 
 COPY package.json package-lock.json .
