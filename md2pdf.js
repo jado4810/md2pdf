@@ -10,7 +10,11 @@ import { readFile } from 'fs/promises';
 import { pipeline } from 'stream/promises';
 
 import { Command, Option, InvalidArgumentError } from 'commander';
-import cld from 'cld';
+import { eld } from 'eld/large';
+import { table_cn2tw, table_tw2cn } from '@lazy-cjk/static-build-zh-convert';
+
+const re_cn = new RegExp(`[^${Object.keys(table_cn2tw).join('')}]`, 'g');
+const re_tw = new RegExp(`[^${Object.keys(table_tw2cn).join('')}]`, 'g');
 
 import { marked } from 'marked';
 import katex from 'katex';
@@ -67,16 +71,17 @@ async function outputStdout(data) {
   }
 }
 
-async function guessLocale(markdown) {
-  const locales = {
-    'zh':      'zh-cn',
-    'zh-Hant': 'zh-tw'
-  };
+function guessZhLocale(markdown) {
+  const score_cn = markdown.replaceAll(re_cn, '').length;
+  const score_tw = markdown.replaceAll(re_tw, '').length;
+  return (score_tw > score_cn) ? 'zh-tw' : 'zh-cn';
+}
 
+function guessLocale(markdown) {
   try {
-    const result = await cld.detect(markdown, {bestEffort: true});
-    const code = result.languages[0].code;
-    const locale = locales[code] || code;
+    const result = eld.detect(markdown);
+    const code = result.language;
+    const locale = (code == 'zh') ? guessZhLocale(markdown) : code;
     process.stderr.write(`Guessed locale: ${locale}\n`);
     return locale;
   } catch (e) {
@@ -522,7 +527,7 @@ async function main() {
   if (!markdown) return 'Empty Markdown';
 
   // Guess locale if omitted
-  const locale = ltype || await guessLocale(markdown);
+  const locale = ltype || guessLocale(markdown);
 
   const themes = {
     'ja':    'ja',

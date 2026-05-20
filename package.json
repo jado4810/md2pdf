@@ -15,16 +15,14 @@
   },
   "homepage": "https://github.com/jado4810/md2pdf/",
   "dependencies": {
-    "cld": "^2.10.0",
+    "@lazy-cjk/static-build-zh-convert": "*",
     "commander": "*",
+    "eld": "*",
     "highlight.js": "*",
     "marked": "^16.0.0",
     "marked-alert": "^2.0.0",
     "marked-katex-extension": "^5.0.0",
     "mermaid": "^11.0.0",
     "puppeteer": "^25.0.0"
-  },
-  "overrides": {
-    "glob": "^9.0.0"
   }
 }
