@@ -26,14 +26,9 @@ RUN mkdir mnt
 COPY --from=builder /opt/app/package.json /opt/app/package-lock.json .
 COPY --from=builder /opt/app/node_modules node_modules/
 
-RUN groupadd -r user && useradd -r -g user -G audio,video user \
- && mkdir -p /home/user/Downloads \
- && chown -R user:user /home/user \
- && chown -R user:user /opt/app
-
 COPY LICENSE.txt README.md md2pdf.js .
 COPY resource resource/
 COPY doc-images doc-images/
 
-USER user
+USER node
 ENTRYPOINT ["node", "md2pdf.js"]

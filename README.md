@@ -121,14 +121,13 @@ Preparation
 
 ### Run as a container
 
-There is pretty severe criteria to run puppeteer, a headless browser driver, in the container.
-However we have confirmed to be available on Intel Linux and ARM macOS.
+We have confirmed to be available on Intel Linux and ARM macOS.
+
+Run below to build the container image with Chromium, an open source web browser component, introduced from the official debian package.
 
 ```console
 $ docker build -t md2pdf .
 ```
-
-The container image will be built with Chromium, an open source web browser component, introduced from the official debian package.
 
 ### Direct-run NodeJS
 
