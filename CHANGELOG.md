@@ -6,6 +6,7 @@
 * Replace language detection library from node-cld to eld-js
     * Use Simplified-Traditional conversion table to determine zh-cn or zh-tw
 * Migrate some other NodeJS libraries
+* Simplify the container image and fix minor security issue
 
 ## Version 0.11.4 (2026-5-8)
 
