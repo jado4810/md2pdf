@@ -141,7 +141,7 @@ $ PUPPETEER_SKIP_DOWNLOAD=true npm install
 Also needs a web browser installed, which is compatible with "headless mode", i.e. Google Chrome, Microsoft Edge.
 Set the type and executable path of the browser to `browser_type` and `browser_exec` near the beginning of the script.
 
-Markdown format
+Markdown Format
 ---------------
 
 Markdown documents are rendered by [MarkedJS](https://marked.js.org/), and are recognized as [GitHub Flavored Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
@@ -326,7 +326,7 @@ will be:
 
 ### 5\. Alerts
 
-Alert tags like `[!AlertType]` in quoted blocks, beginning with '> ', are rendered as emphasized critical information header just like GFM Alerts.
+Alert tags like `[!AlertType]` in quoted blocks, beginning with `> `, are rendered as emphasized critical information header just like GFM Alerts.
 
 The following `AlertType`s are recognized:
 
