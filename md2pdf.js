@@ -2,7 +2,7 @@
 
 'use strict';
 
-const version = '0.11.4';
+const version = '0.12.0';
 
 const browser_type = 'chrome';
 const browser_exec = '/usr/bin/chromium';
