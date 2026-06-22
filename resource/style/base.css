@@ -200,6 +200,7 @@ img {
 figure {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   margin: 8pt 12pt;
 }
 

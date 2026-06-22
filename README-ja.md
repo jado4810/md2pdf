@@ -174,6 +174,17 @@ IDは内部リンクを行う際に有用です。
 
 `-r`オプションを指定することで図をくっきりと出すことができます。
 
+以下のようにタグを追加することで、複数の図を横に並べることもできます。
+
+```markdown
+<div style="display:flex;justify-content:space-evenly">
+
+![fig1](image1.png "Fig1. Sample image 1")
+![fig2](image2.png "Fig2. Sample image 2")
+
+</div>
+```
+
 ### 3\. コードブロック
 
 #### 3.1. ハイライト

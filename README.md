@@ -173,6 +173,17 @@ will be rendered as:
 
 Also consider specifying the `-r` option to get clear images.
 
+To arrange multi-columns figures side by side, add tags like below:
+
+```markdown
+<div style="display:flex;justify-content:space-evenly">
+
+![fig1](image1.png "Fig1. Sample image 1")
+![fig2](image2.png "Fig2. Sample image 2")
+
+</div>
+```
+
 ### 3\. Code block
 
 #### 3.1. Highlight
