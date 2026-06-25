@@ -19,7 +19,7 @@
     "commander": "*",
     "eld": "*",
     "highlight.js": "*",
-    "marked": "^16.0.0",
+    "marked": "^18.0.0",
     "marked-alert": "^2.0.0",
     "marked-katex-extension": "^5.0.0",
     "mermaid": "^11.0.0",
