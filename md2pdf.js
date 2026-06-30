@@ -188,6 +188,11 @@ async function convert({markdown, setting, lang, color, base, flags}) {
       }
     },
 
+    blockquote({tokens}) {
+      const parsed = this.parser.parse(tokens);
+      return `<figure>\n<blockquote>\n${parsed}</blockquote>\n</figure>\n`;
+    },
+
     code({text, lang}) {
       let info = (lang == null) ? '' : lang;
 
@@ -242,13 +247,9 @@ async function convert({markdown, setting, lang, color, base, flags}) {
 
       match = info.match(/"([^\"]+)"/);
       const title = match && match[1];
+      const caption = title ? `<figcaption>${title}</figcaption>\n` : '';
 
-      if (title) {
-        const caption = `<figcaption>${title}</figcaption>\n`;
-        return `<figure>\n${base}${caption}</figure>\n`;
-      } else {
-        return base;
-      }
+      return `<figure>\n${base}${caption}</figure>\n`;
     }
   };
 
@@ -258,6 +259,17 @@ async function convert({markdown, setting, lang, color, base, flags}) {
   });
 
   marked.use(markedAlert());
+
+  const alert_renderer = marked.defaults.extensions.renderers.alert;
+  marked.use({
+    extensions: [{
+      name: 'alert',
+      renderer(token) {
+        const parsed = alert_renderer.call(this, token);
+        return `<figure>\n${parsed}</figure>\n`;
+      }
+    }]
+  });
 
   const texmacros = {};
   marked.use(markedKatex({
