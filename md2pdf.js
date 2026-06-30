@@ -119,6 +119,8 @@ async function convert({markdown, setting, lang, color, base, flags}) {
     html({text}) {
       if (text.match(/<!--\s*(?:pf|page\s*feed)\s*-->/i)) {
         return '<hr class="force-pf">\n';
+      } else if (text.match(/<!--\s*(?:brk|break)\s*-->/i)) {
+        return '<hr class="float-brk">\n';
       } else {
         return text;
       }
@@ -158,11 +160,29 @@ async function convert({markdown, setting, lang, color, base, flags}) {
     image({href, title, text}) {
       const uri = href.match(/^https?:\/\//) ? href : path.resolve(base, href);
       const klass = uri.match(/\.svg$/i) ? 'md-img-vector' : 'md-img';
-      const alt = text ? ` alt="${text}"` : '';
+
+      const {alttext, float} = (() => {
+        const info = text.trim();
+        if (info) {
+          const match = info.match(/^(.*?)\s*\[(left|right)\]\s*(.*?)$/);
+          if (match) {
+            return {
+              alttext: [match[1], match[3]].join(' ').trim(),
+              float: ` class="float-${match[2]}"`
+            };
+          }
+        }
+        return {
+          alttext: info,
+          float: ''
+        };
+      })();
+      const alt = alttext ? ` alt="${alttext}"` : '';
+
       const img = `<img class="${klass}" src="${uri}"${alt}>\n`;
-      if (title) {
-        const caption = `<figcaption>${title}</figcaption>\n`;
-        return `<figure>\n${img}${caption}</figure>\n`;
+      if (title || float) {
+        const caption = title ? `<figcaption>${title}</figcaption>\n` : '';
+        return `<figure${float}>\n${img}${caption}</figure>\n`;
       } else {
         return img;
       }
