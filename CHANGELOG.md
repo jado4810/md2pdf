@@ -2,6 +2,8 @@
 
 ## Version 0.13.0
 
+* Support floated images
+    * Changed the markups of `blockquote` and `pre` to work will with floated images, so updating are recommended when using raw html in Markdowns (see section 2.2. of README)
 * Styles with consideration for multi-columns figures
 * Migrate to Marked18
 * Migrate to Chromium150 and Puppeteer25.2
