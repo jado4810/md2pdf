@@ -191,7 +191,10 @@ async function convert({markdown, setting, lang, color, base, flags}) {
 
     blockquote({tokens}) {
       const parsed = this.parser.parse(tokens);
-      return `<figure>\n<blockquote>\n${parsed}</blockquote>\n</figure>\n`;
+      const match = parsed.match(/<!--\s*(left|right)\s*-->/i);
+      const float = match ? ` class="float-${match[1].toLowerCase()}"` : '';
+      const base = `<blockquote>\n${parsed}</blockquote>\n`;
+      return `<figure${float}>\n${base}</figure>\n`;
     },
 
     code({text, lang}) {
@@ -267,7 +270,9 @@ async function convert({markdown, setting, lang, color, base, flags}) {
       name: 'alert',
       renderer(token) {
         const parsed = alert_renderer.call(this, token);
-        return `<figure>\n${parsed}</figure>\n`;
+        const match = parsed.match(/<!--\s*(left|right)\s*-->/i);
+        const float = match ? ` class="float-${match[1].toLowerCase()}"` : '';
+        return `<figure${float}>\n${parsed}</figure>\n`;
       }
     }]
   });
