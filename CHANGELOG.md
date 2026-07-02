@@ -2,8 +2,9 @@
 
 ## Version 0.13.0
 
-* Support floated images
+* Support floated images and blockquotes
     * Changed the markups of `blockquote` and `pre` to work will with floated images, so updating are recommended when using raw html in Markdowns (see section 2.2. of README)
+* Paging control keywords on code blocks are now case insensitive
 * Styles with consideration for multi-columns figures
 * Migrate to Marked18
 * Migrate to Chromium150 and Puppeteer25.2
