@@ -190,11 +190,11 @@ IDは内部リンクを行う際に有用です。
 #### 2.2. 回り込み
 
 画像の代替文字列の中に`[left]`または`[right]`を記述すると、その画像はページの左端または右端にフロート配置され、続く文書が回り込むようになります。
+大文字小文字は任意の組み合わせのものを認識しますので、`LEFT`や`Right`でも認識します。
 
-`<!-- Break -->`のようなHTMLコメント行を挿入することで、回り込みを解除することができます。
-
-大文字小文字は任意の組み合わせのものを認識しますので、`BREAK`や`break`でも認識します。
-また、省略形として`Brk`や`BRK`等で記述することもできます。
+また、`<!-- Break -->`のようなHTMLコメント行を挿入することで、回り込みを解除することができます。
+こちらも、大文字小文字は任意の組み合わせのものを認識しますので、`BREAK`や`break`でも認識します。
+さらに、省略形として`Brk`や`BRK`等で記述することもできます。
 
 > [!IMPORTANT]
 > 回り込みを指定した画像は、ブロック要素化するために`figure`要素の中に入ります。
@@ -204,9 +204,55 @@ IDは内部リンクを行う際に有用です。
 >
 > このような構造を前提としたスタイルを組んでいるため、Markdown中で生のHTMLを記述する場合、同じように`figure`タグで囲むことを推奨します。
 
-### 3\. コードブロック
+### 3\. 引用ブロック
 
-#### 3.1. ハイライト
+#### 3.1. 回り込み
+
+引用ブロック(`> `で始まる行)中のどこかに`<!-- left -->`または`<!-- right -->`のようなHTMLコメントを記述すると、そのブロックはページの左端または右端にフロート配置され、続く文書が回り込むようになります。
+大文字小文字は任意の組み合わせのものを認識しますので、`LEFT`や`Right`でも認識します。
+
+#### 3.2. アラート
+
+引用ブロック中に`[!アラート種別]`のようなタグを挿入することで、GFM Alertがサポートしている強調、警告情報のヘッダーを描画させることができます。
+
+以下のアラート種別を指定できます。
+
+* `NOTE`
+
+    考慮すべき強調情報。
+
+* `TIP`
+
+    よりよい結果を得るために有用な補足情報。
+
+* `IMPORTANT`
+
+    正しい結果を得る上で必要となる重要な情報。
+
+* `WARNING`
+
+    潜在的なリスクのため、注意を要する重要な項目。
+
+* `CAUTION`
+
+    実行することによって発生するおそれのある好ましくない事象。
+
+例えば、以下のようなアラートタグを含む引用ブロックは、
+
+```markdown
+> [!WARNING]
+> Be sure to set this option to avoid the image corruption.
+```
+
+このように描画されます。
+
+<p align="center">
+<img src="./doc-images/fig2.png" style="width:862px;height:auto">
+</p>
+
+### 4\. コードブロック
+
+#### 4.1. ハイライト
 
 コードブロックの開始部に付与した言語指定子は[highlight.js](https://highlightjs.org/)によってコードの強調に用いられます。
 言語指定子の後に、コロンで区切ってファイル名を追加することも可能です。
@@ -227,10 +273,10 @@ function highlight(code, lang) {
 は、以下のように整形されます。
 
 <p align="center">
-<img src="./doc-images/fig2.png" style="width:862px;height:auto">
+<img src="./doc-images/fig3.png" style="width:862px;height:auto">
 </p>
 
-#### 3.2. Mermaid
+#### 4.2. Mermaid
 
 言語指定子として"mermaid"を付与したコードブロックは[MermaidJS](https://mermaid.js.org/)で描画されます。
 
@@ -250,10 +296,10 @@ flowchart LR
 このように描画されます。
 
 <p align="center">
-<img src="./doc-images/fig3.png" style="width:294px;height:auto">
+<img src="./doc-images/fig4.png" style="width:294px;height:auto">
 </p>
 
-#### 3.3. 見出し
+#### 4.3. 見出し
 
 言語指定子の後に、ダブルクォーテーションで囲んだ見出しを追加することが可能です。
 
@@ -277,16 +323,17 @@ function highlight(code, lang) {
 は、以下のように整形されます。
 
 <p align="center">
-<img src="./doc-images/fig4.png" style="width:862px;height:auto">
+<img src="./doc-images/fig5.png" style="width:862px;height:auto">
 </p>
 
-#### 3.4. ページング制御
+#### 4.4. ページング制御
 
 言語指定子の後に、`[`〜`]`で囲んだページング制御指示を追加することが可能です。
 
 一般的なMarkdownパーサーが混乱しないよう、コードブロックの開始部および言語指定子との間にスペースを挟むことを推奨します。
 
 ページング制御指示として、以下を指定可能です。
+こちらは、大文字小文字については任意の組み合わせのものを認識します。
 
 * `flow`
 
@@ -321,7 +368,7 @@ function long_proc(list) {
 ```
 ````
 
-### 4\. KaTeX
+### 5\. KaTeX
 
 `$`〜`$`または`$$`〜`$$`で囲んだTeX形式の数式は、[KaTeX](https://katex.org/)で描画されます。
 `$`〜`$`で囲んだ部分はインライン数式として、`$$`〜`$$`で囲んだ部分はブロック数式として、それぞれ描画されます。
@@ -335,7 +382,7 @@ Euler's formula: $e^{i\theta}=\cos\theta+i\sin\theta$
 このように描画されます。
 
 <p align="center">
-<img src="./doc-images/fig5.png" style="width:256px;height:auto">
+<img src="./doc-images/fig6.png" style="width:256px;height:auto">
 </p>
 
 また、以下のようなブロック数式は、
@@ -352,46 +399,7 @@ $$
 このように描画されます。
 
 <p align="center">
-<img src="./doc-images/fig6.png" style="width:192px;height:auto">
-</p>
-
-### 5\. アラート
-
-引用ブロック(`> `で始まる行)中に`[!アラート種別]`のようなタグを挿入することで、GFM Alertがサポートしている強調、警告情報のヘッダーを描画させることができます。
-
-以下のアラート種別を指定できます。
-
-* `NOTE`
-
-    考慮すべき強調情報。
-
-* `TIP`
-
-    よりよい結果を得るために有用な補足情報。
-
-* `IMPORTANT`
-
-    正しい結果を得る上で必要となる重要な情報。
-
-* `WARNING`
-
-    潜在的なリスクのため、注意を要する重要な項目。
-
-* `CAUTION`
-
-    実行することによって発生するおそれのある好ましくない事象。
-
-例えば、以下のようなアラートタグを含む引用ブロックは、
-
-```markdown
-> [!WARNING]
-> Be sure to set this option to avoid the image corruption.
-```
-
-このように描画されます。
-
-<p align="center">
-<img src="./doc-images/fig7.png" style="width:862px;height:auto">
+<img src="./doc-images/fig7.png" style="width:192px;height:auto">
 </p>
 
 ### 6\. 強制改ページ

@@ -190,10 +190,10 @@ To arrange multi-columns figures side by side, add tags like below:
 
 To make images float to left or right edges of the pages, specify `[left]` or `[right]` in alternative texts of images.
 The following document will wrap around the image.
+Any combination of upper or lower cases; `LEFT` or `Right` are to be recognized.
 
-Insert a HTML comment line like `<!-- Break -->` to cancel wrapping.
-
-Any combination of upper or lower cases; `BREAK` and `break` are to be recognized.
+To cancel wrapping, insert a HTML comment line like `<!-- Break -->`.
+Also, any combination of upper or lower cases; `BREAK` and `break` are to be recognized.
 Additionally, acronymized patterns such as `Brk` or `BRK` are also available.
 
 > [!IMPORTANT]
@@ -204,160 +204,16 @@ Additionally, acronymized patterns such as `Brk` or `BRK` are also available.
 >
 > We provide the styles assuming the structure above, so it is recommended wrapping them by `figure` tags in the same way, when writing raw html in your Markdowns.
 
-### 3\. Code block
+### 3\. Blockquote
 
-#### 3.1. Highlight
+#### 3.1. Floating
 
-Language specifiers following code block openers are passed to [highlight.js](https://highlightjs.org/).
-And additional filenames separated by colon are also available.
+To make quoted blocks float to left or right edges of the pages, insert a HTML comment line like `<!-- left -->` or `<!-- right -->` anywhere inside of quoted blocks, beginning with `> `.
+Any combination of upper or lower cases; `LEFT` or `Right` are to be recognized.
 
-````markdown
-```javascript:sample.js
-function highlight(code, lang) {
-  try {
-    code = hljs.highlight(code, {language: lang}).value;
-  } catch (e) {
-    console.error('Error: ', e);
-  }
-  return code;
-}
-```
-````
+#### 3.2. Alerts
 
-will be:
-
-<p align="center">
-<img src="./doc-images/fig2.png" style="width:862px;height:auto">
-</p>
-
-#### 3.2. Mermaid
-
-Code blocks with the language specifiers of "mermaid" are rendered by [MermaidJS](https://mermaid.js.org/).
-
-For example, code block below:
-
-````markdown
-```mermaid
-flowchart LR
-  A[Start]-->B{Check}
-  C[Okay]
-  D[NG]
-  B-->|Yes| C
-  B-->|No| D
-```
-````
-
-will be rendered as:
-
-<p align="center">
-<img src="./doc-images/fig3.png" style="width:294px;height:auto">
-</p>
-
-#### 3.3. Caption
-
-Language specifiers can be followed by captions enclosed in double quotations.
-
-Note that spaces are required after code block openers and language specifiers to avoid confusing common markdown parsers.
-
-Captions are available also on mermaid blocks.
-
-````markdown
-```javascript:sample.js "List 1. highlight sample"
-function highlight(code, lang) {
-  try {
-    code = hljs.highlight(code, {language: lang}).value;
-  } catch (e) {
-    console.error('Error: ', e);
-  }
-  return code;
-}
-```
-````
-
-will be:
-
-<p align="center">
-<img src="./doc-images/fig4.png" style="width:862px;height:auto">
-</p>
-
-#### 3.4. Paging control
-
-Language specifiers can be followed by paging control specifications enclosed in brackets.
-
-Note that spaces are required after code block openers and language specifiers to avoid confusing common markdown parsers.
-
-The following controls are available:
-
-* `flow`
-
-    Allows this code block paging inside the block; pagings are avoided inside it as a default, so breaks page before long code block.
-    But `flow`ed blocks do not break pages before it.
-
-* `newpage`
-
-    Makes sure break page just before this code block.
-
-* `isolated`
-
-    In addition to `newpage`, also breaks page just after this code block.
-
-For example, the list below will be rendered in separate page.
-
-````markdown
-```javascript:long.js [isolated]
-function long_proc(list) {
-  var a = 1;
-  var b = 2;
-
-  return list.forEach(function(elem) {
-    elem.someProcs(a);
-    elem.someProcs(b);
-    // other long procs...
-    // :
-    // :
-    // :
-  });
-}
-```
-````
-
-### 4\. KaTeX
-
-TeX-style formulas surrounded by `$` or `$$` are passed to [KaTeX](https://katex.org/).
-The parts surrounded by `$` are rendered as inline formulas, and those by `$$` as block ones.
-
-For example, the inline formula below:
-
-```markdown
-Euler's formula: $e^{i\theta}=\cos\theta+i\sin\theta$
-```
-
-will be rendered as:
-
-<p align="center">
-<img src="./doc-images/fig5.png" style="width:256px;height:auto">
-</p>
-
-And the block formula below:
-
-```markdown
-$$
-\begin{split}
-  &ax^2+bx+c=0 \\
-  \Leftrightarrow {}&x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
-\end{split}
-$$
-```
-
-will be:
-
-<p align="center">
-<img src="./doc-images/fig6.png" style="width:192px;height:auto">
-</p>
-
-### 5\. Alerts
-
-Alert tags like `[!AlertType]` in quoted blocks, beginning with `> `, are rendered as emphasized critical information header just like GFM Alerts.
+Alert tags like `[!AlertType]` in quoted blocks are rendered as emphasized critical information header just like GFM Alerts.
 
 The following `AlertType`s are recognized:
 
@@ -391,7 +247,160 @@ For example, the alert in the quote below:
 will be rendered as:
 
 <p align="center">
-<img src="./doc-images/fig7.png" style="width:862px;height:auto">
+<img src="./doc-images/fig2.png" style="width:862px;height:auto">
+</p>
+
+### 4\. Code block
+
+#### 4.1. Highlight
+
+Language specifiers following code block openers are passed to [highlight.js](https://highlightjs.org/).
+And additional filenames separated by colon are also available.
+
+````markdown
+```javascript:sample.js
+function highlight(code, lang) {
+  try {
+    code = hljs.highlight(code, {language: lang}).value;
+  } catch (e) {
+    console.error('Error: ', e);
+  }
+  return code;
+}
+```
+````
+
+will be:
+
+<p align="center">
+<img src="./doc-images/fig3.png" style="width:862px;height:auto">
+</p>
+
+#### 4.2. Mermaid
+
+Code blocks with the language specifiers of "mermaid" are rendered by [MermaidJS](https://mermaid.js.org/).
+
+For example, code block below:
+
+````markdown
+```mermaid
+flowchart LR
+  A[Start]-->B{Check}
+  C[Okay]
+  D[NG]
+  B-->|Yes| C
+  B-->|No| D
+```
+````
+
+will be rendered as:
+
+<p align="center">
+<img src="./doc-images/fig4.png" style="width:294px;height:auto">
+</p>
+
+#### 4.3. Caption
+
+Language specifiers can be followed by captions enclosed in double quotations.
+
+Note that spaces are required after code block openers and language specifiers to avoid confusing common markdown parsers.
+
+Captions are available also on mermaid blocks.
+
+````markdown
+```javascript:sample.js "List 1. highlight sample"
+function highlight(code, lang) {
+  try {
+    code = hljs.highlight(code, {language: lang}).value;
+  } catch (e) {
+    console.error('Error: ', e);
+  }
+  return code;
+}
+```
+````
+
+will be:
+
+<p align="center">
+<img src="./doc-images/fig5.png" style="width:862px;height:auto">
+</p>
+
+#### 4.4. Paging control
+
+Language specifiers can be followed by paging control specifications enclosed in brackets.
+
+Note that spaces are required after code block openers and language specifiers to avoid confusing common markdown parsers.
+
+The following controls are available:
+
+* `flow`
+
+    Allows this code block paging inside the block; pagings are avoided inside it as a default, so breaks page before long code block.
+    But `flow`ed blocks do not break pages before it.
+
+* `newpage`
+
+    Makes sure break page just before this code block.
+
+* `isolated`
+
+    In addition to `newpage`, also breaks page just after this code block.
+
+On this control, any combination of upper or lower cases are to be recognized.
+
+For example, the list below will be rendered in separate page.
+
+````markdown
+```javascript:long.js [isolated]
+function long_proc(list) {
+  var a = 1;
+  var b = 2;
+
+  return list.forEach(function(elem) {
+    elem.someProcs(a);
+    elem.someProcs(b);
+    // other long procs...
+    // :
+    // :
+    // :
+  });
+}
+```
+````
+
+### 5\. KaTeX
+
+TeX-style formulas surrounded by `$` or `$$` are passed to [KaTeX](https://katex.org/).
+The parts surrounded by `$` are rendered as inline formulas, and those by `$$` as block ones.
+
+For example, the inline formula below:
+
+```markdown
+Euler's formula: $e^{i\theta}=\cos\theta+i\sin\theta$
+```
+
+will be rendered as:
+
+<p align="center">
+<img src="./doc-images/fig6.png" style="width:256px;height:auto">
+</p>
+
+And the block formula below:
+
+```markdown
+$$
+\begin{split}
+  &ax^2+bx+c=0 \\
+  \Leftrightarrow {}&x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\end{split}
+$$
+```
+
+will be:
+
+<p align="center">
+<img src="./doc-images/fig7.png" style="width:192px;height:auto">
 </p>
 
 ### 6\. Forcing page feed
