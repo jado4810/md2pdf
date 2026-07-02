@@ -117,15 +117,16 @@ blockquote, .markdown-alert, pre {
   padding: 4pt 8pt;
 }
 
-:is(blockquote, .markdown-alert) > :is(h1, h2, h3, h4, h5, h6, .markdown-alert-title):first-child {
-  margin-top: 4pt;
-}
-
 .markdown-alert-title {
   align-items: center;
   border-left-style: solid;
   border-left-width: 6pt;
   display: flex;
+}
+
+blockquote > :is(h1, h2, h3, h4, h5, h6):first-child,
+.markdown-alert > .markdown-alert-title:first-child {
+  margin-top: 4pt;
 }
 
 .markdown-alert-title > .octicon {

@@ -163,26 +163,27 @@ async function convert({markdown, setting, lang, color, base, flags}) {
 
       const {alttext, float} = (() => {
         const info = text.trim();
-        if (info) {
-          const match = info.match(/^(.*?)\s*\[(left|right)\]\s*(.*?)$/);
-          if (match) {
-            return {
-              alttext: [match[1], match[3]].join(' ').trim(),
-              float: ` class="float-${match[2]}"`
-            };
-          }
+        const match = info.match(/^(.*?)\s*\[(left|right)\]\s*(.*?)$/);
+        if (match) {
+          return {
+            alttext: [match[1], match[3]].join(' ').trim(),
+            float: ` class="float-${match[2]}"`
+          };
+        } else {
+          return {
+            alttext: info,
+            float: ''
+          };
         }
-        return {
-          alttext: info,
-          float: ''
-        };
       })();
       const alt = alttext ? ` alt="${alttext}"` : '';
 
       const img = `<img class="${klass}" src="${uri}"${alt}>\n`;
-      if (title || float) {
-        const caption = title ? `<figcaption>${title}</figcaption>\n` : '';
+      if (title) {
+        const caption = `<figcaption>${title}</figcaption>\n`;
         return `<figure${float}>\n${img}${caption}</figure>\n`;
+      } else if (float) {
+        return `<figure${float}>\n${img}</figure>\n`;
       } else {
         return img;
       }
