@@ -163,11 +163,11 @@ async function convert({markdown, setting, lang, color, base, flags}) {
 
       const {alttext, float} = (() => {
         const info = text.trim();
-        const match = info.match(/^(.*?)\s*\[(left|right)\]\s*(.*?)$/);
+        const match = info.match(/^(.*?)\s*\[(left|right)\]\s*(.*?)$/i);
         if (match) {
           return {
             alttext: [match[1], match[3]].join(' ').trim(),
-            float: ` class="float-${match[2]}"`
+            float: ` class="float-${match[2].toLowerCase()}"`
           };
         } else {
           return {
@@ -227,7 +227,7 @@ async function convert({markdown, setting, lang, color, base, flags}) {
       }
 
       match = info.match(/\[([^\]]+)\]/);
-      const paging = match && match[1] || '';
+      const paging = match && match[1].toLowerCase() || '';
 
       switch (paging) {
       case '':
