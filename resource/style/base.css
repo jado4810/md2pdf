@@ -54,7 +54,6 @@ li:is(
 
 h1 {
   break-after: avoid-page;
-  clear: both;
   font-size: 20pt;
   margin: 8pt 0 16pt;
   padding: 0;
@@ -63,7 +62,6 @@ h1 {
 
 h2 {
   break-after: avoid-page;
-  clear: both;
   font-size: 14pt;
   margin: 16pt 0 8pt;
   padding: 0;
