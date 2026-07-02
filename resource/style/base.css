@@ -89,11 +89,14 @@ h5, h6 {
 }
 
 figure {
-  break-inside: avoid-page;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: 8pt 12pt;
+}
+
+figure:has(> blockquote, .markdown-alert, img) {
+  break-inside: avoid-page;
 }
 
 figure:has(> img) {
