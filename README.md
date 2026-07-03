@@ -9,7 +9,7 @@ md2pdf - Typeset Markdown to PDF for publishing
 
 EN|[JA](./README-ja.md)
 
-What is this?
+What is This?
 -------------
 
 The PDF converter for Markdown, assumed for use in exporting documents.
@@ -211,7 +211,7 @@ Additionally, acronymized patterns such as `Brk` or `BRK` are also available.
 To make quoted blocks, beginning with `> `, float to left or right edges of the pages, insert a HTML comment line like `<!-- left -->` or `<!-- right -->` anywhere inside of the blocks.
 Any combination of upper or lower cases; `LEFT` or `Right` are to be recognized.
 
-#### 3.2. Alerts
+#### 3.2. Alert
 
 Alert tags like `[!AlertType]` in quoted blocks are rendered as emphasized critical information header just like GFM Alerts.
 
