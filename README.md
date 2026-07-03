@@ -204,11 +204,11 @@ Additionally, acronymized patterns such as `Brk` or `BRK` are also available.
 >
 > We provide the styles assuming the structure above, so it is recommended wrapping them by `figure` tags in the same way, when writing raw html in your Markdowns.
 
-### 3\. Blockquote
+### 3\. Quoted block
 
 #### 3.1. Floating
 
-To make quoted blocks float to left or right edges of the pages, insert a HTML comment line like `<!-- left -->` or `<!-- right -->` anywhere inside of quoted blocks, beginning with `> `.
+To make quoted blocks, beginning with `> `, float to left or right edges of the pages, insert a HTML comment line like `<!-- left -->` or `<!-- right -->` anywhere inside of the blocks.
 Any combination of upper or lower cases; `LEFT` or `Right` are to be recognized.
 
 #### 3.2. Alerts
