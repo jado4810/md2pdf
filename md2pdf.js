@@ -5,7 +5,7 @@
 const version = '0.13.0';
 
 const browser_type = 'chrome';
-const browser_exec = '/usr/bin/chromium';
+const browser_exec = '/usr/bin/chromium-headless-shell';
 
 import path from 'path';
 import fs from 'fs';
