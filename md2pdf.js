@@ -114,152 +114,152 @@ async function convert({markdown, setting, lang, color, base, flags}) {
     ].map((klass) => { return `\\p{${klass}}` }).join('')
   }]`, 'gu');
 
-  // Markdown renderer
-  const renderer = {
-    html({text}) {
-      if (text.match(/<!--\s*(?:pf|page\s*feed)\s*-->/i)) {
-        return '<hr class="force-pf">\n';
-      } else if (text.match(/<!--\s*(?:brk|break)\s*-->/i)) {
-        return '<hr class="float-brk">\n';
-      } else {
-        return text;
-      }
-    },
-
-    heading({tokens, text, depth}) {
-      const parsed = this.parser.parseInline(tokens);
-      const raw = parsed.replaceAll(/<.*?>/g, '');
-
-      const id = (() => {
-        const key = raw.replaceAll(sre, '').replaceAll(/ /g, '-').toLowerCase();
-        if (!key) return '';
-
-        if (extracted.ids[key]) {
-          return key + '-' + extracted.ids[key]++;
-        } else {
-          extracted.ids[key] = 1;
-          return key;
-        }
-      })();
-      const attr_id = id ? ` id="${id}"` : '';
-
-      if (setting.title == null && !extracted.title) {
-        const title = raw.trim();
-        if (title) {
-          extracted.title = title;
-          process.stderr.write(`Extracted title: ${title}\n`);
-        }
-      }
-
-      if (id && flags.anchors) {
-        process.stderr.write(`Anchor id=${id}: ${text}\n`);
-      }
-      return `<h${depth}${attr_id}>${parsed}</h${depth}>`;
-    },
-
-    image({href, title, text}) {
-      const uri = href.match(/^https?:\/\//) ? href : path.resolve(base, href);
-      const klass = uri.match(/\.svg$/i) ? 'md-img-vector' : 'md-img';
-
-      const {alttext, float} = (() => {
-        const info = text.trim();
-        const match = info.match(/^(.*?)\s*\[(left|right)\]\s*(.*?)$/i);
-        if (match) {
-          return {
-            alttext: [match[1], match[3]].join(' ').trim(),
-            float: ` class="float-${match[2].toLowerCase()}"`
-          };
-        } else {
-          return {
-            alttext: info,
-            float: ''
-          };
-        }
-      })();
-      const alt = alttext ? ` alt="${alttext}"` : '';
-
-      const img = `<img class="${klass}" src="${uri}"${alt}>\n`;
-      if (title) {
-        const caption = `<figcaption>${title}</figcaption>\n`;
-        return `<figure${float}>\n${img}${caption}</figure>\n`;
-      } else if (float) {
-        return `<figure${float}>\n${img}</figure>\n`;
-      } else {
-        return img;
-      }
-    },
-
-    blockquote({tokens}) {
-      const parsed = this.parser.parse(tokens);
-      const match = parsed.match(/<!--\s*(left|right)\s*-->/i);
-      const float = match ? ` class="float-${match[1].toLowerCase()}"` : '';
-      const base = `<blockquote>\n${parsed}</blockquote>\n`;
-      return `<figure${float}>\n${base}</figure>\n`;
-    },
-
-    code({text, lang}) {
-      let info = (lang == null) ? '' : lang;
-
-      const classes = [];
-      let match;
-
-      match = info.match(/^([^\[\"\s:]*):?(.*)$/);
-      const hilit = match && match[1] || 'plaintext';
-      info = match && match[2] || '';
-
-      match = info.match(/^([^\[\"\s]*)(.*)?$/);
-      const filename = match && match[1] || '';
-      info = match && match[2] || '';
-      const file = filename ? `<code class="filename">${filename}</code>` : '';
-
-      const otags = [];
-      let ctag;
-      if (hilit == 'mermaid') {
-        classes.push('mermaid');
-        otags.push('<div');
-        otags.push('>\n');
-        ctag = '\n</div>\n';
-      } else {
-        otags.push('<pre');
-        otags.push(`>${file}<code>`);
-        ctag = '</code></pre>\n';
-        text = hljs.highlight(text, {
-          language: hilit,
-          ignoreIllegals: true
-        }).value;
-      }
-
-      match = info.match(/\[([^\]]+)\]/);
-      const paging = match && match[1].toLowerCase() || '';
-
-      switch (paging) {
-      case '':
-        break;
-      case 'float':
-      case 'newpage':
-      case 'isolated':
-        classes.push(paging);
-        break;
-      default:
-        process.stderr.write(`Unknown paging option: ${paging}\n`);
-      }
-
-      if (classes.length > 0) {
-        otags.splice(1, 0, ` class="${classes.join(' ')}"`);
-      }
-      const base = otags.join('') + text + ctag;
-
-      match = info.match(/"([^\"]+)"/);
-      const title = match && match[1];
-      const caption = title ? `<figcaption>${title}</figcaption>\n` : '';
-
-      return `<figure>\n${base}${caption}</figure>\n`;
-    }
-  };
-
   // Convert markdown to HTML
   marked.use({
-    renderer: renderer
+    renderer: {
+      html({text}) {
+        if (text.match(/<!--\s*(?:pf|page\s*feed)\s*-->/i)) {
+          return '<hr class="force-pf">\n';
+        } else if (text.match(/<!--\s*(?:brk|break)\s*-->/i)) {
+          return '<hr class="float-brk">\n';
+        } else {
+          return text;
+        }
+      },
+
+      heading({tokens, text, depth}) {
+        const parsed = this.parser.parseInline(tokens);
+        const raw = parsed.replaceAll(/<.*?>/g, '');
+
+        const id = (() => {
+          const key =
+              raw.replaceAll(sre, '').replaceAll(/ /g, '-').toLowerCase();
+          if (!key) return '';
+
+          if (extracted.ids[key]) {
+            return key + '-' + extracted.ids[key]++;
+          } else {
+            extracted.ids[key] = 1;
+            return key;
+          }
+        })();
+        const attr_id = id ? ` id="${id}"` : '';
+
+        if (setting.title == null && !extracted.title) {
+          const title = raw.trim();
+          if (title) {
+            extracted.title = title;
+            process.stderr.write(`Extracted title: ${title}\n`);
+          }
+        }
+
+        if (id && flags.anchors) {
+          process.stderr.write(`Anchor id=${id}: ${text}\n`);
+        }
+        return `<h${depth}${attr_id}>${parsed}</h${depth}>`;
+      },
+
+      image({href, title, text}) {
+        const uri =
+            href.match(/^https?:\/\//) ? href : path.resolve(base, href);
+        const klass = uri.match(/\.svg$/i) ? 'md-img-vector' : 'md-img';
+
+        const {alttext, float} = (() => {
+          const info = text.trim();
+          const match = info.match(/^(.*?)\s*\[(left|right)\]\s*(.*?)$/i);
+          if (match) {
+            return {
+              alttext: [match[1], match[3]].join(' ').trim(),
+              float: ` class="float-${match[2].toLowerCase()}"`
+            };
+          } else {
+            return {
+              alttext: info,
+              float: ''
+            };
+          }
+        })();
+        const alt = alttext ? ` alt="${alttext}"` : '';
+
+        const img = `<img class="${klass}" src="${uri}"${alt}>\n`;
+        if (title) {
+          const caption = `<figcaption>${title}</figcaption>\n`;
+          return `<figure${float}>\n${img}${caption}</figure>\n`;
+        } else if (float) {
+          return `<figure${float}>\n${img}</figure>\n`;
+        } else {
+          return img;
+        }
+      },
+
+      blockquote({tokens}) {
+        const parsed = this.parser.parse(tokens);
+        const match = parsed.match(/<!--\s*(left|right)\s*-->/i);
+        const float = match ? ` class="float-${match[1].toLowerCase()}"` : '';
+        const base = `<blockquote>\n${parsed}</blockquote>\n`;
+        return `<figure${float}>\n${base}</figure>\n`;
+      },
+
+      code({text, lang}) {
+        const info1 = (lang == null) ? '' : lang;
+        const match1 = info1.match(/^([^\[\"\s:]*):?(.*)$/);
+        const hilit = match1 && match1[1] || 'plaintext';
+        const info2 = match1 && match1[2] || '';
+
+        const match2 = info2.match(/^([^\[\"\s]*)(.*)?$/);
+        const fname = match2 && match2[1] || '';
+        const info3 = match2 && match2[2] || '';
+        const file = fname ? `<code class="filename">${fname}</code>` : '';
+
+        const {otag1, ocls, otag2, parsed, ctag} = (() => {
+          if (hilit == 'mermaid') {
+            return {
+              otag1: '<div',
+              ocls: ['mermaid'],
+              otag2: '>\n',
+              parsed: text,
+              ctag: '\n</div>\n'
+            };
+          } else {
+            const parsed = hljs.highlight(text, {
+              language: hilit,
+              ignoreIllegals: true
+            }).value;
+            return {
+              otag1: '<pre',
+              ocls: [],
+              otag2: `>${file}<code>`,
+              parsed: parsed,
+              ctag: '</code></pre>\n'
+            };
+          }
+        })();
+
+        const match3 = info3.match(/\[([^\]]+)\]/);
+        const paging = match3 && match3[1].toLowerCase() || '';
+
+        switch (paging) {
+        case '':
+          break;
+        case 'float':
+        case 'newpage':
+        case 'isolated':
+          ocls.push(paging);
+          break;
+        default:
+          process.stderr.write(`Unknown paging option: ${paging}\n`);
+        }
+
+        const klass = (ocls.length > 0) ? ` class="${ocls.join(' ')}"` : '';
+        const base = otag1 + klass + otag2 + parsed + ctag;
+
+        const match4 = info3.match(/"([^\"]+)"/);
+        const title = match4 && match4[1];
+        const caption = title ? `<figcaption>${title}</figcaption>\n` : '';
+
+        return `<figure>\n${base}${caption}</figure>\n`;
+      }
+    }
   });
 
   marked.use(markedAlert());
