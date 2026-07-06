@@ -1,4 +1,5 @@
 body {
+  font-family: var(--body);
   font-feature-settings: "palt" 1;
   font-size: 10.5pt;
   hyphens: auto;
@@ -52,40 +53,44 @@ li:is(
   visibility: hidden;
 }
 
-h1 {
+h1, h2, h3, h4, h5 {
   break-after: avoid-page;
+  font-family: var(--head);
+  font-weight: bold;
+  padding: 0;
+}
+
+h6, .markdown-alert-title {
+  break-after: avoid-page;
+  font-family: var(--emph);
+  font-weight: bold;
+  padding: 0;
+}
+
+h1 {
   font-size: 20pt;
   margin: 8pt 0 16pt;
-  padding: 0;
   text-align: center;
 }
 
 h2 {
-  break-after: avoid-page;
   font-size: 14pt;
   margin: 16pt 0 8pt;
-  padding: 0;
 }
 
 h3 {
-  break-after: avoid-page;
   font-size: 12pt;
   margin: 12pt 0 8pt;
-  padding: 0;
 }
 
 h4, .markdown-alert-title {
-  break-after: avoid-page;
   font-size: 11pt;
   margin: 12pt 0 8pt;
-  padding: 0;
 }
 
 h5, h6 {
-  break-after: avoid-page;
   font-size: 10.5pt;
   margin: 8pt 0;
-  padding: 0;
 }
 
 figure {
@@ -113,7 +118,10 @@ figcaption {
   font-size: 9pt;
 }
 
-blockquote, .markdown-alert, pre {
+blockquote, .markdown-alert {
+  background-color: var(--bqbg);
+  border: var(--bqbd);
+  border-radius: 4pt;
   margin: 0;
   padding: 4pt 8pt;
 }
@@ -123,6 +131,36 @@ blockquote, .markdown-alert, pre {
   border-left-style: solid;
   border-left-width: 6pt;
   display: flex;
+}
+
+.markdown-alert-note > .markdown-alert-title {
+  border-color: var(--alnt);
+  color: var(--alnt);
+  fill: var(--alnt);
+}
+
+.markdown-alert-tip > .markdown-alert-title {
+  border-color: var(--altp);
+  color: var(--altp);
+  fill: var(--altp);
+}
+
+.markdown-alert-important > .markdown-alert-title {
+  border-color: var(--alim);
+  color: var(--alim);
+  fill: var(--alim);
+}
+
+.markdown-alert-warning > .markdown-alert-title {
+  border-color: var(--alwr);
+  color: var(--alwr);
+  fill: var(--alwr);
+}
+
+.markdown-alert-caution > .markdown-alert-title {
+  border-color: var(--alct);
+  color: var(--alct);
+  fill: var(--alct);
 }
 
 blockquote > :is(h1, h2, h3, h4, h5, h6):first-child,
@@ -137,6 +175,11 @@ blockquote > :is(h1, h2, h3, h4, h5, h6):first-child,
 }
 
 pre {
+  background-color: var(--cbbg);
+  border: var(--cbbd);
+  border-radius: var(--cbbr);
+  margin: 0;
+  padding: 4pt 8pt;
   position: relative;
 }
 
@@ -156,8 +199,13 @@ pre.isolated {
 }
 
 .filename {
+  background-color: var(--fnbg);
+  border-bottom: var(--cbbd);
+  border-left: var(--cbbd);
   border-radius: 0 0 4pt 4pt;
+  border-right: var(--cbbd);
   display: block;
+  font-family: var(--emph);
   font-size: 9pt;
   left: 8pt;
   line-height: 14pt;
@@ -169,6 +217,10 @@ pre.isolated {
 .filename + * {
   display: block;
   margin-top: 14pt;
+}
+
+code {
+  font-family: var(--mono);
 }
 
 ul, ol {
@@ -184,9 +236,14 @@ li > :is(ul, ol) {
   margin: 0;
 }
 
+li > p:first-child {
+  text-indent: 0;
+}
+
 li > p:nth-child(2) {
   break-before: avoid-page;
   margin-top: 2pt;
+  text-indent: var(--idt1);
 }
 
 table {
@@ -196,18 +253,48 @@ table {
 }
 
 th, td {
-  border-style: solid;
-  border-width: 0.5pt;
+  border: var(--tbbd);
   font-size: 10.5pt;
   padding: 0 2pt;
+}
+
+th {
+  background-color: var(--thbg);
+  font-family: var(--emph);
+  font-weight: normal;
+}
+
+td {
+  font-family: var(--body);
 }
 
 p {
   margin: 0;
 }
 
+p:not(.markdown-alert-title) {
+  text-indent: var(--idt1);
+}
+
+p:not(.markdown-alert-title) + p {
+  text-indent: var(--idt2);
+}
+
+b, strong {
+  font-family: var(--emph);
+  font-weight: bold;
+}
+
+a {
+  color: var(--lkfg);
+}
+
 kbd {
+  background-color: var(--kbbg);
+  border: var(--bqbd);
   border-radius: 4pt;
+  color: var(--kbfg);
+  font-family: var(--emph);
   margin: 0 2pt;
   padding: 0 4pt;
 }
@@ -215,6 +302,8 @@ kbd {
 img {
   height: auto;
   max-width: 100%;
+  position: relative;
+  top: var(--iofs);
   vertical-align: middle;
 }
 
@@ -244,11 +333,19 @@ img {
 /* Mermaid Graph */
 
 .mermaid .cluster-label .nodeLabel p {
+  font-family: var(--emph);
   font-size: 10.5pt;
   text-indent: 0;
 }
 
-.mermaid .label :is(.edgeLabel, .nodeLabel) p {
+.mermaid .label .edgeLabel p {
+  font-family: var(--emph);
+  font-size: 9pt;
+  text-indent: 0;
+}
+
+.mermaid .label .nodeLabel p {
+  font-family: var(--body);
   font-size: 9pt;
   text-indent: 0;
 }
@@ -256,16 +353,19 @@ img {
 /* Mermaid Flowchart */
 
 .mermaid .flowchartTitleText {
+  font-family: var(--emph) !important;
   font-size: 10.5pt !important;
 }
 
 /* Mermaid Class Diagram */
 
 .mermaid :is(.classDiagramTitleText, .label-group .label .nodeLabel p) {
+  font-family: var(--emph);
   font-size: 10.5pt;
 }
 
 .mermaid .edgeTerminals foreignObject {
+  font-family: var(--body);
   font-size: 8pt;
   height: 1.5em !important;
   transform: translateY(-.25em);
@@ -274,28 +374,34 @@ img {
 /* Mermaid State Diagram */
 
 .mermaid .stateDiagramTitleText {
+  font-family: var(--emph) !important;
   font-size: 10.5pt !important;
 }
 
 .mermaid .cluster-label .nodeLabel {
+  font-family: var(--emph);
   font-size: 10.5pt;
 }
 
 /* Mermaid Sequence Diagram */
 
 .mermaid .text tspan {
+  font-family: var(--emph);
   font-size: 10.5pt;
 }
 
 .mermaid :is(.labelText, .sequenceNumber) {
+  font-family: var(--emph) !important;
   font-size: 9pt !important;
 }
 
 .mermaid :is(.actor, .noteText, .loopText) tspan {
+  font-family: var(--body);
   font-size: 9pt;
 }
 
 .mermaid .messageText {
+  font-family: var(--body) !important;
   font-size: 9pt !important;
   transform: translateY(.75em);
 }
@@ -303,16 +409,28 @@ img {
 /* Mermaid Entity Relationship Diagram */
 
 .mermaid :is(.entityTitleText, .entityLabel:first-of-type) {
+  font-family: var(--emph) !important;
   font-size: 10.5pt !important;
 }
 
-.mermaid :is(.entityLabel, .relationshipLabel) {
+.mermaid [aria-roledescription="er"] .relationshipLabelBox {
+  opacity: 1 !important;
+}
+
+.mermaid .relationshipLabel {
+  font-family: var(--emph) !important;
+  font-size: 9pt !important;
+}
+
+.mermain .entityLabel {
+  font-family: var(--body) !important;
   font-size: 9pt !important;
 }
 
 /* Mermaid User Journey Diagram */
 
 .mermaid :has(.journey-section) ~ text {
+  font-family: var(--emph) !important;
   font-size: 10.5pt !important;
 }
 
@@ -320,22 +438,38 @@ img {
   transform: translateY(-.2em);
 }
 
-.mermaid .legend tspan,
-.mermaid :is(.journey-section, .task) .label {
+.mermaid .legend tspan {
+  font-family: var(--emph);
   font-size: 9pt;
+}
+
+.mermaid :is(.journey-section, .task) .label {
+  font-family: var(--body) !important;
+  font-size: 9pt !important;
 }
 
 /* Mermaid Gantt Chart */
 
 .mermaid .titleText {
-  font-size: 10.5pt;
+  font-family: var(--emph) !important;
+  font-size: 10.5pt !important;
 }
 
-.mermaid .sectionTitle tspan,
+.mermaid .sectionTitle tspan {
+  font-family: var(--emph) !important;
+  font-size: 9pt !important;
+}
+
 .mermaid :is(.taskText, .taskTextOutsideRight, .taskTextOutsideLeft) {
-  font-size: 9pt;
+  font-family: var(--body) !important;
+  font-size: 9pt !important;
 }
 
 .mermaid .tick text {
-  font-size: 8pt;
+  font-family: var(--body) !important;
+  font-size: 8pt !important;
+}
+
+.mermaid [aria-roledescription="gantt"] .today {
+  stroke-width: 1 !important;
 }

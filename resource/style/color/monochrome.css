@@ -1,33 +1,20 @@
-blockquote, .markdown-alert {
-  border: 0.5pt solid #000;
-  border-radius: 4pt;
-}
-
-:is(.markdown-alert-note, .markdown-alert-tip, .markdown-alert-important, .markdown-alert-warning, .markdown-alert-caution) > .markdown-alert-title {
-  border-color: #000;
-  color: #000;
-  fill: #000;
-}
-
-pre {
-  border: 0.5pt solid #000;
-}
-
-.filename {
-  border: 0.5pt solid #000;
-  border-top: none;
-}
-
-th, td {
-  border-color: #000;
-}
-
-a {
-  color: #000;
-}
-
-kbd {
-  border: 0.5pt solid #000;
+body {
+  --bqbg: #fff;
+  --bqbd: 0.5pt solid #000;
+  --alnt: #000;
+  --altp: #000;
+  --alim: #000;
+  --alwr: #000;
+  --alct: #000;
+  --cbbg: #fff;
+  --fnbg: #fff;
+  --cbbd: 0.5pt solid #000;
+  --cbbr: 0;
+  --thbg: #fff;
+  --tbbd: 0.5pt solid #000;
+  --lkfg: #000;
+  --kbbg: #fff;
+  --kbfg: #000;
 }
 
 .mermaid [aria-roledescription="sequence"] .rect {
@@ -36,10 +23,6 @@ kbd {
 
 .mermaid [aria-roledescription="er"] .relationshipLine {
   stroke: #000 !important;
-}
-
-.mermaid [aria-roledescription="er"] .relationshipLabelBox {
-  opacity: 1 !important;
 }
 
 .mermaid [aria-roledescription="er"] marker :is(circle, path) {
@@ -84,5 +67,4 @@ kbd {
 
 .mermaid [aria-roledescription="gantt"] .today {
   stroke-dasharray: 10, 2, 2, 2;
-  stroke-width: 1 !important;
 }

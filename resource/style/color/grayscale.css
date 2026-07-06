@@ -1,58 +1,18 @@
-blockquote, .markdown-alert {
-  border: 0.5pt solid #666;
-  border-radius: 4pt;
-}
-
-:is(.markdown-alert-note, .markdown-alert-tip) > .markdown-alert-title {
-  border-color: #666;
-  color: #666;
-  fill: #666;
-}
-
-.markdown-alert-warning > .markdown-alert-title {
-  border-color: #444;
-  color: #444;
-  fill: #444;
-}
-
-:is(.markdown-alert-important, .markdown-alert-caution) > .markdown-alert-title {
-  border-color: #000;
-  color: #000;
-  fill: #000;
-}
-
-pre {
-  background-color: #eee;
-  border-radius: 4pt;
-}
-
-.filename {
-  background-color: #ddd;
-}
-
-th {
-  background-color: #ddd;
-  border-color: #666;
-}
-
-td {
-  border-color: #666;
-}
-
-a {
-  color: #000;
-}
-
-kbd {
-  background-color: #ddd;
-  border: 0.5pt solid #666;
-  color: #000;
-}
-
-.mermaid [aria-roledescription="er"] .relationshipLabelBox {
-  opacity: 1 !important;
-}
-
-.mermaid [aria-roledescription="gantt"] .today {
-  stroke-width: 1 !important;
+body {
+  --bqbg: #fff;
+  --bqbd: 0.5pt solid #666;
+  --alnt: #666;
+  --altp: #666;
+  --alim: #000;
+  --alwr: #444;
+  --alct: #000;
+  --cbbg: #eee;
+  --fnbg: #ddd;
+  --cbbd: none;
+  --cbbr: 4pt;
+  --thbg: #ddd;
+  --tbbd: 0.5pt solid #666;
+  --lkfg: #000;
+  --kbbg: #ddd;
+  --kbfg: #000;
 }

@@ -1,65 +1,18 @@
-blockquote, .markdown-alert {
-  background-color: #fec;
-  border-radius: 4pt;
-}
-
-.markdown-alert-note > .markdown-alert-title {
-  border-color: #05c;
-  color: #05c;
-  fill: #05c;
-}
-
-.markdown-alert-tip > .markdown-alert-title {
-  border-color: #063;
-  color: #063;
-  fill: #063;
-}
-
-.markdown-alert-important > .markdown-alert-title {
-  border-color: #63a;
-  color: #63a;
-  fill: #63a;
-}
-
-.markdown-alert-warning > .markdown-alert-title {
-  border-color: #850;
-  color: #850;
-  fill: #850;
-}
-
-.markdown-alert-caution > .markdown-alert-title {
-  border-color: #b12;
-  color: #b12;
-  fill: #b12;
-}
-
-pre {
-  background-color: #eee;
-  border-radius: 4pt;
-}
-
-.filename {
-  background-color: #ddc;
-}
-
-th {
-  background-color: #ddd;
-  border-color: #666;
-}
-
-td {
-  border-color: #666;
-}
-
-kbd {
-  background-color: #444;
-  color: #fff;
-}
-
-.mermaid [aria-roledescription="er"] .relationshipLabelBox {
-  opacity: 1 !important;
-}
-
-.mermaid [aria-roledescription="gantt"] .today {
-  stroke-width: 1 !important;
+body {
+  --bqbg: #fec;
+  --bqbd: none;
+  --alnt: #05c;
+  --altp: #063;
+  --alim: #63a;
+  --alwr: #850;
+  --alct: #b12;
+  --cbbg: #eee;
+  --fnbg: #ddc;
+  --cbbd: none;
+  --cbbr: 4pt;
+  --thbg: #ddd;
+  --tbbd: 0.5pt solid #666;
+  --lkfg: #00e;
+  --kbbg: #444;
+  --kbfg: #fff;
 }
