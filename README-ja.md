@@ -1,8 +1,7 @@
 md2pdf - 印刷用にMarkdownをPDFに整形
 ====================================
 
-[![JavaScript](https://img.shields.io/badge/JavaScript-f7df1e?logo=javascript&logoColor=000)](https://github.com/jado4810/md2pdf/search?l=JavaScript)
-[![CSS](https://img.shields.io/github/languages/top/jado4810/md2pdf?logo=css&logoColor=639&label=CSS&labelColor=eee&color=666)](https://github.com/jado4810/md2pdf/search?l=CSS)
+[![JavaScript](https://img.shields.io/github/languages/top/jado4810/md2pdf?logo=javascript&logoColor=000&label=JavaScript&labelColor=f7df1e&color=666)](https://github.com/jado4810/md2pdf/search?l=JavaScript)
 [![Node.js](https://img.shields.io/badge/-Node.js-393?logo=nodedotjs&logoColor=fff)](https://github.com/nodejs)
 [![Docker](https://img.shields.io/badge/-Docker-2496ed?logo=docker&logoColor=fff)](https://github.com/docker)
 [![License](https://img.shields.io/github/license/jado4810/md2pdf?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEuMjUiPjxwYXRoIGQ9Ik04LDB2MTRNNCwxNGg4TTEsNGgzbDMtMWgybDMsMWgzTTMsNGwtMi41LDZxMi41LDEuNSw1LDB6TTEzLDRsLTIuNSw2cTIuNSwxLjUsNSwweiI+PC9wYXRoPjwvc3ZnPgo%3D)](https://github.com/jado4810/md2pdf/blob/main/LICENSE.txt)
