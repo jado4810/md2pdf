@@ -1,9 +1,11 @@
 # md2pdf - Changelog
 
-## Version 0.13.0
+## Version 0.13.0 (2026-7-6)
 
 * Support floated images and blockquotes
-    * Changed the markups of `blockquote` and `pre` to work will with floated images, so updating are recommended when using raw html in Markdowns (see section 2.2. of README)
+    * Now `blockquote` and `pre` put under `figure` (to work with floated parts)
+    * Updating recommended when using raw html parts with those elements
+    * See also section 2.2. of README
 * Paging control keywords on code blocks are now case insensitive
 * Styles with consideration for multi-columns figures
 * Migrate to Marked18
