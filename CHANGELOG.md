@@ -9,7 +9,8 @@
 * Paging control keywords on code blocks are now case insensitive
 * Styles with consideration for multi-columns figures
 * Migrate to Marked18
-* Migrate to Chromium150 and Puppeteer25.2
+* Migrate to Chromium150 and Puppeteer25.3
+    * Use chromium-headless-shell to avoid errors about system bus
 * Migrate some other NodeJS libraries
 
 ## Version 0.12.0 (2026-6-12)
