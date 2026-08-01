@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.13.1 (2026-8-1)
+
+* Migrate to Chromium151 and Puppeteer25.4
+
 ## Version 0.13.0 (2026-7-6)
 
 * Support floated images and blockquotes
