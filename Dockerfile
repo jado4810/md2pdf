@@ -5,9 +5,7 @@ WORKDIR /opt/app
 COPY package.json package-lock.json .
 
 ARG PUPPETEER_SKIP_DOWNLOAD=true
-
-RUN npm init -y \
- && npm install
+RUN npm ci
 
 FROM node:24-trixie-slim
 
