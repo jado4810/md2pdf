@@ -1,5 +1,10 @@
 # md2pdf - Changelog
 
+## Version 0.13.2
+
+* Migrate to Chromium152 and Puppeteer25.9
+* Improve container security
+
 ## Version 0.13.1 (2026-8-1)
 
 * Migrate to Chromium151 and Puppeteer25.4
