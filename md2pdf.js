@@ -2,7 +2,7 @@
 
 'use strict';
 
-const version = '0.13.1';
+const version = '0.13.2';
 
 const browser_type = 'chrome';
 const browser_exec = '/usr/bin/chromium-headless-shell';
