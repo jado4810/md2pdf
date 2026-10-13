@@ -1,5 +1,9 @@
 # md2pdf - Changelog
 
+## Version 0.13.5 (2026-10-13)
+
+* Migrate to Chromium155 and Puppepeer25.13
+
 ## Version 0.13.4 (2026-9-26)
 
 * Migrate to Chromium154 and Puppepeer25.12
