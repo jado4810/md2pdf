@@ -1,5 +1,10 @@
 # md2pdf - Changelog
 
+## Version 0.13.6 (2026-10-25)
+
+* Migrate to Chromium156 and Puppeteer25.16
+* Update minimum NodeJS version for security issue
+
 ## Version 0.13.5 (2026-10-13)
 
 * Migrate to Chromium155 and Puppepeer25.13
