@@ -1,5 +1,14 @@
 # md2pdf - Changelog
 
+## Version 0.14.0
+
+* Migrate container image to Node26LTS
+* Migrate to Mermaid12
+    * Using old "dagre" layout engine for now
+    * To use new elk engine, modify md2pdf.js and change options in `mermaid.initialize`
+* Migrate to Chromium147 and Puppeteer25.17
+* Migrate some other NodeJS libraries
+
 ## Version 0.13.6 (2026-10-25)
 
 * Migrate to Chromium156 and Puppeteer25.16
