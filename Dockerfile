@@ -1,4 +1,4 @@
-FROM node:24-trixie-slim AS builder
+FROM node:26-trixie-slim AS builder
 
 WORKDIR /opt/app
 
@@ -7,7 +7,7 @@ COPY package.json package-lock.json .
 ARG PUPPETEER_SKIP_DOWNLOAD=true
 RUN npm ci
 
-FROM node:24-trixie-slim
+FROM node:26-trixie-slim
 
 RUN apt-get update \
  && apt-get install -y \
