@@ -365,6 +365,8 @@ async function convert({markdown, setting, lang, color, base, flags}) {
   const merr = await page.evaluate((config) => {
     mermaid.initialize(Object.assign({
       startOnLoad: false,
+      layout: 'dagre',
+      look: 'classic',
       flowchart: {
         padding: 10
       },
